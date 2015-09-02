@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="Theme.Libertacao" parent="Theme.Libertacao.Base"/>
+
+    <style name="Theme.Libertacao.Base" parent="Theme.AppCompat.Light">
+        <!--   your app branding color for the app bar -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:textColor">@color/Black</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+</resources>
