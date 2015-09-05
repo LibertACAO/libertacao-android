@@ -64,7 +64,7 @@
         </receiver>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="@string/fabric_key" />
+            android:value="PLACEHOLDER" />
     </application>
 
 </manifest>
