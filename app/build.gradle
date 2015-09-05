@@ -25,11 +25,13 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [ parse_permission:"com.libertacao.libertacao.permission.C2D_MESSAGE"]
     }
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-DEBUG"
+            manifestPlaceholders = [ parse_permission:"com.libertacao.libertacao.debug.permission.C2D_MESSAGE"]
         }
         release {
             minifyEnabled false
