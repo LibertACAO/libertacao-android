@@ -68,11 +68,6 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
-
-        <!-- Crashlytics key -->
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="PLACEHOLDER" />
     </application>
 
 </manifest>
