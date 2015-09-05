@@ -8,5 +8,8 @@ Um aplicativo inovador com um conceito simples: revolucionar o ativismo de liber
 * Faça clone do projeto
 * Abra o projeto
 
+## Como rodar
+Você pode utilizar um dispositivo Android, o simulador que vem junto com o Android Studio ou o Genymotion emulador (https://www.genymotion.com). O simulador que vem junto com a IDE é lento, por isso recomendo utilizar as outras alternativas.
+
 ## Requisitos
 * Android 2.3+
