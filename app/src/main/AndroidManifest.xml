@@ -62,6 +62,9 @@
                 <category android:name="com.libertacao.libertacao.debug" />
             </intent-filter>
         </receiver>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="@string/fabric_key" />
     </application>
 
 </manifest>

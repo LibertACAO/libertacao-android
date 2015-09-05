@@ -5,10 +5,12 @@ import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
 
+import com.crashlytics.android.Crashlytics;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.squareup.leakcanary.LeakCanary;
+import io.fabric.sdk.android.Fabric;
 
 public class MyApp extends Application {
     public static boolean IS_DEBUG = false;
@@ -22,7 +24,7 @@ public class MyApp extends Application {
 
     public void onCreate() {
         super.onCreate();
-        // TODO: add Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics());
         LeakCanary.install(this);
         MyApp.context = getApplicationContext();
         if (context.getPackageName().endsWith(".debug")) {
