@@ -44,8 +44,7 @@ public class MyApp extends Application {
     }
 
     private void setupParse() {
-        // TODO: find a better way to hide credentials
-        Parse.initialize(this, "PUT_YOUR_CREDENTIALS_HERE", "PUT_YOUR_CREDENTIALS_HERE");
+        Parse.initialize(this, getString(R.string.parse_application_id), getString(R.string.parse_client_key));
         ParseInstallation.getCurrentInstallation().saveInBackground();
         ParseUser.enableAutomaticUser();
         ParseUser.getCurrentUser().increment("RunCount");
