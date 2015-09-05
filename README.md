@@ -7,6 +7,8 @@ Um aplicativo inovador com um conceito simples: revolucionar o ativismo de liber
 * Baixe o Android Studio (https://developer.android.com/intl/ko/sdk/index.html)
 * Faça clone do projeto
 * Abra o projeto
+* Existe um arquivo de configuração "config.xml" localizado na pasta res/values. Você deverá alterar os valores contidos neste arquivo de acordo
+com o seu ambiente. Contate alguém do projeto para ter acesso a esses dados.
 
 ## Como rodar
 Você pode utilizar um dispositivo Android, o simulador que vem junto com o Android Studio ou o Genymotion emulador (https://www.genymotion.com). O simulador que vem junto com a IDE é lento, por isso recomendo utilizar as outras alternativas.
