@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Libertacao</string>
 
+    <!-- Drawer -->
     <string name="navigation_drawer_open">Abrir painel de navegação</string>
     <string name="navigation_drawer_close">Fechar painel de navegação</string>
-
     <string name="drawer_notificacoes">Notificações</string>
     <string name="drawer_configuracoes">Configurações</string>
     <string name="drawer_contato">Contato</string>

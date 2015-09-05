@@ -6,8 +6,10 @@ import android.os.Build;
 import android.os.StrictMode;
 
 import com.crashlytics.android.Crashlytics;
+import com.libertacao.libertacao.data.Call;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.squareup.leakcanary.LeakCanary;
 import io.fabric.sdk.android.Fabric;
@@ -40,12 +42,11 @@ public class MyApp extends Application {
                     .build());
         }
 
-        // TODO - ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
-
         setupParse();
     }
 
     private void setupParse() {
+        ParseObject.registerSubclass(Call.class);
         Parse.initialize(this, getString(R.string.parse_application_id), getString(R.string.parse_client_key));
         ParseInstallation.getCurrentInstallation().saveInBackground();
         ParseUser.enableAutomaticUser();
