@@ -1,5 +1,6 @@
 package com.libertacao.libertacao.view.main;
 
+import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -20,12 +21,26 @@ import android.widget.ListView;
 
 import com.libertacao.libertacao.R;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
+    /**
+     * Track drawer position
+     */
+    @IntDef({NOTIFICACAO, CADASTRO, CONFIGURACAO, CONTATO})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DrawerPosition {}
+
+    public static final int NOTIFICACAO = 0;
+    public static final int CADASTRO = 1;
+    public static final int CONFIGURACAO = 2;
+    public static final int CONTATO = 3;
 
     /**
      * Remember the position of the selected item.
@@ -94,6 +109,7 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.id.text1,
                 new String[]{
                         getString(R.string.drawer_notificacoes),
+                        getString(R.string.drawer_cadastro),
                         getString(R.string.drawer_configuracoes),
                         getString(R.string.drawer_contato),
                 }));

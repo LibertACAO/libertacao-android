@@ -47,7 +47,7 @@ public class MyApp extends Application {
 
     private void setupParse() {
         ParseObject.registerSubclass(Call.class);
-        Parse.initialize(this, getString(R.string.parse_application_id), getString(R.string.parse_client_key));
+        Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
         ParseInstallation.getCurrentInstallation().saveInBackground();
         ParseUser.enableAutomaticUser();
         ParseUser.getCurrentUser().increment("RunCount");

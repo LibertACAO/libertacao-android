@@ -14,6 +14,7 @@ import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.main.NavigationDrawerFragment;
 import com.libertacao.libertacao.view.notificacoes.NotificacaoFragment;
+import com.parse.ui.ParseLoginBuilder;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -40,9 +41,17 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        // TODO: instantiate fragments accrodingly to position
-        fragmentManager.beginTransaction().replace(R.id.container, NotificacaoFragment.newInstance()).commit();
+    public void onNavigationDrawerItemSelected(@NavigationDrawerFragment.DrawerPosition int position) {
+        if(position == NavigationDrawerFragment.NOTIFICACAO) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, NotificacaoFragment.newInstance()).commit();
+        } else if(position == NavigationDrawerFragment.CADASTRO){
+            ParseLoginBuilder builder = new ParseLoginBuilder(this);
+            startActivityForResult(builder.build(), 0);
+        } else if(position == NavigationDrawerFragment.CONFIGURACAO){
+            // TODO: create configuracao screen
+        } else if(position == NavigationDrawerFragment.CONTATO){
+            // TODO: create contato screen
+        }
     }
 }
