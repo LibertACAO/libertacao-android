@@ -9,6 +9,7 @@ Um aplicativo inovador com um conceito simples: revolucionar o ativismo de liber
 * Abra o projeto
 * Existe um arquivo de configuração "config.xml" localizado na pasta res/values. Você deverá alterar os valores contidos neste arquivo de acordo
 com o seu ambiente. Contate alguém do projeto para ter acesso a esses dados.
+
 ** Sugestão de fluxo: 
 No terminal, digite 'git update-index --assume-unchanged app/src/main/res/values/config.xml' para o git parar de monitorar as mudanças nesse arquivo (http://stackoverflow.com/a/4498611). Após, coloque os valores certos nesse arquivo, sem precisar se preocupar em não comitar essas informações. 
 
