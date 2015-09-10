@@ -34,6 +34,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".view.notificacoes.NotificacaoDetail" >
+        </activity>
+
         <!-- Parse login -->
         <activity
             android:name="com.parse.ui.ParseLoginActivity"
@@ -77,9 +80,6 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".view.notificacoes.NotificacaoDetail" >
-        </activity>
     </application>
 
 </manifest>
