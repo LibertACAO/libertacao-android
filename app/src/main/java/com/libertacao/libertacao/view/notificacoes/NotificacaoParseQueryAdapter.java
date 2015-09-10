@@ -25,11 +25,11 @@ public class NotificacaoParseQueryAdapter extends ParseQueryAdapter<Call> {
         }
         super.getItemView(object, v, parent);
 
-        ParseImageView todoImage = (ParseImageView) v.findViewById(R.id.notificacao_image);
+        ParseImageView notificacao_image = (ParseImageView) v.findViewById(R.id.notificacao_image);
         ParseFile imageFile = object.getParseFile("image");
         if (imageFile != null) {
-            todoImage.setParseFile(imageFile);
-            todoImage.loadInBackground();
+            notificacao_image.setParseFile(imageFile);
+            notificacao_image.loadInBackground();
         }
 
         TextView notificacaoTitleView = (TextView) v.findViewById(R.id.notificacao_title);
