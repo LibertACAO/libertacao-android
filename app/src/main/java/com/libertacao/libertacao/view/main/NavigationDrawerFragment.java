@@ -1,5 +1,6 @@
 package com.libertacao.libertacao.view.main;
 
+import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
@@ -20,9 +21,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.libertacao.libertacao.R;
+import com.parse.ParseUser;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -71,6 +75,9 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    private ArrayAdapter<String> mDrawerArrayAdapter;
+    private List<String> mDrawerStrings;
+
     public NavigationDrawerFragment() {
     }
 
@@ -103,16 +110,17 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<>(
+        mDrawerStrings = new ArrayList<>();
+        mDrawerStrings.add(getString(R.string.drawer_notificacoes));
+        mDrawerStrings.add(getString(R.string.drawer_cadastro));
+        mDrawerStrings.add(getString(R.string.drawer_configuracoes));
+        mDrawerStrings.add(getString(R.string.drawer_contato));
+        mDrawerArrayAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
-                new String[]{
-                        getString(R.string.drawer_notificacoes),
-                        getString(R.string.drawer_cadastro),
-                        getString(R.string.drawer_configuracoes),
-                        getString(R.string.drawer_contato),
-                }));
+                mDrawerStrings);
+        mDrawerListView.setAdapter(mDrawerArrayAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -241,5 +249,14 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    public void updateDrawerAdapter(){
+        if(ParseUser.getCurrentUser().isAuthenticated()){
+            mDrawerStrings.set(CADASTRO, getString(R.string.drawer_perfil));
+        } else {
+            mDrawerStrings.set(CADASTRO, getString(R.string.drawer_cadastro));
+        }
+        mDrawerArrayAdapter.notifyDataSetChanged();
     }
 }
