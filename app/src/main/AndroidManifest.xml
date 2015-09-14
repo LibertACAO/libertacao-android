@@ -33,7 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".view.notificacoes.NotificacaoDetail" >
         </activity>
 
@@ -80,6 +79,9 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".view.perfil.PerfilActivity" >
+        </activity>
     </application>
 
 </manifest>

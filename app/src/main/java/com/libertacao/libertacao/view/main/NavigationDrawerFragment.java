@@ -1,6 +1,5 @@
 package com.libertacao.libertacao.view.main;
 
-import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
@@ -37,14 +36,13 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Track drawer position
      */
-    @IntDef({NOTIFICACAO, CADASTRO, CONFIGURACAO, CONTATO})
+    @IntDef({NOTIFICACAO, CADASTRO_PERFIL, CONTATO})
     @Retention(RetentionPolicy.SOURCE)
     public @interface DrawerPosition {}
 
     public static final int NOTIFICACAO = 0;
-    public static final int CADASTRO = 1;
-    public static final int CONFIGURACAO = 2;
-    public static final int CONTATO = 3;
+    public static final int CADASTRO_PERFIL = 1;
+    public static final int CONTATO = 2;
 
     /**
      * Remember the position of the selected item.
@@ -253,9 +251,9 @@ public class NavigationDrawerFragment extends Fragment {
 
     public void updateDrawerAdapter(){
         if(ParseUser.getCurrentUser().isAuthenticated()){
-            mDrawerStrings.set(CADASTRO, getString(R.string.drawer_perfil));
+            mDrawerStrings.set(CADASTRO_PERFIL, getString(R.string.drawer_perfil));
         } else {
-            mDrawerStrings.set(CADASTRO, getString(R.string.drawer_cadastro));
+            mDrawerStrings.set(CADASTRO_PERFIL, getString(R.string.drawer_cadastro));
         }
         mDrawerArrayAdapter.notifyDataSetChanged();
     }

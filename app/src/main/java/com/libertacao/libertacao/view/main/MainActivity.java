@@ -1,5 +1,6 @@
 package com.libertacao.libertacao.view.main;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.notificacoes.NotificacaoFragment;
+import com.libertacao.libertacao.view.perfil.PerfilActivity;
 import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
@@ -43,15 +45,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         if(position == NavigationDrawerFragment.NOTIFICACAO) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.container, NotificacaoFragment.newInstance()).commit();
-        } else if(position == NavigationDrawerFragment.CADASTRO){
+        } else if(position == NavigationDrawerFragment.CADASTRO_PERFIL){
             if(ParseUser.getCurrentUser().isAuthenticated()){
-
+                Intent intent = new Intent(this, PerfilActivity.class);
+                startActivity(intent);
             } else {
                 ParseLoginBuilder builder = new ParseLoginBuilder(this);
                 startActivityForResult(builder.build(), 0);
             }
-        } else if(position == NavigationDrawerFragment.CONFIGURACAO){
-            // TODO: create configuracao screen
         } else if(position == NavigationDrawerFragment.CONTATO){
             // TODO: create contato screen
         }
