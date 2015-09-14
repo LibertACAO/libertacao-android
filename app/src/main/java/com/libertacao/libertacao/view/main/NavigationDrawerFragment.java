@@ -111,7 +111,6 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerStrings = new ArrayList<>();
         mDrawerStrings.add(getString(R.string.drawer_notificacoes));
         mDrawerStrings.add(getString(R.string.drawer_cadastro));
-        mDrawerStrings.add(getString(R.string.drawer_configuracoes));
         mDrawerStrings.add(getString(R.string.drawer_contato));
         mDrawerArrayAdapter = new ArrayAdapter<>(
                 getActivity(),
