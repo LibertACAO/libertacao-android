@@ -8,4 +8,12 @@
     <string name="drawer_cadastro">Cadastre-se</string>
     <string name="drawer_perfil">Perfil</string>
     <string name="drawer_contato">Contato</string>
+
+    <!-- Details -->
+    <string name="details">Detalhes</string>
+
+    <!-- Profile -->
+    <string name="profile">Perfil</string>
+    <string name="profile_username">Username:</string>
+
 </resources>

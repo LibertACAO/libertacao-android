@@ -33,14 +33,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.notificacoes.NotificacaoDetail" >
+
+        <activity
+            android:name=".view.notificacoes.NotificacaoDetail"
+              android:label="@string/details"
+              android:parentActivityName=".view.main.MainActivity"
+              android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.main.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".view.perfil.PerfilActivity"
+              android:label="@string/profile"
+              android:parentActivityName=".view.main.MainActivity"
+              android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.main.MainActivity" />
         </activity>
 
         <!-- Parse login -->
         <activity
             android:name="com.parse.ui.ParseLoginActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" >
 
             <!-- For more options, see https://www.parse.com/docs/android_guide#ui-login -->
             <meta-data
@@ -79,9 +98,6 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".view.perfil.PerfilActivity" >
-        </activity>
     </application>
 
 </manifest>
