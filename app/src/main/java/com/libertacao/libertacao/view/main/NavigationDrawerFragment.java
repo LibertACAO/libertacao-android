@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.libertacao.libertacao.R;
+import com.parse.ParseAnonymousUtils;
 import com.parse.ParseUser;
 
 import java.lang.annotation.Retention;
@@ -249,7 +250,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     public void updateDrawerAdapter(){
-        if(ParseUser.getCurrentUser().isAuthenticated()){
+        if(ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())){
             mDrawerStrings.set(CADASTRO_PERFIL, getString(R.string.drawer_perfil));
         } else {
             mDrawerStrings.set(CADASTRO_PERFIL, getString(R.string.drawer_cadastro));

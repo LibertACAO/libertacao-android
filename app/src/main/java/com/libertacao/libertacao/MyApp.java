@@ -8,7 +8,6 @@ import android.os.StrictMode;
 import com.crashlytics.android.Crashlytics;
 import com.libertacao.libertacao.data.Call;
 import com.parse.Parse;
-import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.squareup.leakcanary.LeakCanary;
@@ -47,9 +46,7 @@ public class MyApp extends Application {
     private void setupParse() {
         ParseObject.registerSubclass(Call.class);
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
-        ParseInstallation.getCurrentInstallation().saveInBackground();
         ParseUser.enableAutomaticUser();
-        ParseUser.getCurrentUser().increment("RunCount");
         ParseUser.getCurrentUser().saveInBackground();
     }
 }

@@ -15,5 +15,6 @@
     <!-- Profile -->
     <string name="profile">Perfil</string>
     <string name="profile_username">Username:</string>
+    <string name="logout">Sair</string>
 
 </resources>

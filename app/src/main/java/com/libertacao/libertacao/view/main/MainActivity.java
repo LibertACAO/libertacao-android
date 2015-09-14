@@ -11,6 +11,7 @@ import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.notificacoes.NotificacaoFragment;
 import com.libertacao.libertacao.view.perfil.PerfilActivity;
+import com.parse.ParseAnonymousUtils;
 import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.container, NotificacaoFragment.newInstance()).commit();
         } else if(position == NavigationDrawerFragment.CADASTRO_PERFIL){
-            if(ParseUser.getCurrentUser().isAuthenticated()){
+            if(ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())){
                 Intent intent = new Intent(this, PerfilActivity.class);
                 startActivity(intent);
             } else {
