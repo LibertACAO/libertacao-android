@@ -16,7 +16,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_margin="@dimen/default_margin"
+            android:gravity="end"
             style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
             android:text="@string/profile_username"/>
 
@@ -24,6 +26,7 @@
             android:id="@+id/profile_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:layout_margin="@dimen/default_margin"
             style="@style/TextAppearance.AppCompat.Large"
             tools:text="Ada Lovelace"/>
