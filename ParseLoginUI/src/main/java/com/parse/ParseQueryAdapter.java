@@ -380,7 +380,7 @@ public class ParseQueryAdapter<T extends ParseObject> extends BaseAdapter {
 
     runningQueries.add(query);
 
-    // TODO convert to Tasks and CancellationTokens
+    // TODOO convert to Tasks and CancellationTokens
     // (depends on https://github.com/ParsePlatform/Parse-SDK-Android/issues/6)
     query.findInBackground(new FindCallback<T>() {
       @Override
