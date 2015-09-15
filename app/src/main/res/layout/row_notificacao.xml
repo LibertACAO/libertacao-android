@@ -32,4 +32,11 @@
         style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
         tools:text="Faça a diferença na vida dos animais acolhidos pelo Rancho dos Gnomos. Juntos somos mais fortes, juntos podemos ir mais longe ;-)"/>
 
+    <Button
+        android:id="@+id/btn_share_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/share"/>
+
 </LinearLayout>

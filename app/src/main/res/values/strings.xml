@@ -12,6 +12,7 @@
     <!-- Notifications -->
     <string name="loading_notification_list">Carregando notificações…</string>
     <string name="empty_notification_list">Sem nenhuma notificação…</string>
+    <string name="share">Share</string>
 
     <!-- Details -->
     <string name="details">Detalhes</string>
