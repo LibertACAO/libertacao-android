@@ -34,6 +34,7 @@ public class NotificacaoFragment extends ListFragment {
             public ParseQuery<Call> create() {
                 ParseQuery<Call> query = new ParseQuery<>("Call");
                 //query.whereGreaterThanOrEqualTo("createdAt", new Date()); // TODO: should be a field indicating the due date
+                // TODO: add something including location (whereNear?) - https://parse.com/docs/android/guide#geopoints
                 query.orderByDescending("createdAt");
                 return query;
             }

@@ -4,13 +4,18 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.libertacao.libertacao.data.Call;
+import com.parse.LocationCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.squareup.leakcanary.LeakCanary;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MyApp extends Application {
@@ -48,5 +53,17 @@ public class MyApp extends Application {
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
         ParseUser.enableAutomaticUser();
         ParseUser.getCurrentUser().saveInBackground();
+
+        ParseGeoPoint.getCurrentLocationInBackground(10 * 1000, //ms
+                new LocationCallback() {
+                    @Override
+                    public void done(ParseGeoPoint geoPoint, ParseException e) {
+                        Log.d("MyApp","Found geopoint: " + geoPoint);
+                        if(geoPoint != null) {
+                            ParseUser.getCurrentUser().put("location", geoPoint);
+                            ParseUser.getCurrentUser().saveInBackground();
+                        }
+                    }
+                });
     }
 }
