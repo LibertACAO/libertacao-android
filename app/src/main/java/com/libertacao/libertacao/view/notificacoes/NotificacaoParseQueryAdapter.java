@@ -11,7 +11,6 @@ import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Call;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
-import com.parse.ParseObject;
 import com.parse.ParseQueryAdapter;
 
 public class NotificacaoParseQueryAdapter extends ParseQueryAdapter<Call> {
