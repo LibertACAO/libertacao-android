@@ -6,9 +6,13 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Call;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+
+import java.util.List;
 
 public class NotificacaoFragment extends ListFragment {
 
@@ -26,8 +30,27 @@ public class NotificacaoFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ParseQueryAdapter<Call> adapter = new NotificacaoParseQueryAdapter(getActivity(), Call.class);
+        final ParseQueryAdapter<Call> adapter = new NotificacaoParseQueryAdapter(getContext(), new ParseQueryAdapter.QueryFactory<Call>() {
+            public ParseQuery<Call> create() {
+                ParseQuery<Call> query = new ParseQuery<>("Call");
+                //query.whereGreaterThanOrEqualTo("createdAt", new Date()); // TODO: should be a field indicating the due date
+                query.orderByDescending("createdAt");
+                return query;
+            }
+        });
+
         setListAdapter(adapter);
+        adapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<Call>() {
+            @Override
+            public void onLoading() {
+                setEmptyText(getText(R.string.loading_notification_list));
+            }
+
+            @Override
+            public void onLoaded(List<Call> objects, Exception e) {
+                setEmptyText(getText(R.string.empty_notification_list));
+            }
+        });
     }
 
     @Override

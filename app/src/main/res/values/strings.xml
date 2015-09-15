@@ -9,6 +9,10 @@
     <string name="drawer_perfil">Perfil</string>
     <string name="drawer_contato">Contato</string>
 
+    <!-- Notifications -->
+    <string name="loading_notification_list">Carregando notificações…</string>
+    <string name="empty_notification_list">Sem nenhuma notificação…</string>
+
     <!-- Details -->
     <string name="details">Detalhes</string>
 

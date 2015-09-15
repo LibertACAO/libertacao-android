@@ -14,8 +14,8 @@ import com.parse.ParseQueryAdapter;
 
 public class NotificacaoParseQueryAdapter extends ParseQueryAdapter<Call> {
 
-    public NotificacaoParseQueryAdapter(Context context, Class<? extends ParseObject> clazz) {
-        super(context, clazz);
+    public NotificacaoParseQueryAdapter(Context context, QueryFactory<Call> queryFactory) {
+        super(context, queryFactory);
     }
 
     @Override
