@@ -44,16 +44,6 @@
                 android:value=".view.main.MainActivity" />
         </activity>
 
-        <activity
-            android:name=".view.perfil.PerfilActivity"
-              android:label="@string/profile"
-              android:parentActivityName=".view.main.MainActivity"
-              android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.main.MainActivity" />
-        </activity>
-
         <!-- Parse login -->
         <activity
             android:name="com.parse.ui.ParseLoginActivity"
