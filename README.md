@@ -1,23 +1,27 @@
-# Cyberativismo de Libertação Animal
+# Animal Liberation Cyberactivism
 
-## O que é?
-Um aplicativo inovador com um conceito simples: revolucionar o ativismo de libertação animal no Brasil através do conceito “call to action”. O objetivo principal é o de promover e divulgar “chamadas emergenciais” relacionadas à libertação animal, ou seja, ações que exigem uma interação  e intervenção imediata do usuário.
+## What is LiberACTION?
+LiberACTION is an innovative app built upon a simple concept: to revolutionize activism focused on animal liberation in Brazil through the “call to action concept”. The main goal is to promote and disclose “emergency calls” related to animal liberation, i.e actions which demand the user’s immediate intervention and interaction.
 
-## Como configurar o ambiente
-* Baixe o Android Studio (https://developer.android.com/intl/ko/sdk/index.html)
-* Faça clone do projeto
-* Abra o projeto
+## How to setup the environment
+* Download Android Studio (https://developer.android.com/intl/ko/sdk/index.html)
+* Clone the project
+* Open it!
 
 ### Sensitive information
-Existe um arquivo de configuração "config.xml" localizado na pasta res/values. Você deverá alterar os valores contidos neste arquivo de acordo com o seu ambiente.
-Além dele, existe um arquivo especial do Fabric (gerenciamento de crashes), chamado "fabric.properties", contendo as chaves para acessar esse serviço.
-Contate alguém do projeto para ter acesso a esses dados.
+There is a config file named "config.xml" located in res/values folder. You should set the values in this file to match your environment.
+In addition to that, there is a special file from Fabric (crash manager), called "fabric.properties", which contains keys to access its service.
+Contact someone from this project to get access to the existing data.
 
-Sugestão de fluxo: No terminal, digite 'git update-index --assume-unchanged app/src/main/res/values/config.xml' e 'git update-index --assume-unchanged app/fabric.properties' para o git parar de monitorar as mudanças nesses arquivos (http://stackoverflow.com/a/4498611).
-Após, coloque os valores certos nos arquivos, sem precisar se preocupar em não comitar essas informações.
+Flow suggestion: At terminal, type 'git update-index --assume-unchanged app/src/main/res/values/config.xml' and 'git update-index --assume-unchanged app/fabric.properties' in order to git stop monitoring changes in these files (http://stackoverflow.com/a/4498611).
+After that, put the correct values, without needing to worry about not commiting these information.
 
-## Como rodar
-Você pode utilizar um dispositivo Android, o simulador que vem junto com o Android Studio ou o Genymotion emulador (https://www.genymotion.com). O simulador que vem junto com a IDE é lento, por isso recomendo utilizar as outras alternativas.
+## How to run
+You can use an Android device, Android Studio simulator or Genymotion emulator (only for personal use - https://www.genymotion.com). Android simulator is slow, therefore we recommend the other options.
 
-## Requisitos
+## Requirements
 * Android 2.3+
+
+## Types of events (this is more related to Parse api, but will place here while there is no common API)
+1 - Feiras
+2 - Vaquinhas
