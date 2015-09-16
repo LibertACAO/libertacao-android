@@ -1,0 +1,48 @@
+#
+# generated on 2015/09/16 08:26:12
+#
+# --table-start--
+dataClass=com.libertacao.libertacao.data.Event
+tableName=event
+# --table-fields-start--
+# --field-start--
+fieldName=id
+columnName=_id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=objectId
+# --field-end--
+# --field-start--
+fieldName=title
+# --field-end--
+# --field-start--
+fieldName=subtitle
+# --field-end--
+# --field-start--
+fieldName=description
+# --field-end--
+# --field-start--
+fieldName=latitude
+# --field-end--
+# --field-start--
+fieldName=longitude
+# --field-end--
+# --field-start--
+fieldName=locationDescription
+# --field-end--
+# --field-start--
+fieldName=image
+# --field-end--
+# --field-start--
+fieldName=initialDate
+# --field-end--
+# --field-start--
+fieldName=endDate
+# --field-end--
+# --field-start--
+fieldName=type
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################

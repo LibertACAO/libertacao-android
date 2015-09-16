@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">LibertAÇÃO</string>
 
+    <!-- Alerts -->
+    <string name="no_internet_connection">Sem conexão com a Internet. Para atualizar as informações, conecte-se a uma rede.</string>
+    <string name="critical_error">Alguma coisa realmente errada aconteceu. Por favor, feche e reabra a aplicação.</string>
+
     <!-- Drawer -->
     <string name="navigation_drawer_open">Abrir painel de navegação</string>
     <string name="navigation_drawer_close">Fechar painel de navegação</string>

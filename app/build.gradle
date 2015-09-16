@@ -48,8 +48,10 @@ dependencies {
     // Support
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
     compile 'com.android.support:support-v4:23.0.1'
     // Utils
+    compile 'io.reactivex:rxandroid:1.0.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     // Improve coding
