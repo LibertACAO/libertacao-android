@@ -2,6 +2,7 @@ package com.libertacao.libertacao.persistence;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -28,14 +29,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static DatabaseHelper instance;
 
-    public static synchronized DatabaseHelper getHelper(Context context) {
+    public static synchronized DatabaseHelper getHelper(@NonNull Context context) {
         if (instance == null) {
             instance = new DatabaseHelper(context.getApplicationContext());
         }
         return instance;
     }
 
-    private DatabaseHelper(Context context) {
+    private DatabaseHelper(@NonNull Context context) {
         super(context, context.getPackageName(), null, DATABASE_VERSION, R.raw.ormlite_config);
     }
 
@@ -100,7 +101,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Utility methods
      */
 
-    public void createIfNotExists(Event object) {
+    public void createIfNotExists(@NonNull Event object) {
         List<Event> objects = getEventIntegerRuntimeExceptionDao().queryForEq(DataConfig.OBJECT_ID, object.getObjectId());
         if (objects.isEmpty()) {
             getEventIntegerRuntimeExceptionDao().create(object);

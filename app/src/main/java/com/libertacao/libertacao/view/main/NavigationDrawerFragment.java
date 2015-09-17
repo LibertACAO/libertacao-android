@@ -1,6 +1,7 @@
 package com.libertacao.libertacao.view.main;
 
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -129,7 +130,7 @@ public class NavigationDrawerFragment extends Fragment {
      * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    public void setUp(Toolbar toolbar, int fragmentId, DrawerLayout drawerLayout) {
+    public void setUp(@NonNull Toolbar toolbar, int fragmentId, @NonNull DrawerLayout drawerLayout) {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
 

@@ -57,7 +57,8 @@ public class Event {
 
     }
 
-    public Event(String objectId, String title, String subtitle, String description, double latitude, double longitude, String locationDescription, String image, Date initialDate, Date endDate, int type) {
+    public Event(@NonNull String objectId, @NonNull String title, String subtitle, String description, double latitude, double longitude,
+                 String locationDescription, String image, @NonNull Date initialDate, Date endDate, int type) {
         this.objectId = objectId;
         this.title = title;
         this.subtitle = subtitle;

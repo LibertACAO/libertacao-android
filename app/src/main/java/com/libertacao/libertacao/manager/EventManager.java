@@ -1,6 +1,7 @@
 package com.libertacao.libertacao.manager;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.libertacao.libertacao.data.Event;
@@ -28,7 +29,7 @@ public class EventManager {
     private EventManager() {
     }
 
-    public void sync(final Context context){
+    public void sync(@NonNull final Context context){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Event.EVENT);
         //query.whereEqualTo("playerName", "Dan Stemkoski");
         query.findInBackground(new FindCallback<ParseObject>() {
