@@ -7,12 +7,16 @@ import android.util.Log;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.data.DataConfig;
 import com.libertacao.libertacao.data.Event;
 
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.List;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public static final int LAST_SYNCED_THRESHOLD_IN_MINUTES = -30; // time that instances have before being deleted by next sync
@@ -90,5 +94,32 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     public void clearAll() {
         getEventIntegerRuntimeExceptionDao().delete(getEventIntegerRuntimeExceptionDao().queryForAll());
+    }
+
+    /**
+     * Utility methods
+     */
+
+    public void createIfNotExists(Event object) {
+        List<Event> objects = getEventIntegerRuntimeExceptionDao().queryForEq(DataConfig.OBJECT_ID, object.getObjectId());
+        if (objects.isEmpty()) {
+            getEventIntegerRuntimeExceptionDao().create(object);
+        } else {
+            object.setId(objects.get(0).getId());
+            getEventIntegerRuntimeExceptionDao().update(object);
+        }
+    }
+
+    public void deleteEventsNotRecentlySynced() {
+        Calendar sometimeInThePast = Calendar.getInstance();
+        sometimeInThePast.add(Calendar.MINUTE, LAST_SYNCED_THRESHOLD_IN_MINUTES);
+        try {
+            DeleteBuilder<Event, Integer> deleteBuilder = getEventIntegerRuntimeExceptionDao().deleteBuilder();
+            deleteBuilder.where().lt(DataConfig.LAST_SYNCED, sometimeInThePast.getTime());
+            int delete = deleteBuilder.delete();
+            Log.d(TAG, "Deleted " + delete + " rows in deleteEventsNotRecentlySynced");
+        } catch (SQLException e) {
+            Log.e(TAG, "Exception when deleteEventsNotRecentlySynced: " + e.getLocalizedMessage());
+        }
     }
 }

@@ -55,13 +55,13 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         if (!ConnectionManager.getInstance().isOnline(getBaseContext())){
             registerNetworkReceiver();
         }
-        registerSyncRepeat();
+        registerSyncRepeat(); // TODO: move this to onResume
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unsubscribeSyncSubscribe();
+        unsubscribeSyncSubscribe(); // TODO: move this to onPause
     }
 
     private void setupDrawer() {

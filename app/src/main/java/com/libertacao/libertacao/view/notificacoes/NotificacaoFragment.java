@@ -29,6 +29,7 @@ public class NotificacaoFragment extends ListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // TODO: create our own adapter
         super.onCreate(savedInstanceState);
         final ParseQueryAdapter<Call> adapter = new NotificacaoParseQueryAdapter(getContext(), new ParseQueryAdapter.QueryFactory<Call>() {
             public ParseQuery<Call> create() {
