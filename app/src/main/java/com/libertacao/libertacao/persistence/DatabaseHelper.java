@@ -9,6 +9,8 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.libertacao.libertacao.R;
@@ -122,5 +124,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         } catch (SQLException e) {
             Log.e(TAG, "Exception when deleteEventsNotRecentlySynced: " + e.getLocalizedMessage());
         }
+    }
+
+    /**
+     * Prepared queries
+     */
+
+    public PreparedQuery<Event> getEventPreparedQuery() throws SQLException {
+        QueryBuilder<Event, Integer> queryBuilder = getEventIntegerRuntimeExceptionDao().queryBuilder();
+        // TODO: add where clause to only filter events from today to future
+        // TODO: add orderby clause by date descending
+        // TODO: add something including location (whereNear?) - https://parse.com/docs/android/guide#geopoints
+        return queryBuilder.prepare();
     }
 }

@@ -28,6 +28,8 @@ public class Event {
     private String description;
 
     // Location
+    // TODO: add in fragment a map - http://stackoverflow.com/questions/26562848/how-to-integrate-google-maps-in-android-app
+    // http://stackoverflow.com/questions/26174527/android-mapview-in-fragment
     @DatabaseField
     private double latitude;
 
@@ -98,5 +100,21 @@ public class Event {
 
     public String getObjectId() {
         return objectId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImage() {
+        return image;
     }
 }

@@ -4,6 +4,7 @@
     <!-- Alerts -->
     <string name="no_internet_connection">Sem conexão com a Internet. Para atualizar as informações, conecte-se a uma rede.</string>
     <string name="critical_error">Alguma coisa realmente errada aconteceu. Por favor, feche e reabra a aplicação.</string>
+    <string name="eventNotFound">Não foi encontrado o evento selecionado</string>
 
     <!-- Drawer -->
     <string name="navigation_drawer_open">Abrir painel de navegação</string>
@@ -14,8 +15,7 @@
     <string name="drawer_contato">Contato</string>
 
     <!-- Notifications -->
-    <string name="loading_notification_list">Carregando notificações…</string>
-    <string name="empty_notification_list">Sem nenhuma notificação…</string>
+    <string name="empty_event_list">Sem nenhum evento :(…</string>
     <string name="share">Share</string>
 
     <!-- Details -->

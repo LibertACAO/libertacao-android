@@ -7,7 +7,8 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.libertacao.libertacao.data.Call;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.LocationCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -46,10 +47,10 @@ public class MyApp extends Application {
         }
 
         setupParse();
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
     }
 
     private void setupParse() {
-        ParseObject.registerSubclass(Call.class);
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
         ParseUser.enableAutomaticUser();
         ParseUser.getCurrentUser().saveInBackground();
