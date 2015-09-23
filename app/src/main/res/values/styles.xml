@@ -11,4 +11,9 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <!-- Custom styles -->
+    <style name="LibertacaoCardView">
+        <item name="cardBackgroundColor">@color/FloralWhite</item>
+    </style>
+
 </resources>

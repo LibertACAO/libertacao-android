@@ -115,7 +115,7 @@ public class EventDataModel extends BaseObservable {
     public void onShareClick(View view){
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, event.getTitle()); // TODO: define a better text
+        sendIntent.putExtra(Intent.EXTRA_TEXT, event.getTitle() + " - " + event.getDescription()); // TODO: define a better text
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
     }

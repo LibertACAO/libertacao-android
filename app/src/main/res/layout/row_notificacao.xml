@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
+        style="@style/LibertacaoCardView"
         card_view:cardCornerRadius="2dp">
 
         <LinearLayout
