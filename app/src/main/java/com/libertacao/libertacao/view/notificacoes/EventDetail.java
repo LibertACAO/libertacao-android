@@ -25,7 +25,7 @@ public class EventDetail extends AppCompatActivity {
             Event event = DatabaseHelper.getHelper(this).getEventIntegerRuntimeExceptionDao().queryForId(eventId);
             if(event != null){
                 ActivityNotificacaoDetailBinding binding = DataBindingUtil.setContentView(EventDetail.this, R.layout.activity_notificacao_detail);
-                binding.setEventDataModel(new EventDataModel(event));
+                binding.setEventDataModel(new EventDataModel(this, event));
                 ViewUtils.setHomeAsUpEnabled(EventDetail.this);
             } else {
                 notFoundEvent();

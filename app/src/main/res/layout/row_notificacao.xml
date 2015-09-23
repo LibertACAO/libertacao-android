@@ -1,43 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.parse.ParseImageView
-        android:id="@+id/notificacao_image"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop"
-        android:background="@android:color/black"/>
+    <data>
+        <variable name="eventDataModel" type="com.libertacao.libertacao.viewmodel.EventDataModel"/>
+    </data>
 
-    <TextView
-        android:id="@+id/notificacao_title"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/list_view_text_margin"
-        android:layout_marginLeft="@dimen/list_view_text_margin"
-        android:layout_marginRight="@dimen/list_view_text_margin"
-        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
-        tools:text=" O SANTUÁRIO ECOLÓGICO RANCHO DOS GNOMOS PRECISA MUDAR"/>
+        android:layout_margin="@dimen/default_margin"
+        card_view:cardCornerRadius="2dp">
 
-    <TextView
-        android:id="@+id/notificacao_subtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/list_view_text_margin"
-        android:layout_marginLeft="@dimen/list_view_text_margin"
-        android:layout_marginRight="@dimen/list_view_text_margin"
-        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
-        tools:text="Faça a diferença na vida dos animais acolhidos pelo Rancho dos Gnomos. Juntos somos mais fortes, juntos podemos ir mais longe ;-)"/>
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="@{eventDataModel.onEventClick}"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_share_notification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:focusable="false"
-        android:text="@string/share"/>
+            <ImageView
+                android:id="@+id/notificacao_image"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                app:image="@{eventDataModel.image}"
+                android:scaleType="centerCrop"
+                android:background="@android:color/black"
+                tools:ignore="ContentDescription"/>
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/notificacao_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/list_view_text_margin"
+                android:layout_marginLeft="@dimen/list_view_text_margin"
+                android:layout_marginRight="@dimen/list_view_text_margin"
+                android:text="@{eventDataModel.title}"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
+                tools:text=" O SANTUÁRIO ECOLÓGICO RANCHO DOS GNOMOS PRECISA MUDAR"/>
+
+            <TextView
+                android:id="@+id/notificacao_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_view_text_margin"
+                android:layout_marginLeft="@dimen/list_view_text_margin"
+                android:layout_marginRight="@dimen/list_view_text_margin"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                android:text="@{eventDataModel.subtitle}"
+                tools:text="Faça a diferença na vida dos animais acolhidos pelo Rancho dos Gnomos. Juntos somos mais fortes, juntos podemos ir mais longe ;-)"/>
+
+            <Button
+                android:id="@+id/btn_share_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:focusable="false"
+                android:onClick="@{eventDataModel.onShareClick}"
+                android:text="@string/share"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</layout>

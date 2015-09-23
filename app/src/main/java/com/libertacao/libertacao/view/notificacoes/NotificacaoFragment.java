@@ -1,13 +1,11 @@
 package com.libertacao.libertacao.view.notificacoes;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.customviews.EmptyRecyclerView;
-import com.libertacao.libertacao.view.customviews.RecyclerItemClickListener;
 
 import java.sql.SQLException;
 
@@ -61,28 +58,7 @@ public class NotificacaoFragment extends Fragment {
         mRecyclerView.setLayoutManager(llm);
 
         final EventRecyclerViewAdapter mAdapter = new EventRecyclerViewAdapter(getContext());
-        mAdapter.setCallback(new EventRecyclerViewAdapter.Callback() {
-            @Override
-            public void onItemClick(Event event) {
-                // TODO: not working, appears that onItemTouchListener is stoling this event :/
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, event.getTitle()); // TODO: define a better text
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            }
-        });
         mRecyclerView.setAdapter(mAdapter);
-
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(getActivity(), EventDetail.class);
-                        intent.putExtra(EventDetail.EVENT_ID, mAdapter.getTypedItem(position).getId());
-                        startActivity(intent);
-                    }
-                })
-        );
 
         final PreparedQuery<Event> preparedQuery;
         try {
