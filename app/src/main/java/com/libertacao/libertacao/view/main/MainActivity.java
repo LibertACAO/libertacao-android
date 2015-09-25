@@ -51,10 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         ViewUtils.setHomeAsUpEnabled(this);
         ButterKnife.inject(this);
         setupDrawer();
-
-        if (!ConnectionManager.getInstance().isOnline(getBaseContext())){
-            registerNetworkReceiver();
-        }
+        registerNetworkReceiver();
     }
 
     private void setupDrawer() {
@@ -120,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     private void registerSyncRepeat() {
         unsubscribeSyncSubscribe();
-        syncSubscribe = Observable.interval(0, 5, TimeUnit.MINUTES)
+        syncSubscribe = Observable.interval(1, 5, TimeUnit.MINUTES)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Object>() {
                     @Override

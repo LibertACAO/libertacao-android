@@ -2,10 +2,13 @@ package com.libertacao.libertacao.view.notificacoes;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +19,10 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.manager.ConnectionManager;
+import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
+import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.customviews.EmptyRecyclerView;
 
@@ -25,13 +31,20 @@ import java.sql.SQLException;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class NotificacaoFragment extends Fragment {
+public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Dao.DaoObserver {
     private static final String TAG = "NotificacaoFragment";
     /**
      * Interface elements
      */
+    @InjectView(R.id.swipe_container) SwipeRefreshLayout mSwipeLayout;
     @InjectView(R.id.event_recycler_view) EmptyRecyclerView mRecyclerView;
     @InjectView(R.id.empty_event_list_textview) TextView mEmptyTextView;
+
+    /**
+     * DAOs
+     * Used by LoaderManager when creating a loader and when manually refreshing (to keep track of when the refresh ended)
+     */
+    @Nullable private Dao<Event, Integer> eventIntegerDao;
 
     public static NotificacaoFragment newInstance() {
         return new NotificacaoFragment();
@@ -50,21 +63,40 @@ public class NotificacaoFragment extends Fragment {
         return layout;
     }
 
-    public void setupRecyclerView(){
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Unregister observer to avoid leaks
+        if (eventIntegerDao != null) {
+            eventIntegerDao.unregisterObserver(this);
+        }
+    }
+
+    public void setupRecyclerView() {
+        // Configure Swipe Refresh component
+        mSwipeLayout.setOnRefreshListener(this);
+        ViewUtils.setSwipeColorSchemeResources(mSwipeLayout);
+
+        // Configure Recycler View
+        // Changes in Recycler View content does not change it itself
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setEmptyView(mEmptyTextView);
+
+        // Linear Vertical layout (like old ListView)
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
+        // Create and set adapter (data source)
         final EventRecyclerViewAdapter mAdapter = new EventRecyclerViewAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         final PreparedQuery<Event> preparedQuery;
         try {
-            final Dao<Event, Integer> eventIntegerDao = DatabaseHelper.getHelper(getContext()).getEventIntegerDao();
+            eventIntegerDao = DatabaseHelper.getHelper(getContext()).getEventIntegerDao();
             preparedQuery = DatabaseHelper.getHelper(getContext()).getEventPreparedQuery();
 
+            // Using LoaderManager to change cursor when some data change in database
             LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
                 @Override
                 public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -86,5 +118,48 @@ public class NotificacaoFragment extends Fragment {
         } catch (SQLException e) {
             ViewUtils.showCriticalErrorMessageAndLogToCrashlytics(NotificacaoFragment.this.getContext(), mRecyclerView, TAG, e);
         }
+    }
+
+    /**
+     * Required by SwipeRefreshLayout.OnRefreshListener interface. It is called when user manually refreshes RecyclerView.
+     */
+
+    @Override
+    public void onRefresh() {
+        if (ConnectionManager.getInstance().isOnline(getActivity())) {
+            if (eventIntegerDao != null) {
+                eventIntegerDao.registerObserver(this);
+                SyncManager.getInstance().sync(getContext());
+            } else {
+                Log.e(TAG, "Could not refresh because eventIntegerDao is null");
+                SnackbarUtils.showCriticalErrorSnackbar(getContext(), mSwipeLayout);
+                mSwipeLayout.setRefreshing(false);
+            }
+        } else {
+            SnackbarUtils.showNoInternetConnectionSnackbar(getActivity(), mSwipeLayout);
+            mSwipeLayout.setRefreshing(false);
+        }
+    }
+
+    /**
+     * Required by Dao.DaoObserver interface. It is called when a change in database occurs.
+     * In this view, we register to observe for changes when user has started a manual refresh. Then, when database changes, we unregister it to stop
+     * getting callbacks, as we can already stop refreshing animation. We also unregister observer in onDestroyView callback to avoid leaks.
+     * FIXME: It SHOULD exist a better way to do this -.-. This has potential to cause a lot of bugs/crashes.
+     */
+
+    @Override
+    public void onChange() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeLayout.setRefreshing(false);
+                if (eventIntegerDao != null) {
+                    eventIntegerDao.unregisterObserver(NotificacaoFragment.this);
+                } else {
+                    Log.e(TAG, "Could not unregisterObserver because eventIntegerDao is null");
+                }
+            }
+        });
     }
 }

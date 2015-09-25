@@ -4,11 +4,18 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <com.libertacao.libertacao.view.customviews.EmptyRecyclerView
-        android:id="@+id/event_recycler_view"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"/>
+        android:layout_height="match_parent">
+
+        <com.libertacao.libertacao.view.customviews.EmptyRecyclerView
+            android:id="@+id/event_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/empty_event_list_textview"
