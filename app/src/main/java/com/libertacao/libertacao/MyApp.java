@@ -52,8 +52,8 @@ public class MyApp extends Application {
 
     private void setupParse() {
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
-        ParseUser.enableAutomaticUser();
-        ParseUser.getCurrentUser().saveInBackground();
+        //ParseUser.enableAutomaticUser();
+        //ParseUser.getCurrentUser().saveInBackground();
 
         ParseGeoPoint.getCurrentLocationInBackground(10 * 1000, //ms
                 new LocationCallback() {
@@ -61,8 +61,8 @@ public class MyApp extends Application {
                     public void done(ParseGeoPoint geoPoint, ParseException e) {
                         Log.d("MyApp","Found geopoint: " + geoPoint);
                         if(geoPoint != null) {
-                            ParseUser.getCurrentUser().put("location", geoPoint);
-                            ParseUser.getCurrentUser().saveInBackground();
+                            //ParseUser.getCurrentUser().put("location", geoPoint);
+                            //ParseUser.getCurrentUser().saveInBackground();
                         }
                     }
                 });

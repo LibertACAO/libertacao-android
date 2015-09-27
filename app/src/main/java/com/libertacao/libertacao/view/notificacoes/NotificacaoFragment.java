@@ -19,6 +19,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.event.SyncedEvent;
 import com.libertacao.libertacao.manager.ConnectionManager;
 import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
@@ -30,8 +31,9 @@ import java.sql.SQLException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 
-public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, Dao.DaoObserver {
+public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "NotificacaoFragment";
     /**
      * Interface elements
@@ -39,12 +41,6 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
     @InjectView(R.id.swipe_container) SwipeRefreshLayout mSwipeLayout;
     @InjectView(R.id.event_recycler_view) EmptyRecyclerView mRecyclerView;
     @InjectView(R.id.empty_event_list_textview) TextView mEmptyTextView;
-
-    /**
-     * DAOs
-     * Used by LoaderManager when creating a loader and when manually refreshing (to keep track of when the refresh ended)
-     */
-    @Nullable private Dao<Event, Integer> eventIntegerDao;
 
     public static NotificacaoFragment newInstance() {
         return new NotificacaoFragment();
@@ -60,16 +56,14 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
         View layout = inflater.inflate(R.layout.fragment_events, container, false);
         ButterKnife.inject(this, layout);
         setupRecyclerView();
+        EventBus.getDefault().register(this);
         return layout;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // Unregister observer to avoid leaks
-        if (eventIntegerDao != null) {
-            eventIntegerDao.unregisterObserver(this);
-        }
+        EventBus.getDefault().unregister(this);
     }
 
     public void setupRecyclerView() {
@@ -93,7 +87,7 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
 
         final PreparedQuery<Event> preparedQuery;
         try {
-            eventIntegerDao = DatabaseHelper.getHelper(getContext()).getEventIntegerDao();
+            final Dao<Event, Integer> eventIntegerDao = DatabaseHelper.getHelper(getContext()).getEventIntegerDao();
             preparedQuery = DatabaseHelper.getHelper(getContext()).getEventPreparedQuery();
 
             // Using LoaderManager to change cursor when some data change in database
@@ -127,14 +121,7 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void onRefresh() {
         if (ConnectionManager.getInstance().isOnline(getActivity())) {
-            if (eventIntegerDao != null) {
-                eventIntegerDao.registerObserver(this);
-                SyncManager.getInstance().sync(getContext());
-            } else {
-                Log.e(TAG, "Could not refresh because eventIntegerDao is null");
-                SnackbarUtils.showCriticalErrorSnackbar(getContext(), mSwipeLayout);
-                mSwipeLayout.setRefreshing(false);
-            }
+            SyncManager.getInstance().sync(getContext());
         } else {
             SnackbarUtils.showNoInternetConnectionSnackbar(getActivity(), mSwipeLayout);
             mSwipeLayout.setRefreshing(false);
@@ -142,24 +129,11 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
     }
 
     /**
-     * Required by Dao.DaoObserver interface. It is called when a change in database occurs.
-     * In this view, we register to observe for changes when user has started a manual refresh. Then, when database changes, we unregister it to stop
-     * getting callbacks, as we can already stop refreshing animation. We also unregister observer in onDestroyView callback to avoid leaks.
-     * FIXME: It SHOULD exist a better way to do this -.-. This has potential to cause a lot of bugs/crashes.
+     * Events
      */
 
-    @Override
-    public void onChange() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeLayout.setRefreshing(false);
-                if (eventIntegerDao != null) {
-                    eventIntegerDao.unregisterObserver(NotificacaoFragment.this);
-                } else {
-                    Log.e(TAG, "Could not unregisterObserver because eventIntegerDao is null");
-                }
-            }
-        });
+    @SuppressWarnings("unused")
+    public void onEventMainThread(SyncedEvent event) {
+        mSwipeLayout.setRefreshing(false);
     }
 }

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.event.SyncedEvent;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -13,6 +14,7 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -59,6 +61,8 @@ public class EventManager {
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
                 }
+
+                EventBus.getDefault().post(new SyncedEvent());
             }
         });
     }

@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.manager.LoginManager;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseUser;
 
@@ -251,7 +252,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     public void updateDrawerAdapter(){
-        if(ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())){
+        if(LoginManager.getInstance().isLoggedIn()){
             mDrawerStrings.set(CADASTRO_PERFIL, getString(R.string.drawer_perfil));
         } else {
             mDrawerStrings.set(CADASTRO_PERFIL, getString(R.string.drawer_cadastro));

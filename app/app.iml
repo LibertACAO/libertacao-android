@@ -121,6 +121,7 @@
     <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="crashlytics-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="compiler-1.0-rc2" level="project" />
+    <orderEntry type="library" exported="" name="eventbus-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="ormlite-core-4.49-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="ParseCrashReporting-1.10.1" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-1.0.0" level="project" />

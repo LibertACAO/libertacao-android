@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.manager.ConnectionManager;
+import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.container, NotificacaoFragment.newInstance()).commit();
         } else if(position == NavigationDrawerFragment.CADASTRO_PERFIL){
-            if(ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())){
+            if(LoginManager.getInstance().isLoggedIn()){
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, PerfilFragment.newInstance()).commit();
             } else {
