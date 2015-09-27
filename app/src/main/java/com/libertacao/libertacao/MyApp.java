@@ -7,6 +7,7 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.libertacao.libertacao.manager.LoginManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.LocationCallback;
@@ -52,19 +53,19 @@ public class MyApp extends Application {
 
     private void setupParse() {
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
-        //ParseUser.enableAutomaticUser();
-        //ParseUser.getCurrentUser().saveInBackground();
 
-        ParseGeoPoint.getCurrentLocationInBackground(10 * 1000, //ms
-                new LocationCallback() {
-                    @Override
-                    public void done(ParseGeoPoint geoPoint, ParseException e) {
-                        Log.d("MyApp","Found geopoint: " + geoPoint);
-                        if(geoPoint != null) {
-                            //ParseUser.getCurrentUser().put("location", geoPoint);
-                            //ParseUser.getCurrentUser().saveInBackground();
+        if(LoginManager.getInstance().isLoggedIn()) {
+            ParseGeoPoint.getCurrentLocationInBackground(10 * 1000, //ms
+                    new LocationCallback() {
+                        @Override
+                        public void done(ParseGeoPoint geoPoint, ParseException e) {
+                            Log.d("MyApp", "Found geopoint: " + geoPoint);
+                            if (geoPoint != null) {
+                                ParseUser.getCurrentUser().put("location", geoPoint);
+                                ParseUser.getCurrentUser().saveInBackground();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 }

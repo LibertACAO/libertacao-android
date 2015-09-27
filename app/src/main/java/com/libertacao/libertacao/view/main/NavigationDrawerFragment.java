@@ -22,8 +22,6 @@ import android.widget.ListView;
 
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.manager.LoginManager;
-import com.parse.ParseAnonymousUtils;
-import com.parse.ParseUser;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
