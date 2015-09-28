@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/parse_login"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/background"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/com_parse_ui_vertical_margin"
+              android:paddingLeft="@dimen/com_parse_ui_horizontal_margin"
+              android:paddingRight="@dimen/com_parse_ui_horizontal_margin"
+              android:paddingTop="@dimen/com_parse_ui_vertical_margin">
+
+    <ImageView
+        style="@style/LogoImageView"
+        android:layout_gravity="center"
+        tools:ignore="ContentDescription"/>
+
+    <EditText
+        android:id="@+id/login_username_input"
+        style="@style/LoginEditText"
+        android:layout_marginTop="@dimen/large_margin"
+        android:hint="@string/emailHint"/>
+
+    <EditText
+        android:id="@+id/login_password_input"
+        style="@style/LoginEditText"
+        android:layout_marginTop="@dimen/space_between_edit_texts"
+        android:fontFamily="sans-serif"
+        android:hint="@string/passwordHint"
+        android:inputType="textPassword"
+        android:selectAllOnFocus="true"/>
+
+    <Button
+        android:id="@+id/parse_login_button"
+        style="@style/LoginButton"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:text="@string/login"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="@dimen/large_margin"
+        android:layout_marginLeft="@dimen/large_margin"
+        android:layout_marginRight="@dimen/large_margin"
+        android:layout_marginStart="@dimen/large_margin"
+        android:layout_marginTop="@dimen/large_margin"
+        android:background="@android:color/black"/>
+
+    <include layout="@layout/com_parse_ui_parse_login_third_party_section"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/com_parse_ui_small_vertical_spacing"
+        android:layout_marginTop="@dimen/com_parse_ui_small_vertical_spacing"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/parse_login_help"
+            style="@style/ParseLoginUI.HelpButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/com_parse_ui_small_horizontal_spacing"
+            android:layout_marginStart="@dimen/com_parse_ui_small_horizontal_spacing"
+            android:text="@string/forgotPassword"/>
+
+        <Button
+            android:id="@+id/parse_signup_button"
+            style="@style/ParseLoginUI.HelpButton"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/parse_login_help"
+            android:layout_toRightOf="@+id/parse_login_help"
+            android:gravity="end"
+            android:text="@string/signUp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

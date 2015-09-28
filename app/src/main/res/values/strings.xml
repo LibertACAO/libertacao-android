@@ -26,4 +26,11 @@
     <string name="profile_username">Username:</string>
     <string name="logout">Sair</string>
 
+    <!-- Login -->
+    <string name="login">Login</string>
+    <string name="forgotPassword">Esqueceu a senha?</string>
+    <string name="signUp"><u>Cadastre-se</u></string>
+    <string name="emailHint">E-mail</string>
+    <string name="passwordHint">Senha</string>
+
 </resources>
