@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -58,6 +59,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     private void setupDrawer() {
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(toolbar, R.id.navigation_drawer, mDrawerLayout);
+    }
+
+    public void openDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public void updateDrawer() {
+        mNavigationDrawerFragment.updateDrawerAdapter();
     }
 
     @Override

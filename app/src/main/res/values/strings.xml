@@ -25,6 +25,9 @@
     <string name="profile">Perfil</string>
     <string name="profile_username">Username:</string>
     <string name="logout">Sair</string>
+    <string name="performingLogout">Saindo</string>
+    <string name="performedLogoutSuccess">Deslogado!</string>
+    <string name="performedLogoutError">Erro! Não foi possível fazer logout… Tente novamente mais tarde.</string>
 
     <!-- Login -->
     <string name="login">Login</string>
