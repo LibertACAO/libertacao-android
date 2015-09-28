@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.util.ShareUtils;
 import com.libertacao.libertacao.view.notificacoes.EventDetail;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -115,7 +116,7 @@ public class EventDataModel extends BaseObservable {
     public void onShareClick(View view){
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, event.getTitle() + " - " + event.getDescription()); // TODO: define a better text
+        sendIntent.putExtra(Intent.EXTRA_TEXT, ShareUtils.getEventShareText(event));
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
     }
