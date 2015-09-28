@@ -10,6 +10,8 @@
     <color name="ActionBarColor">#42c55a</color>
     <color name="ActionBarColorDark">#2c873c</color>
 
+    <color name="medium_green">#27bf00</color>
+
     <!-- Generic colors -->
     <color name="Black">#ff000000</color>
 

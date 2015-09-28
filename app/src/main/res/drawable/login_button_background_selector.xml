@@ -3,6 +3,6 @@
 
     <item android:state_pressed="true" android:drawable="@color/DarkGreen"/>
     <item android:state_focused="true" android:drawable="@color/DarkGreen"/>
-    <item android:drawable="@color/green"/>
+    <item android:drawable="@color/medium_green"/>
 
 </selector>
