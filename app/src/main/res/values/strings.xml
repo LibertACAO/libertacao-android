@@ -41,4 +41,9 @@
         <item>user_friends</item>
     </string-array>
 
+    <!-- Forgot password -->
+    <string name="forgotPasswordInstructions">Entre seu e-mail para recuperar sua senha</string>
+    <string name="recoverPassword">Recuperar senha</string>
+
+
 </resources>
