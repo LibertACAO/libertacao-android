@@ -47,7 +47,7 @@
 
         <!-- Parse login -->
         <activity
-            android:name="com.parse.ui.ParseLoginActivity"
+            android:name=".view.login.ParseLoginActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" >

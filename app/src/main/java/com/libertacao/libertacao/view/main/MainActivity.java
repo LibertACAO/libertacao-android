@@ -19,11 +19,9 @@ import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
+import com.libertacao.libertacao.view.login.ParseLoginActivity;
 import com.libertacao.libertacao.view.notificacoes.NotificacaoFragment;
 import com.libertacao.libertacao.view.perfil.PerfilFragment;
-import com.parse.ParseAnonymousUtils;
-import com.parse.ParseUser;
-import com.parse.ui.ParseLoginBuilder;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +33,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    private static final int LOGIN_RESULT_CODE = 1;
     private BroadcastReceiver networkBroadcastReceiver;
     private Subscription syncSubscribe;
 
@@ -79,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, PerfilFragment.newInstance()).commit();
             } else {
-                ParseLoginBuilder builder = new ParseLoginBuilder(this);
-                startActivityForResult(builder.build(), 0);
+                Intent intent = new Intent(this, ParseLoginActivity.class);
+                startActivityForResult(intent, LOGIN_RESULT_CODE); // TODO: get result
             }
         } else if(position == NavigationDrawerFragment.CONTATO){
             // TODO: create contato screen

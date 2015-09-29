@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.libertacao.libertacao.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 public class ViewUtils {
     public static void setHomeAsUpEnabled(@NonNull AppCompatActivity activity) {
@@ -30,5 +32,14 @@ public class ViewUtils {
                 R.color.holo_green_light,
                 R.color.holo_orange_light,
                 R.color.holo_red_light);
+    }
+
+    // Display image options
+    private static DisplayImageOptions displayImageOptions;
+    public static DisplayImageOptions getFadeInDisplayImageOptions(){
+        if(displayImageOptions == null){
+            displayImageOptions = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).build();
+        }
+        return displayImageOptions;
     }
 }

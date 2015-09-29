@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-    compile 'com.parse.bolts:bolts-android:1.+'
+    compile 'com.parse.bolts:bolts-android:1.2.1'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
 
@@ -69,4 +69,5 @@ dependencies {
     // Parse
     compile 'com.parse:parse-android:1.10.1'
     compile project(':ParseLoginUI')
+    compile 'com.facebook.android:facebook-android-sdk:4.0.1'
 }
