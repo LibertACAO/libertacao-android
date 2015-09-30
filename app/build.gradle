@@ -70,4 +70,8 @@ dependencies {
     compile 'com.parse:parse-android:1.10.1'
     compile project(':ParseLoginUI')
     compile 'com.facebook.android:facebook-android-sdk:4.0.1'
+
+    // Maps
+    compile 'com.google.android.gms:play-services-maps:8.1.0'
+    compile 'com.google.android.gms:play-services-location:8.1.0'
 }
