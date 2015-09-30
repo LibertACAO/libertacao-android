@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 fragmentManager.beginTransaction().replace(R.id.container, PerfilFragment.newInstance()).commit();
             } else {
                 Intent intent = new Intent(this, ParseLoginActivity.class);
-                startActivityForResult(intent, LOGIN_RESULT_CODE); // TODO: get result
+                startActivityForResult(intent, LOGIN_RESULT_CODE);
             }
         } else if(position == NavigationDrawerFragment.CONTATO){
             // TODO: create contato screen
