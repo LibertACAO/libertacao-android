@@ -35,6 +35,7 @@
     <string name="signUp"><u>Cadastre-se</u></string>
     <string name="emailHint">E-mail</string>
     <string name="passwordHint">Senha</string>
+    <string name="welcomeUser">Bem-vinda(o) %1$s!</string>
 
     <string-array name="my_facebook_permissions">
         <item>public_profile</item>

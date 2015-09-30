@@ -22,6 +22,7 @@ import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.login.ParseLoginActivity;
 import com.libertacao.libertacao.view.notificacoes.NotificacaoFragment;
 import com.libertacao.libertacao.view.perfil.PerfilFragment;
+import com.parse.ParseUser;
 
 import java.util.concurrent.TimeUnit;
 
@@ -97,6 +98,16 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     protected void onPause() {
         super.onPause();
         unsubscribeSyncSubscribe();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == LOGIN_RESULT_CODE) {
+            if(resultCode == RESULT_OK && LoginManager.getInstance().isLoggedIn()) {
+                SnackbarUtils.showDefaultSnackbar(mDrawerLayout, getResources().getString(R.string.welcomeUser, ParseUser.getCurrentUser().getUsername()));
+            }
+        }
     }
 
     /**
