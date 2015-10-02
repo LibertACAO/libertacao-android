@@ -1,24 +1,3 @@
-/*
- *  Copyright (c) 2014, Parse, LLC. All rights reserved.
- *
- *  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
- *  copy, modify, and distribute this software in source code or binary form for use
- *  in connection with the web services and APIs provided by Parse.
- *
- *  As with any software that integrates with the Parse platform, your use of
- *  this software is subject to the Parse Terms of Service
- *  [https://www.parse.com/about/terms]. This copyright notice shall be
- *  included in all copies or substantial portions of the software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- *  FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- *  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- *  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- *  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- */
-
 package com.libertacao.libertacao.view.login;
 
 import android.content.Context;
@@ -56,7 +35,7 @@ public class ParseLoginConfig {
     // For internally serializing to/from string array (the public analog above is for resource from activity meta-data).
     private static final String FACEBOOK_LOGIN_PERMISSIONS_STRING_ARRAY = "com.parse.ui.ParseLoginActivity.FACEBOOK_LOGIN_PERMISSIONS_STRING_ARRAY";
 
-    private static final String LOG_TAG = "com.parse.ui.ParseLoginConfig";
+    private static final String LOG_TAG = "ParseLoginConfig";
 
     // Use boxed types so that we can differentiate between a setting not set,
     // versus its default value.  This is useful for merging options set from code

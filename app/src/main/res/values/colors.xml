@@ -5,7 +5,8 @@
     <color name="primaryDark">@color/ActionBarColorDark</color>
 
     <!-- Colors used on the application -->
-    <color name="Background">@color/FloralWhite</color>
+    <color name="WhiteBackground">@color/FloralWhite</color>
+    <color name="BlackBackground">#787575</color>
 
     <color name="ActionBarColor">#42c55a</color>
     <color name="ActionBarColorDark">#2c873c</color>

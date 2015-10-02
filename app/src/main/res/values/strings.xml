@@ -47,4 +47,9 @@
     <string name="recoverPassword">Recuperar senha</string>
 
 
+    <!-- Sign up -->
+    <string name="createAccount">Criar conta</string>
+    <string name="usernameHint">Username</string>
+    <string name="confirmPasswordHint">Confirmar senha</string>
+
 </resources>

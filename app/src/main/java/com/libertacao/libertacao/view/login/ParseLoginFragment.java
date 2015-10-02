@@ -1,24 +1,3 @@
-/*
- *  Copyright (c) 2014, Parse, LLC. All rights reserved.
- *
- *  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
- *  copy, modify, and distribute this software in source code or binary form for use
- *  in connection with the web services and APIs provided by Parse.
- *
- *  As with any software that integrates with the Parse platform, your use of
- *  this software is subject to the Parse Terms of Service
- *  [https://www.parse.com/about/terms]. This copyright notice shall be
- *  included in all copies or substantial portions of the software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- *  FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- *  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- *  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- *  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
- */
-
 package com.libertacao.libertacao.view.login;
 
 import android.app.Activity;
@@ -61,8 +40,6 @@ public class ParseLoginFragment extends ParseLoginFragmentBase {
         void onSignUpClicked(String username, String password);
 
         void onLoginHelpClicked();
-
-        void onLoginSuccess();
     }
 
     private static final String LOG_TAG = "ParseLoginFragment";
@@ -96,12 +73,9 @@ public class ParseLoginFragment extends ParseLoginFragmentBase {
                              Bundle savedInstanceState) {
         config = ParseLoginConfig.fromBundle(getArguments(), getActivity());
 
-        View v = inflater.inflate(com.parse.ui.R.layout.com_parse_ui_parse_login_fragment,
-                parent, false);
-
+        View v = inflater.inflate(com.parse.ui.R.layout.com_parse_ui_parse_login_fragment, parent, false);
         ImageLoader.getInstance().displayImage("drawable://" + R.drawable.background, (ImageView) v.findViewById(R.id.background_image_view),
                 ViewUtils.getFadeInDisplayImageOptions());
-
         ImageView appLogo = (ImageView) v.findViewById(com.parse.ui.R.id.app_logo);
         usernameField = (EditText) v.findViewById(com.parse.ui.R.id.login_username_input);
         passwordField = (EditText) v.findViewById(com.parse.ui.R.id.login_password_input);

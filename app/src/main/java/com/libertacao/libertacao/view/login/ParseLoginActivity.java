@@ -15,11 +15,11 @@ import android.view.Window;
 
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
-import com.parse.ui.ParseLoginHelpFragment;
 import com.parse.ui.ParseOnLoadingListener;
 import com.parse.ui.ParseOnLoginSuccessListener;
-import com.parse.ui.ParseSignupFragment;
 
+// TODO: change strings to pt-br (in all Parse* files)
+// TODO: change validation from Toast based to setError based (in all Parse* files)
 public class ParseLoginActivity extends FragmentActivity implements
         ParseLoginFragment.ParseLoginFragmentListener,
         ParseLoginHelpFragment.ParseOnLoginHelpSuccessListener,

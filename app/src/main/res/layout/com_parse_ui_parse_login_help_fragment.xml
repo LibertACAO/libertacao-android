@@ -1,38 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/background"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/com_parse_ui_vertical_margin"
-              android:paddingLeft="@dimen/com_parse_ui_horizontal_margin"
-              android:paddingRight="@dimen/com_parse_ui_horizontal_margin"
-              android:paddingTop="@dimen/com_parse_ui_vertical_margin">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@color/BlackBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ImageView
-        style="@style/LogoImageView"
-        android:layout_gravity="center"
-        tools:ignore="ContentDescription"/>
+        android:id="@+id/background_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/background"/>
 
-    <TextView
-        android:id="@+id/login_help_instructions"
-        style="@style/ParseLoginUI.HelpButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/forgotPasswordInstructions"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:paddingBottom="@dimen/com_parse_ui_vertical_margin"
+                  android:paddingLeft="@dimen/com_parse_ui_horizontal_margin"
+                  android:paddingRight="@dimen/com_parse_ui_horizontal_margin"
+                  android:paddingTop="@dimen/com_parse_ui_vertical_margin">
 
-    <EditText
-        android:id="@+id/login_help_email_input"
-        style="@style/LoginEditText"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:hint="@string/emailHint"
-        android:inputType="textEmailAddress"/>
+        <ImageView
+            style="@style/LogoImageView"
+            android:layout_gravity="center"
+            tools:ignore="ContentDescription"/>
 
-    <Button
-        android:id="@+id/login_help_submit"
-        style="@style/LoginButton"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:text="@string/recoverPassword"/>
-</LinearLayout>
+        <TextView
+            android:id="@+id/login_help_instructions"
+            style="@style/ParseLoginUI.HelpButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/forgotPasswordInstructions"/>
+
+        <EditText
+            android:id="@+id/login_help_email_input"
+            style="@style/LoginEditText"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:hint="@string/emailHint"
+            android:inputType="textEmailAddress"/>
+
+        <Button
+            android:id="@+id/login_help_submit"
+            style="@style/LoginButton"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:text="@string/recoverPassword"/>
+    </LinearLayout>
+
+</RelativeLayout>
