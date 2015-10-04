@@ -43,9 +43,8 @@
             android:text="@{eventDataModel.subtitle}"
             tools:text="Faça a diferença na vida dos animais acolhidos pelo Rancho dos Gnomos. Juntos somos mais fortes, juntos podemos ir mais longe ;-)"/>
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.libertacao.libertacao.view.map.MapFragment"
+        <FrameLayout
+            android:id="@+id/event_map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

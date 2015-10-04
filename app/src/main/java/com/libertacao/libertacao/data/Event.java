@@ -115,4 +115,12 @@ public class Event {
     public String getImage() {
         return image;
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
 }

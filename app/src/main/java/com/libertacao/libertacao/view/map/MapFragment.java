@@ -1,10 +1,8 @@
 package com.libertacao.libertacao.view.map;
 
-import android.graphics.BitmapFactory;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -18,48 +16,52 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.libertacao.libertacao.R;
-
-import java.io.IOException;
+import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.persistence.DatabaseHelper;
 
 // Based on: http://code.tutsplus.com/tutorials/getting-started-with-google-maps-for-android-basics--cms-24635
-// TODO: add event location!
 public class MapFragment extends SupportMapFragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         GoogleMap.OnInfoWindowClickListener,
-        GoogleMap.OnMapLongClickListener,
-        GoogleMap.OnMapClickListener,
         GoogleMap.OnMarkerClickListener {
 
+    private static final String EVENT_ID = "EVENT_ID";
     private GoogleApiClient mGoogleApiClient;
-    private Location mCurrentLocation;
+    private Event event;
 
-    private final int[] MAP_TYPES = { GoogleMap.MAP_TYPE_SATELLITE,
-            GoogleMap.MAP_TYPE_NORMAL,
-            GoogleMap.MAP_TYPE_HYBRID,
-            GoogleMap.MAP_TYPE_TERRAIN,
-            GoogleMap.MAP_TYPE_NONE };
-    private int curMapTypeIndex = 1;
+    public static MapFragment newInstance(Event event) {
+        MapFragment mapFragment = new MapFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(EVENT_ID, event.getId());
+        mapFragment.setArguments(bundle);
+        return mapFragment;
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setHasOptionsMenu(true);
+        int eventId = getArguments().getInt(EVENT_ID, -1);
+        if(eventId != -1) {
+            event = DatabaseHelper.getHelper(getContext()).getEventIntegerRuntimeExceptionDao().queryForId(eventId);
+        }
 
-        mGoogleApiClient = new GoogleApiClient.Builder( getActivity() )
-                .addConnectionCallbacks( this )
-                .addOnConnectionFailedListener( this )
-                .addApi(LocationServices.API)
-                .build();
+        if(event == null) {
+            Toast.makeText(getContext(), getString(R.string.eventNotFound), Toast.LENGTH_LONG).show();
+        } else {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
 
-        initListeners();
+            initListeners();
+        }
     }
 
     private void initListeners() {
         getMap().setOnMarkerClickListener(this);
-        getMap().setOnMapLongClickListener(this);
-        getMap().setOnInfoWindowClickListener( this );
-        getMap().setOnMapClickListener(this);
+        getMap().setOnInfoWindowClickListener(this);
     }
 
     @Override
@@ -78,25 +80,29 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
 
     @Override
     public void onConnected(Bundle bundle) {
-        mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        initCamera(mCurrentLocation);
+        initCamera();
     }
 
-    private void initCamera( Location location ) {
+    private void initCamera() {
+        LatLng eventLocation = new LatLng(event.getLatitude(), event.getLongitude());
         CameraPosition position = CameraPosition.builder()
-                .target(new LatLng( location.getLatitude(), location.getLongitude()))
+                .target(eventLocation)
                 .zoom(16f)
                 .bearing(0.0f)
                 .tilt(0.0f)
                 .build();
 
-        getMap().animateCamera( CameraUpdateFactory
-                .newCameraPosition(position), null );
-
-        getMap().setMapType( MAP_TYPES[curMapTypeIndex] );
-        getMap().setTrafficEnabled( true );
-        getMap().setMyLocationEnabled( true );
+        getMap().animateCamera( CameraUpdateFactory.newCameraPosition(position), null);
+        getMap().setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        getMap().setTrafficEnabled(true);
+        getMap().setMyLocationEnabled(true);
         getMap().getUiSettings().setZoomControlsEnabled(true);
+
+        // Create marker at event location
+        MarkerOptions options = new MarkerOptions().position(eventLocation);
+        options.title(event.getTitle());
+        options.icon(BitmapDescriptorFactory.defaultMarker());
+        getMap().addMarker(options);
     }
 
     @Override
@@ -112,37 +118,6 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
     @Override
     public void onInfoWindowClick(Marker marker) {
 
-    }
-
-    @Override
-    public void onMapClick(LatLng latLng) {
-        MarkerOptions options = new MarkerOptions().position(latLng);
-        options.title(getAddressFromLatLng(latLng));
-
-        options.icon( BitmapDescriptorFactory.defaultMarker());
-        getMap().addMarker(options);
-    }
-
-    @Override
-    public void onMapLongClick(LatLng latLng) {
-        MarkerOptions options = new MarkerOptions().position( latLng );
-        options.title(getAddressFromLatLng(latLng));
-
-        options.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)));
-
-        getMap().addMarker( options );
-    }
-
-    private String getAddressFromLatLng( LatLng latLng ) {
-        Geocoder geocoder = new Geocoder( getActivity() );
-
-        String address = "";
-        try {
-            address = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0).getAddressLine(0);
-        } catch (IOException ignored) {
-        }
-
-        return address;
     }
 
     @Override

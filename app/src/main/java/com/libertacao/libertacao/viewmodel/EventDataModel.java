@@ -103,9 +103,7 @@ public class EventDataModel extends BaseObservable {
      */
     @SuppressWarnings("unused")
     public void onEventClick(View view){
-        Intent intent = new Intent(context, EventDetail.class);
-        intent.putExtra(EventDetail.EVENT_ID, event.getId());
-        context.startActivity(intent);
+        context.startActivity(EventDetail.newIntent(context, event));
     }
 
     /**
