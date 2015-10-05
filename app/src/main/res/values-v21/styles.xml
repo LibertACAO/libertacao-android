@@ -5,6 +5,5 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
-        <item name="android:colorPrimaryDark">@color/primaryDark</item>
     </style>
 </resources>
