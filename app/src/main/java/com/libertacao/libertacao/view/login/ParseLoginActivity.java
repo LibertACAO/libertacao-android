@@ -18,14 +18,10 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ui.ParseOnLoadingListener;
 import com.parse.ui.ParseOnLoginSuccessListener;
 
-// TODO: change strings to pt-br (in all Parse* files)
-// TODO: change validation from Toast based to setError based (in all Parse* files)
 public class ParseLoginActivity extends FragmentActivity implements
         ParseLoginFragment.ParseLoginFragmentListener,
         ParseLoginHelpFragment.ParseOnLoginHelpSuccessListener,
         ParseOnLoginSuccessListener, ParseOnLoadingListener {
-
-    public static final String LOG_TAG = "ParseLoginActivity";
 
     // All login UI fragment transactions will happen within this parent layout element.
     // Change this if you are modifying this code to be hosted in your own activity.
@@ -41,15 +37,12 @@ public class ParseLoginActivity extends FragmentActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         // Combine options from incoming intent and the activity metadata
         configOptions = getMergedOptions();
 
         // Show the login form
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(fragmentContainer,
-                    ParseLoginFragment.newInstance(configOptions)).commit();
+            getSupportFragmentManager().beginTransaction().add(fragmentContainer, ParseLoginFragment.newInstance(configOptions)).commit();
         }
     }
 
@@ -163,8 +156,8 @@ public class ParseLoginActivity extends FragmentActivity implements
                     this.getComponentName(), PackageManager.GET_META_DATA);
         } catch (NameNotFoundException e) {
             if (Parse.getLogLevel() <= Parse.LOG_LEVEL_ERROR &&
-                    Log.isLoggable(LOG_TAG, Log.WARN)) {
-                Log.w(LOG_TAG, e.getMessage());
+                    Log.isLoggable("ParseLoginActivity", Log.WARN)) {
+                Log.w("ParseLoginActivity", e.getMessage());
             }
         }
 
