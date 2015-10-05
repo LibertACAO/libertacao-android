@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">LibertAÇÃO</string>
 
+    <!-- General -->
+    <string name="obrigatorio">Obrigatório</string>
+    <string name="passwordNotMatch">Senhas não coincidem</string>
+
     <!-- Alerts -->
     <string name="no_internet_connection">Sem conexão com a Internet. Para atualizar as informações, conecte-se a uma rede.</string>
     <string name="critical_error">Alguma coisa realmente errada aconteceu. Por favor, feche e reabra a aplicação.</string>
@@ -46,10 +50,13 @@
     <string name="forgotPasswordInstructions">Entre seu e-mail para recuperar sua senha</string>
     <string name="recoverPassword">Recuperar senha</string>
 
-
     <!-- Sign up -->
     <string name="createAccount">Criar conta</string>
     <string name="usernameHint">Username</string>
     <string name="confirmPasswordHint">Confirmar senha</string>
+    <string name="invalidEmail">E-mail inválido! Corrija e tente novamente.</string>
+    <string name="emailTaken">E-mail já cadastrado, você já pode se logar com ele</string>
+    <string name="usernameTaken">Username já cadastrado! Por favor, escolha outro.</string>
+    <string name="unknownSignupError">Não foi possível fazer o cadastro. Por favor, tente novamente mais tarde.</string>
 
 </resources>

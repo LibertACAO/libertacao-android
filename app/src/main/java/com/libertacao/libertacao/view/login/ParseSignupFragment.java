@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.libertacao.libertacao.MyApp;
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.util.Validator;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.ParseException;
@@ -32,9 +34,6 @@ public class ParseSignupFragment extends ParseLoginFragmentBase implements OnCli
     private EditText confirmPasswordField;
     private EditText emailField;
     private ParseOnLoginSuccessListener onLoginSuccessListener;
-
-    private static final String LOG_TAG = "ParseSignupFragment";
-    private static final int DEFAULT_MIN_PASSWORD_LENGTH = 6;
 
     public static ParseSignupFragment newInstance(Bundle configOptions, String username, String password) {
         ParseSignupFragment signupFragment = new ParseSignupFragment();
@@ -75,88 +74,79 @@ public class ParseSignupFragment extends ParseLoginFragmentBase implements OnCli
         if (activity instanceof ParseOnLoginSuccessListener) {
             onLoginSuccessListener = (ParseOnLoginSuccessListener) activity;
         } else {
-            throw new IllegalArgumentException(
-                    "Activity must implemement ParseOnLoginSuccessListener");
+            throw new IllegalArgumentException("Activity must implemement ParseOnLoginSuccessListener");
         }
 
         if (activity instanceof ParseOnLoadingListener) {
             onLoadingListener = (ParseOnLoadingListener) activity;
         } else {
-            throw new IllegalArgumentException(
-                    "Activity must implemement ParseOnLoadingListener");
+            throw new IllegalArgumentException("Activity must implemement ParseOnLoadingListener");
         }
+    }
+
+    private boolean validate() {
+        boolean ret;
+        ret = Validator.validate(usernameField, true);
+        ret = Validator.validate(passwordField, ret);
+        ret = Validator.validate(confirmPasswordField, ret);
+        ret = Validator.validate(emailField, ret);
+        return ret;
     }
 
     @Override
     public void onClick(View v) {
-        String username = usernameField.getText().toString();
-        String password = passwordField.getText().toString();
-        String passwordAgain = confirmPasswordField.getText().toString();
+        if(!validate()){
+            return;
+        }
 
-        String email = emailField.getText().toString();
-
-        if (username.length() == 0) {
-            showToast(R.string.com_parse_ui_no_username_toast);
-        } else if (password.length() == 0) {
-            showToast(R.string.com_parse_ui_no_password_toast);
-        } else if (password.length() < DEFAULT_MIN_PASSWORD_LENGTH) {
-            showToast(getResources().getQuantityString(
-                    R.plurals.com_parse_ui_password_too_short_toast,
-                    DEFAULT_MIN_PASSWORD_LENGTH, DEFAULT_MIN_PASSWORD_LENGTH));
-        } else if (passwordAgain.length() == 0) {
-            showToast(R.string.com_parse_ui_reenter_password_toast);
-        } else if (!password.equals(passwordAgain)) {
-            showToast(R.string.com_parse_ui_mismatch_confirm_password_toast);
+        // Check if password match
+        final String password = passwordField.getText().toString();
+        if(!password.equals(confirmPasswordField.getText().toString())){
+            confirmPasswordField.setError(MyApp.getAppContext().getString(R.string.passwordNotMatch));
             confirmPasswordField.selectAll();
             confirmPasswordField.requestFocus();
-        } else if (email.length() == 0) {
-            showToast(R.string.com_parse_ui_no_email_toast);
-        } else {
-            ParseUser user = new ParseUser();
+            return;
+        }
 
-            // Set standard fields
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setEmail(email);
+        String username = usernameField.getText().toString();
+        String email = emailField.getText().toString();
+        ParseUser user = new ParseUser();
+        // Set standard fields
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
 
-            loadingStart();
-            user.signUpInBackground(new SignUpCallback() {
+        loadingStart();
+        user.signUpInBackground(new SignUpCallback() {
 
-                @Override
-                public void done(ParseException e) {
-                    if (isActivityDestroyed()) {
-                        return;
-                    }
+            @Override
+            public void done(ParseException e) {
+                if (isActivityDestroyed()) {
+                    return;
+                }
 
-                    if (e == null) {
-                        loadingFinish();
-                        signupSuccess();
-                    } else {
-                        loadingFinish();
-                        debugLog(getString(R.string.com_parse_ui_login_warning_parse_signup_failed) +
-                                e.toString());
-                        switch (e.getCode()) {
-                            case ParseException.INVALID_EMAIL_ADDRESS:
-                                showToast(R.string.com_parse_ui_invalid_email_toast);
-                                break;
-                            case ParseException.USERNAME_TAKEN:
-                                showToast(R.string.com_parse_ui_username_taken_toast);
-                                break;
-                            case ParseException.EMAIL_TAKEN:
-                                showToast(R.string.com_parse_ui_email_taken_toast);
-                                break;
-                            default:
-                                showToast(R.string.com_parse_ui_signup_failed_unknown_toast);
-                        }
+                if (e == null) {
+                    loadingFinish();
+                    signupSuccess();
+                } else {
+                    loadingFinish();
+
+                    switch (e.getCode()) {
+                        case ParseException.INVALID_EMAIL_ADDRESS:
+                            showToast(R.string.invalidEmail);
+                            break;
+                        case ParseException.USERNAME_TAKEN:
+                            showToast(R.string.usernameTaken);
+                            break;
+                        case ParseException.EMAIL_TAKEN:
+                            showToast(R.string.emailTaken);
+                            break;
+                        default:
+                            showToast(R.string.unknownSignupError);
                     }
                 }
-            });
-        }
-    }
-
-    @Override
-    protected String getLogTag() {
-        return LOG_TAG;
+            }
+        });
     }
 
     private void signupSuccess() {
