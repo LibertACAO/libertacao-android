@@ -63,6 +63,7 @@ public class PerfilFragment extends Fragment {
                     Toast.makeText(getContext(), getContext().getString(R.string.performedLogoutSuccess), Toast.LENGTH_SHORT).show();
                     ((MainActivity)getActivity()).updateDrawer();
                     ((MainActivity)getActivity()).openDrawer();
+                    ((MainActivity)getActivity()).setupEventFragment();
                 }
             }
         });

@@ -49,6 +49,9 @@
     <!-- Forgot password -->
     <string name="forgotPasswordInstructions">Entre seu e-mail para recuperar sua senha</string>
     <string name="recoverPassword">Recuperar senha</string>
+    <string name="unknownHelpError">Não foi possível fazer o reset da senha. Por favor, tente novamente mais tarde.</string>
+    <string name="helpSuccess">Por favor, cheque seu e-mail para instruções de como acessar sua conta</string>
+    <string name="helpBackToLogin">Voltar para a tela de login</string>
 
     <!-- Sign up -->
     <string name="createAccount">Criar conta</string>

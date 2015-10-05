@@ -69,11 +69,15 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         mNavigationDrawerFragment.updateDrawerAdapter();
     }
 
+    public void setupEventFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, NotificacaoFragment.newInstance()).commit();
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(@NavigationDrawerFragment.DrawerPosition int position) {
         if(position == NavigationDrawerFragment.NOTIFICACAO) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.container, NotificacaoFragment.newInstance()).commit();
+            setupEventFragment();
         } else if(position == NavigationDrawerFragment.CADASTRO_PERFIL){
             if(LoginManager.getInstance().isLoggedIn()){
                 FragmentManager fragmentManager = getSupportFragmentManager();

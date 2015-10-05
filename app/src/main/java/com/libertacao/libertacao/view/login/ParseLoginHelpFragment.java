@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.util.Validator;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.ParseException;
@@ -34,8 +35,6 @@ public class ParseLoginHelpFragment extends ParseLoginFragmentBase implements On
     private Button submitButton;
     private boolean emailSent = false;
     private ParseOnLoginHelpSuccessListener onLoginHelpSuccessListener;
-
-    private static final String LOG_TAG = "ParseLoginHelpFragment";
 
     public static ParseLoginHelpFragment newInstance(Bundle configOptions) {
         ParseLoginHelpFragment loginHelpFragment = new ParseLoginHelpFragment();
@@ -63,61 +62,54 @@ public class ParseLoginHelpFragment extends ParseLoginFragmentBase implements On
         if (activity instanceof ParseOnLoadingListener) {
             onLoadingListener = (ParseOnLoadingListener) activity;
         } else {
-            throw new IllegalArgumentException(
-                    "Activity must implemement ParseOnLoadingListener");
+            throw new IllegalArgumentException("Activity must implemement ParseOnLoadingListener");
         }
 
         if (activity instanceof ParseOnLoginHelpSuccessListener) {
             onLoginHelpSuccessListener = (ParseOnLoginHelpSuccessListener) activity;
         } else {
-            throw new IllegalArgumentException(
-                    "Activity must implemement ParseOnLoginHelpSuccessListener");
+            throw new IllegalArgumentException("Activity must implemement ParseOnLoginHelpSuccessListener");
         }
+    }
+
+    private boolean validate() {
+        return Validator.validate(emailField, true);
     }
 
     @Override
     public void onClick(View v) {
-        if (!emailSent) {
-            String email = emailField.getText().toString();
-            if (email.length() == 0) {
-                showToast(R.string.com_parse_ui_no_email_toast);
-            } else {
-                loadingStart();
-                ParseUser.requestPasswordResetInBackground(email,
-                        new RequestPasswordResetCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (isActivityDestroyed()) {
-                                    return;
-                                }
+        if(!validate()) {
+            return;
+        }
 
-                                loadingFinish();
-                                if (e == null) {
-                                    instructionsTextView.setText(R.string.com_parse_ui_login_help_email_sent);
-                                    emailField.setVisibility(View.INVISIBLE);
-                                    submitButton
-                                            .setText(R.string.com_parse_ui_login_help_login_again_button_label);
-                                    emailSent = true;
+        if (!emailSent) {
+            loadingStart();
+            ParseUser.requestPasswordResetInBackground(emailField.getText().toString(),
+                    new RequestPasswordResetCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (isActivityDestroyed()) {
+                                return;
+                            }
+
+                            loadingFinish();
+                            if (e == null) {
+                                instructionsTextView.setText(R.string.helpSuccess);
+                                emailField.setVisibility(View.INVISIBLE);
+                                submitButton.setText(R.string.helpBackToLogin);
+                                emailSent = true;
+                            } else {
+                                if (e.getCode() == ParseException.INVALID_EMAIL_ADDRESS ||
+                                        e.getCode() == ParseException.EMAIL_NOT_FOUND) {
+                                    showToast(R.string.invalidEmail);
                                 } else {
-                                    debugLog(getString(R.string.com_parse_ui_login_warning_password_reset_failed) +
-                                            e.toString());
-                                    if (e.getCode() == ParseException.INVALID_EMAIL_ADDRESS ||
-                                            e.getCode() == ParseException.EMAIL_NOT_FOUND) {
-                                        showToast(R.string.com_parse_ui_invalid_email_toast);
-                                    } else {
-                                        showToast(R.string.com_parse_ui_login_help_submit_failed_unknown);
-                                    }
+                                    showToast(R.string.unknownHelpError);
                                 }
                             }
-                        });
-            }
+                        }
+                    });
         } else {
             onLoginHelpSuccessListener.onLoginHelpSuccess();
         }
-    }
-
-    @Override
-    protected String getLogTag() {
-        return LOG_TAG;
     }
 }
