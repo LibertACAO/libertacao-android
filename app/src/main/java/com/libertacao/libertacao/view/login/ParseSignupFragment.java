@@ -103,7 +103,7 @@ public class ParseSignupFragment extends ParseLoginFragmentBase implements OnCli
         final String password = passwordField.getText().toString();
         if(!password.equals(confirmPasswordField.getText().toString())){
             confirmPasswordField.setError(MyApp.getAppContext().getString(R.string.passwordNotMatch));
-            confirmPasswordField.selectAll();
+            confirmPasswordField.setText("");
             confirmPasswordField.requestFocus();
             return;
         }
