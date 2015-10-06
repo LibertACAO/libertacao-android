@@ -21,7 +21,7 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ui.ParseOnLoadingListener;
 import com.parse.ui.ParseOnLoginSuccessListener;
 
-// TODO: add scrolling animated background
+// FUTURE: add scrolling animated background (second release)
 public class ParseLoginActivity extends FragmentActivity implements
         ParseLoginFragment.ParseLoginFragmentListener,
         ParseLoginHelpFragment.ParseOnLoginHelpSuccessListener,
