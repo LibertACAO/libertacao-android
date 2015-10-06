@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -16,8 +15,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.util.Validator;
-import com.libertacao.libertacao.util.ViewUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -59,8 +56,6 @@ public class ParseLoginFragment extends ParseLoginFragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(com.parse.ui.R.layout.com_parse_ui_parse_login_fragment, parent, false);
-        ImageLoader.getInstance().displayImage("drawable://" + R.drawable.background, (ImageView) v.findViewById(R.id.background_image_view),
-                ViewUtils.getFadeInDisplayImageOptions());
         usernameField = (EditText) v.findViewById(com.parse.ui.R.id.login_username_input);
         passwordField = (EditText) v.findViewById(com.parse.ui.R.id.login_password_input);
         parseLoginHelpButton = (Button) v.findViewById(com.parse.ui.R.id.parse_login_help);

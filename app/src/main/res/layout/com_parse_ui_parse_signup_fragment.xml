@@ -1,74 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:background="@color/BlackBackground"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                tools:background="@drawable/background">
 
-    <ImageView
-        android:id="@+id/background_image_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        tools:ignore="ContentDescription"
-        tools:src="@drawable/background"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/com_parse_ui_vertical_margin"
+        android:paddingLeft="@dimen/com_parse_ui_horizontal_margin"
+        android:paddingRight="@dimen/com_parse_ui_horizontal_margin"
+        android:paddingTop="@dimen/com_parse_ui_vertical_margin">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <ImageView
+            style="@style/LogoImageView"
+            android:layout_gravity="center"
+            tools:ignore="ContentDescription"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/com_parse_ui_vertical_margin"
-            android:paddingLeft="@dimen/com_parse_ui_horizontal_margin"
-            android:paddingRight="@dimen/com_parse_ui_horizontal_margin"
-            android:paddingTop="@dimen/com_parse_ui_vertical_margin"
-            tools:background="@drawable/background">
+        <EditText
+            android:id="@+id/signup_username_input"
+            style="@style/LoginEditText"
+            android:layout_marginTop="@dimen/small_margin"
+            android:hint="@string/usernameHint"/>
 
-            <ImageView
-                style="@style/LogoImageView"
-                android:layout_gravity="center"
-                tools:ignore="ContentDescription"/>
+        <EditText
+            android:id="@+id/signup_password_input"
+            style="@style/LoginEditText"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:fontFamily="sans-serif"
+            android:hint="@string/passwordHint"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"/>
 
-            <EditText
-                android:id="@+id/signup_username_input"
-                style="@style/LoginEditText"
-                android:layout_marginTop="@dimen/small_margin"
-                android:hint="@string/usernameHint"/>
+        <EditText
+            android:id="@+id/signup_confirm_password_input"
+            style="@style/LoginEditText"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:fontFamily="sans-serif"
+            android:hint="@string/confirmPasswordHint"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"/>
 
-            <EditText
-                android:id="@+id/signup_password_input"
-                style="@style/LoginEditText"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:fontFamily="sans-serif"
-                android:hint="@string/passwordHint"
-                android:inputType="textPassword"
-                android:selectAllOnFocus="true"/>
+        <EditText
+            android:id="@+id/signup_email_input"
+            style="@style/LoginEditText"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:hint="@string/emailHint"
+            android:inputType="textEmailAddress"/>
 
-            <EditText
-                android:id="@+id/signup_confirm_password_input"
-                style="@style/LoginEditText"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:fontFamily="sans-serif"
-                android:hint="@string/confirmPasswordHint"
-                android:inputType="textPassword"
-                android:selectAllOnFocus="true"/>
+        <Button
+            android:id="@+id/create_account"
+            style="@style/LoginButton"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:text="@string/createAccount"/>
 
-            <EditText
-                android:id="@+id/signup_email_input"
-                style="@style/LoginEditText"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:hint="@string/emailHint"
-                android:inputType="textEmailAddress"/>
-
-            <Button
-                android:id="@+id/create_account"
-                style="@style/LoginButton"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:text="@string/createAccount"/>
-
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>

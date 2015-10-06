@@ -11,21 +11,21 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.Window;
+import android.widget.ImageView;
 
+import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.util.ViewUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ui.ParseOnLoadingListener;
 import com.parse.ui.ParseOnLoginSuccessListener;
 
+// TODO: add scrolling animated background
 public class ParseLoginActivity extends FragmentActivity implements
         ParseLoginFragment.ParseLoginFragmentListener,
         ParseLoginHelpFragment.ParseOnLoginHelpSuccessListener,
         ParseOnLoginSuccessListener, ParseOnLoadingListener {
-
-    // All login UI fragment transactions will happen within this parent layout element.
-    // Change this if you are modifying this code to be hosted in your own activity.
-    private final int fragmentContainer = android.R.id.content;
 
     private ProgressDialog progressDialog;
     private Bundle configOptions;
@@ -36,14 +36,18 @@ public class ParseLoginActivity extends FragmentActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
         // Combine options from incoming intent and the activity metadata
         configOptions = getMergedOptions();
 
         // Show the login form
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(fragmentContainer, ParseLoginFragment.newInstance(configOptions)).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.container, ParseLoginFragment.newInstance(configOptions)).commit();
         }
+
+        ImageLoader.getInstance().displayImage("drawable://" + R.drawable.background, (ImageView) findViewById(R.id.background_image_view),
+                ViewUtils.getFadeInDisplayImageOptions());
     }
 
     @Override
@@ -72,8 +76,7 @@ public class ParseLoginActivity extends FragmentActivity implements
         // so that if the user clicks the back button, they are brought back
         // to the login form.
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(fragmentContainer,
-                ParseSignupFragment.newInstance(configOptions, username, password));
+        transaction.replace(R.id.container, ParseSignupFragment.newInstance(configOptions, username, password));
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -87,7 +90,7 @@ public class ParseLoginActivity extends FragmentActivity implements
         // Keep the transaction on the back stack so that if the user clicks
         // the back button, they are brought back to the login form.
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(fragmentContainer, ParseLoginHelpFragment.newInstance(configOptions));
+        transaction.replace(R.id.container, ParseLoginHelpFragment.newInstance(configOptions));
         transaction.addToBackStack(null);
         transaction.commit();
     }

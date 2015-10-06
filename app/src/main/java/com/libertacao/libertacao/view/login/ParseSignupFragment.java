@@ -8,13 +8,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.libertacao.libertacao.MyApp;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.util.Validator;
-import com.libertacao.libertacao.util.ViewUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -52,8 +49,6 @@ public class ParseSignupFragment extends ParseLoginFragmentBase implements OnCli
         String password = args.getString(PASSWORD);
 
         View v = inflater.inflate(R.layout.com_parse_ui_parse_signup_fragment, parent, false);
-        ImageLoader.getInstance().displayImage("drawable://" + R.drawable.background, (ImageView) v.findViewById(R.id.background_image_view),
-                ViewUtils.getFadeInDisplayImageOptions());
         usernameField = (EditText) v.findViewById(R.id.signup_username_input);
         passwordField = (EditText) v.findViewById(R.id.signup_password_input);
         confirmPasswordField = (EditText) v.findViewById(R.id.signup_confirm_password_input);
