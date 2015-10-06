@@ -51,6 +51,22 @@ public class ParseLoginActivity extends FragmentActivity implements
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primaryDark));
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (progressDialog != null) {
