@@ -13,8 +13,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.LocationCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -54,6 +54,7 @@ public class MyApp extends Application {
 
     private void setupParse() {
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
+        ParseFacebookUtils.initialize(this);
 
         if(LoginManager.getInstance().isLoggedIn()) {
             ParseGeoPoint.getCurrentLocationInBackground(10 * 1000, //ms

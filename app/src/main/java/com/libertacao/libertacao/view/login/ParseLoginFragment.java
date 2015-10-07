@@ -212,5 +212,4 @@ public class ParseLoginFragment extends ParseLoginFragmentBase {
     private void loginSuccess() {
         onLoginSuccessListener.onLoginSuccess();
     }
-
 }

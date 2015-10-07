@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.libertacao.libertacao" >
+          package="com.libertacao.libertacao">
 
     <!-- Parse permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -69,6 +69,12 @@
                 android:name="com.parse.ui.ParseLoginActivity.FACEBOOK_LOGIN_PERMISSIONS"
                 android:resource="@array/my_facebook_permissions"/>
         </activity>
+
+        <activity android:name="com.facebook.FacebookActivity"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                  android:label="@string/app_name" />
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
         <!-- Parse services -->
         <service android:name="com.parse.PushService" />
