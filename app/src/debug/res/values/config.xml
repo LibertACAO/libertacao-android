@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parse_app_id">PLACEHOLDER</string>
+    <string name="parse_client_key">PLACEHOLDER</string>
+    <string name="google_api_key">PLACEHOLDER</string>
+    <string name="facebook_app_id">PLACEHOLDER</string>
+</resources>

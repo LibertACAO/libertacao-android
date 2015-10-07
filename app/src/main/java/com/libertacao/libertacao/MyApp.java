@@ -20,7 +20,6 @@ import com.squareup.leakcanary.LeakCanary;
 
 import io.fabric.sdk.android.Fabric;
 
-// TODO: add facebook
 public class MyApp extends Application {
     public static boolean IS_DEBUG = false;
 
