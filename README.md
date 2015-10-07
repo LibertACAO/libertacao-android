@@ -9,11 +9,14 @@ LiberACTION is an innovative app built upon a simple concept: to revolutionize a
 * Open it!
 
 ### Sensitive information
-There is a config file named "config.xml" located in res/values folder. You should set the values in this file to match your environment.
+There is a config file named "config.xml" located in res/values folder (and in debug/res/values folder for debug build). You should set the values in
+this file to match your environment.
 In addition to that, there is a special file from Fabric (crash manager), called "fabric.properties", which contains keys to access its service.
 Contact someone from this project to get access to the existing data.
 
-Flow suggestion: At terminal, type 'git update-index --assume-unchanged app/src/main/res/values/config.xml' and 'git update-index --assume-unchanged app/fabric.properties' in order to git stop monitoring changes in these files (http://stackoverflow.com/a/4498611).
+Flow suggestion: At terminal, type 'git update-index --assume-unchanged app/src/main/res/values/config.xml', 'git update-index --assume-unchanged
+app/src/debug/res/values/config.xml' and 'git update-index
+--assume-unchanged app/fabric.properties' in order to git stop monitoring changes in these files (http://stackoverflow.com/a/4498611).
 After that, put the correct values, without needing to worry about not commiting these information.
 
 ## How to run
