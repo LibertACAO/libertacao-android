@@ -1,13 +1,18 @@
 package com.libertacao.libertacao.view.notificacoes;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -33,6 +38,13 @@ import de.greenrobot.event.EventBus;
 
 public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "NotificacaoFragment";
+
+    // TODO: store in UserPreferences
+    // Array to keep track of current filter
+    private int selectedFilter = 0;
+
+    private boolean loaderInitied = false;
+
     /**
      * Interface elements
      */
@@ -46,6 +58,41 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
 
     public NotificacaoFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.event_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_filter:
+                final CharSequence[] items = {getString(R.string.filterAll), getString(R.string.filterFeira), getString(R.string.filterVaquinha)};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle(getString(R.string.filter));
+                builder.setSingleChoiceItems(items, selectedFilter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectedFilter = which;
+                        setupAdapterAndLoader();
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton(getString(android.R.string.cancel), null);
+                builder.show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -79,6 +126,10 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
+        setupAdapterAndLoader();
+    }
+
+    private void setupAdapterAndLoader() {
         // Create and set adapter (data source)
         final EventRecyclerViewAdapter mAdapter = new EventRecyclerViewAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
@@ -86,7 +137,7 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
         final PreparedQuery<Event> preparedQuery;
         try {
             final Dao<Event, Integer> eventIntegerDao = DatabaseHelper.getHelper(getContext()).getEventIntegerDao();
-            preparedQuery = DatabaseHelper.getHelper(getContext()).getEventPreparedQuery();
+            preparedQuery = DatabaseHelper.getHelper(getContext()).getEventPreparedQuery(selectedFilter);
 
             // Using LoaderManager to change cursor when some data change in database
             LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
@@ -106,7 +157,12 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
                 }
             };
 
-            getLoaderManager().initLoader(0, null, loaderCallbacks);
+            if(!loaderInitied) {
+                getLoaderManager().initLoader(0, null, loaderCallbacks);
+                loaderInitied = true;
+            } else {
+                getLoaderManager().restartLoader(0, null, loaderCallbacks);
+            }
         } catch (SQLException e) {
             ViewUtils.showCriticalErrorMessageAndLogToCrashlytics(NotificacaoFragment.this.getContext(), mRecyclerView, TAG, e);
         }

@@ -130,10 +130,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Prepared queries
      */
 
-    public PreparedQuery<Event> getEventPreparedQuery() throws SQLException {
+    public PreparedQuery<Event> getEventPreparedQuery(int selectedFilter) throws SQLException {
         QueryBuilder<Event, Integer> queryBuilder = getEventIntegerRuntimeExceptionDao().queryBuilder();
+
+        if(selectedFilter != 0) {
+            queryBuilder.where().eq(Event.TYPE, selectedFilter);
+        }
+        queryBuilder.orderBy(Event.INITIAL_DATE, true);
+
         // TODO: add where clause to only filter events from today to future
-        // TODO: add orderby clause by date descending
         // TODO: add something including location (whereNear?) - https://parse.com/docs/android/guide#geopoints
         return queryBuilder.prepare();
     }

@@ -11,6 +11,8 @@ import java.util.Date;
 
 public class Event {
     public static final String EVENT = "Event";
+    public static final String TYPE = "type";
+    public static final String INITIAL_DATE = "initialDate";
 
     @DatabaseField(generatedId = true, columnName = "_id")
     private int id;

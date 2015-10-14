@@ -65,4 +65,10 @@
     <string name="usernameTaken">Username já cadastrado! Por favor, escolha outro.</string>
     <string name="unknownSignupError">Não foi possível fazer o cadastro. Por favor, tente novamente mais tarde.</string>
 
+    <!-- Event Fragment -->
+    <string name="filter">Filtrar</string>
+    <string name="filterAll">Todos</string>
+    <string name="filterFeira">Feira</string>
+    <string name="filterVaquinha">Vaquinha</string>
+
 </resources>
