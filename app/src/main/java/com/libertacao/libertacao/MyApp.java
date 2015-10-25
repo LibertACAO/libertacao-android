@@ -21,8 +21,6 @@ import com.squareup.leakcanary.LeakCanary;
 import io.fabric.sdk.android.Fabric;
 
 public class MyApp extends Application {
-    public static boolean IS_DEBUG = false;
-
     // App context
     private static Context context;
 
@@ -32,14 +30,13 @@ public class MyApp extends Application {
 
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        if(!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
         LeakCanary.install(this);
         MyApp.context = getApplicationContext();
-        if (context.getPackageName().endsWith(".debug")) {
-            IS_DEBUG = true;
-        }
 
-        if(IS_DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+        if(BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                     .detectLeakedSqlLiteObjects()
                     .detectLeakedClosableObjects()
