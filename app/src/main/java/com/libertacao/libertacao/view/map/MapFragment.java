@@ -60,8 +60,10 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
     }
 
     private void initListeners() {
-        getMap().setOnMarkerClickListener(this);
-        getMap().setOnInfoWindowClickListener(this);
+        if(getMap() != null) {
+            getMap().setOnMarkerClickListener(this);
+            getMap().setOnInfoWindowClickListener(this);
+        }
     }
 
     @Override
