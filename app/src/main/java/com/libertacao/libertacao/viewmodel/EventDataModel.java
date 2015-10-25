@@ -82,6 +82,7 @@ public class EventDataModel extends BaseObservable {
      * Provides event date
      * @return event date
      */
+    // TODO: display a more interesting date
     public String getDate() {
         return event.getInitialDate().toString();
     }
@@ -90,6 +91,7 @@ public class EventDataModel extends BaseObservable {
      * Provides event date
      * @return event date
      */
+    // TODO: display a more interesting location. Maybe add in Parse interface an Event location summary field?
     public String getLocation() {
         return event.getLatitude() + " - " + event.getLongitude();
     }
