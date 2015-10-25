@@ -92,7 +92,7 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
                 .tilt(0.0f)
                 .build();
 
-        getMap().animateCamera( CameraUpdateFactory.newCameraPosition(position), null);
+        getMap().animateCamera(CameraUpdateFactory.newCameraPosition(position), null);
         getMap().setMapType(GoogleMap.MAP_TYPE_NORMAL);
         getMap().setTrafficEnabled(true);
         getMap().setMyLocationEnabled(true);
