@@ -50,7 +50,7 @@ public class EventManager {
 
                                 @Override
                                 public void onError(Throwable e) {
-                                    Log.d(TAG, "Error while processing evets: " + e.getLocalizedMessage());
+                                    Log.d(TAG, "Error while processing events: " + e.getLocalizedMessage());
                                 }
 
                                 @Override

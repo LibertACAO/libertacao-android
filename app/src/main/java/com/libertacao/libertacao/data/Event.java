@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
@@ -77,14 +78,15 @@ public class Event {
 
     public static Event getEvent(@NonNull ParseObject object){
         ParseGeoPoint location = object.getParseGeoPoint("location");
+        ParseFile parseFile = object.getParseFile("image");
         return new Event(object.getObjectId(),
                 object.getString("title"),
                 object.getString("subtitle"),
                 object.getString("description"),
-                location.getLatitude(),
-                location.getLongitude(),
+                location != null? location.getLatitude() : -1,
+                location != null? location.getLongitude() : -1,
                 object.getString("locationDescription"),
-                object.getParseFile("image").getUrl(),
+                parseFile != null? parseFile.getUrl() : null,
                 object.getDate("initialDate"),
                 object.getDate("endDate"),
                 object.getInt("type"));
@@ -114,6 +116,10 @@ public class Event {
         return description;
     }
 
+    public boolean hasImage() {
+        return image != null;
+    }
+
     public String getImage() {
         return image;
     }
@@ -124,5 +130,13 @@ public class Event {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public Date getInitialDate() {
+        return initialDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
     }
 }

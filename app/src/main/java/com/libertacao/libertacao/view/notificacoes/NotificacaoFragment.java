@@ -118,7 +118,6 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
 
         // Configure Recycler View
         // Changes in Recycler View content does not change it itself
-        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setEmptyView(mEmptyTextView);
 
         // Linear Vertical layout (like old ListView)

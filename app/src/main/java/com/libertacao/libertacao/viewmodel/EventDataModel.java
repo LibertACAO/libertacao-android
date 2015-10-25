@@ -71,6 +71,38 @@ public class EventDataModel extends BaseObservable {
     }
 
     /**
+     * Returns if the image is visible or gone
+     * @return View.VISIBLE if there is an image; View.GONE otherwise so the view does not take space
+     */
+    public int isImageVisible() {
+        return event.hasImage()? View.VISIBLE : View.GONE;
+    }
+
+    /**
+     * Provides event date
+     * @return event date
+     */
+    public String getDate() {
+        return event.getInitialDate().toString();
+    }
+
+    /**
+     * Provides event date
+     * @return event date
+     */
+    public String getLocation() {
+        return event.getLatitude() + " - " + event.getLongitude();
+    }
+
+    /**
+     * Returns if the loaction is visible or gone
+     * @return View.VISIBLE if there is a latitude and a longitude valid values; View.GONE otherwise so the view does not take space
+     */
+    public int isLocationVisible() {
+        return (event.getLatitude() != -1 && event.getLongitude() != -1)? View.VISIBLE : View.GONE;
+    }
+
+    /**
      * Set a new event to this EventDataModel. It allows recycling EventDataModels within the RecyclerView adapter.
      * This takes advantage of the BaseObservable superclass to call notifyChange to update UI accordingly. Easy :)
      * @param event new event

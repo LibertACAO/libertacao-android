@@ -19,6 +19,7 @@
             app:image="@{eventDataModel.image}"
             android:scaleType="centerCrop"
             android:background="@android:color/black"
+            android:visibility="@{eventDataModel.isImageVisible}"
             tools:ignore="ContentDescription"/>
 
         <TextView

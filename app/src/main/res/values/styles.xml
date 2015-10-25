@@ -43,4 +43,10 @@
         <item name="android:paddingStart" tools:ignore="NewApi">16dp</item>
     </style>
 
+    <!-- Text view -->
+    <style name="SmallGrayTextView">
+        <item name="android:color">@android:color/secondary_text_dark</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>
