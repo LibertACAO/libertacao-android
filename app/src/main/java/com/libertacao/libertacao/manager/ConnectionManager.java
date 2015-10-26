@@ -6,9 +6,7 @@ import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 
 public class ConnectionManager {
-    private static final String TAG = "ConnectionManager";
-
-    private static ConnectionManager ourInstance = new ConnectionManager();
+    private static final ConnectionManager ourInstance = new ConnectionManager();
 
     public static ConnectionManager getInstance() {
         return ourInstance;

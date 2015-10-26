@@ -61,6 +61,7 @@ public class MyApp extends Application {
                     new LocationCallback() {
                         @Override
                         public void done(ParseGeoPoint geoPoint, ParseException e) {
+                            // TODO: not sure if this is working
                             Log.d("MyApp", "Found geopoint: " + geoPoint);
                             if (geoPoint != null) {
                                 ParseUser.getCurrentUser().put("location", geoPoint);

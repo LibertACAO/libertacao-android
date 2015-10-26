@@ -22,7 +22,7 @@ import rx.schedulers.Schedulers;
 public class EventManager {
     private final static String TAG = "EventManager";
 
-    private static EventManager ourInstance = new EventManager();
+    private static final EventManager ourInstance = new EventManager();
 
     public static EventManager getInstance() {
         return ourInstance;

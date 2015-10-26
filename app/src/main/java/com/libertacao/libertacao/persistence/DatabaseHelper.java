@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    public static final int LAST_SYNCED_THRESHOLD_IN_MINUTES = -30; // time that instances have before being deleted by next sync
+    private static final int LAST_SYNCED_THRESHOLD_IN_MINUTES = -30; // time that instances have before being deleted by next sync
 
     private static final int DATABASE_VERSION = 2;
     private static final String TAG = "DatabaseHelper";

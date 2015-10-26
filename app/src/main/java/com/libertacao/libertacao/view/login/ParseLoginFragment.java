@@ -155,7 +155,7 @@ public class ParseLoginFragment extends ParseLoginFragmentBase {
     }
 
 
-    private LogInCallback facebookLoginCallbackV4 = new LogInCallback() {
+    private final LogInCallback facebookLoginCallbackV4 = new LogInCallback() {
         @Override
         public void done(ParseUser user, ParseException e) {
             if (isActivityDestroyed()) {

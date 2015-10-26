@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 public class SyncManager {
-    private static SyncManager ourInstance = new SyncManager();
+    private static final SyncManager ourInstance = new SyncManager();
 
     public static SyncManager getInstance() {
         return ourInstance;

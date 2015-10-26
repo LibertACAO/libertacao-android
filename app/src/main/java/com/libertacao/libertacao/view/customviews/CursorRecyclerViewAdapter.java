@@ -25,7 +25,7 @@ import android.support.v7.widget.RecyclerView;
 // Code from https://gist.github.com/skyfishjy/443b7448f59be978bc59
 public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
-    private Context mContext;
+    private final Context mContext;
 
     private Cursor mCursor;
 
@@ -33,7 +33,7 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
 
     private int mRowIdColumn;
 
-    private DataSetObserver mDataSetObserver;
+    private final DataSetObserver mDataSetObserver;
 
     public CursorRecyclerViewAdapter(Context context, Cursor cursor) {
         mContext = context;

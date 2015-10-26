@@ -19,14 +19,6 @@ import com.libertacao.libertacao.viewmodel.EventDataModel;
 public class EventDetail extends AppCompatActivity {
     private static final String EVENT_ID = "EVENT_ID";
 
-    public static MapFragment newInstance(Event event) {
-        MapFragment mapFragment = new MapFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(EVENT_ID, event.getId());
-        mapFragment.setArguments(bundle);
-        return mapFragment;
-    }
-
     public static Intent newIntent(Context context, Event event){
         Intent intent = new Intent(context, EventDetail.class);
         intent.putExtra(EVENT_ID, event.getId());

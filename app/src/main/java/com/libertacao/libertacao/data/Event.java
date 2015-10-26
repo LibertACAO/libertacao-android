@@ -57,6 +57,7 @@ public class Event {
     @DatabaseField
     private int type;
 
+    @SuppressWarnings("FieldCanBeLocal")
     @DatabaseField(dataType = DataType.DATE_LONG)
     private Date lastSynced;
 
