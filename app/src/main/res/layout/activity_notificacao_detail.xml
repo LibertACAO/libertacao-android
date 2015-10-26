@@ -22,31 +22,55 @@
             android:visibility="@{eventDataModel.isImageVisible}"
             tools:ignore="ContentDescription"/>
 
-        <TextView
-            android:id="@+id/notificacao_detail_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/list_view_text_margin"
-            android:layout_marginLeft="@dimen/list_view_text_margin"
-            android:layout_marginRight="@dimen/list_view_text_margin"
-            style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
-            android:text="@{eventDataModel.title}"
-            tools:text=" O SANTUÁRIO ECOLÓGICO RANCHO DOS GNOMOS PRECISA MUDAR"/>
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/notificacao_detail_subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/list_view_text_margin"
-            android:layout_marginLeft="@dimen/list_view_text_margin"
-            android:layout_marginRight="@dimen/list_view_text_margin"
-            style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
-            android:text="@{eventDataModel.subtitle}"
-            tools:text="Faça a diferença na vida dos animais acolhidos pelo Rancho dos Gnomos. Juntos somos mais fortes, juntos podemos ir mais longe ;-)"/>
+            <TextView
+                android:id="@+id/notificacao_detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
+                android:text="@{eventDataModel.title}"
+                tools:text="O SANTUÁRIO ECOLÓGICO RANCHO DOS GNOMOS PRECISA MUDAR"/>
+
+            <TextView
+                android:id="@+id/notificacao_detail_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                android:text="@{eventDataModel.subtitle}"
+                tools:text="Faça a diferença na vida dos animais acolhidos pelo Rancho dos Gnomos. Juntos somos mais fortes, juntos podemos ir mais longe ;-)"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{eventDataModel.date}"
+                tools:text="22/10 - 20h"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{eventDataModel.locationSummary}"
+                android:visibility="@{eventDataModel.isLocationSummaryVisible}"
+                tools:text="Porto Alegre, RS"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{eventDataModel.locationDescription}"
+                android:visibility="@{eventDataModel.isLocationDescriptionVisible}"
+                tools:text="Avenida Lajeado, 6520"/>
+
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/event_map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:visibility="@{eventDataModel.isLocationVisible}"/>
+
     </LinearLayout>
 </layout>

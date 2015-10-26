@@ -16,7 +16,6 @@ import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.libertacao.libertacao.viewmodel.EventDataModel;
 
-// TODO: add more info
 public class EventDetail extends AppCompatActivity {
     private static final String EVENT_ID = "EVENT_ID";
 

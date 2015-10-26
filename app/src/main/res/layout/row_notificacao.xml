@@ -63,13 +63,13 @@
                     android:id="@+id/notification_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{eventDataModel.location}"
-                    android:visibility="@{eventDataModel.isLocationVisible}"
+                    android:text="@{eventDataModel.locationSummary}"
+                    android:visibility="@{eventDataModel.isLocationSummaryVisible}"
                     android:layout_toLeftOf="@+id/btn_share_notification"
                     android:layout_toStartOf="@+id/btn_share_notification"
                     android:layout_below="@+id/notification_date"
                     style="@style/SmallGrayTextView"
-                    tools:text="Porto Alegre"/>
+                    tools:text="Porto Alegre, RS"/>
 
                 <Button
                     android:id="@+id/btn_share_notification"

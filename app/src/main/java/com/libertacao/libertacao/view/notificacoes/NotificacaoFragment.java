@@ -39,7 +39,6 @@ import de.greenrobot.event.EventBus;
 public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "NotificacaoFragment";
 
-    // TODO: store in UserPreferences
     // Array to keep track of current filter
     private int selectedFilter = 0;
 

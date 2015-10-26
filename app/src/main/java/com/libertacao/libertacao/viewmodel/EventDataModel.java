@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,8 +17,6 @@ import com.libertacao.libertacao.util.MyDateUtils;
 import com.libertacao.libertacao.util.ShareUtils;
 import com.libertacao.libertacao.view.notificacoes.EventDetail;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import org.ocpsoft.prettytime.PrettyTime;
 
 /**
  * This class is the ViewModel of the MVVM architecture pattern. It provides data for row_notificao.xml layout.
@@ -121,16 +120,40 @@ public class EventDataModel extends BaseObservable {
     }
 
     /**
-     * Provides event date
-     * @return event date
+     * Provides event location summary
+     * @return event location summary
      */
-    public String getLocation() {
+    public String getLocationSummary() {
         return event.getLocationSummary();
     }
 
     /**
-     * Returns if the loaction is visible or gone
-     * @return View.VISIBLE if there is a latitude and a longitude valid values; View.GONE otherwise so the view does not take space
+     * Returns if the location summary is visible or gone
+     * @return View.VISIBLE if there is a location summary; View.GONE otherwise so the view does not take space
+     */
+    public int isLocationSummaryVisible() {
+        return TextUtils.isEmpty(event.getLocationSummary())? View.GONE : View.VISIBLE;
+    }
+
+    /**
+     * Provides event location description
+     * @return event location description
+     */
+    public String getLocationDescription() {
+        return event.getLocationDescription();
+    }
+
+    /**
+     * Returns if the location description is visible or gone
+     * @return View.VISIBLE if there is a location description; View.GONE otherwise so the view does not take space
+     */
+    public int isLocationDescriptionVisible() {
+        return TextUtils.isEmpty(event.getLocationDescription())? View.GONE : View.VISIBLE;
+    }
+
+    /**
+     * Returns if the location is visible or gone
+     * @return View.VISIBLE if there is a latitude and a longitude; View.GONE otherwise so the view does not take space
      */
     public int isLocationVisible() {
         return (event.getLatitude() != -1 && event.getLongitude() != -1)? View.VISIBLE : View.GONE;
