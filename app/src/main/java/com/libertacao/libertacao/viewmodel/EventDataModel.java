@@ -6,22 +6,28 @@ import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.util.MyDateUtils;
 import com.libertacao.libertacao.util.ShareUtils;
 import com.libertacao.libertacao.view.notificacoes.EventDetail;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 /**
  * This class is the ViewModel of the MVVM architecture pattern. It provides data for row_notificao.xml layout.
  */
+@SuppressWarnings("unused")
 public class EventDataModel extends BaseObservable {
     /**
      * Hold on context to perform start activities
      */
-    private Context context;
+    private final Context context;
 
     /**
      * Related event. This has all data that we need.
@@ -82,18 +88,44 @@ public class EventDataModel extends BaseObservable {
      * Provides event date
      * @return event date
      */
-    // TODO: display a more interesting date
     public String getDate() {
-        return event.getInitialDate().toString();
+        if(event.hasInitialDate()) {
+            if (event.hasEndDate()) {
+                // Has initial and end date
+                if(MyDateUtils.isSameDay(event.getInitialDate(), event.getEndDate())) {
+                    // If both dates are from the same day
+                    return String.format(context.getString(R.string.eventInitialAndEndDateSameDay),
+                            MyDateUtils.getDateMonthHourMinuteDateToUser(event.getInitialDate()),
+                            MyDateUtils.getHourMinuteDateToUser(event.getEndDate()));
+                } else {
+                    // If dates are from different days
+                    return String.format(context.getString(R.string.eventInitialAndEndDateDifferentDay),
+                            MyDateUtils.getDayMonthDateToUser(event.getInitialDate()),
+                            MyDateUtils.getDayMonthDateToUser(event.getEndDate()));
+                }
+            } else {
+                // Has only initial date
+                if(DateUtils.isToday(event.getInitialDate().getTime())) {
+                    // If it is today, use prettytime to give a relative time
+                    return String.format(context.getString(R.string.eventInitialDateToday),
+                            MyDateUtils.getDateMonthHourMinuteDateToUser(event.getInitialDate()),
+                            MyDateUtils.getPrettyTime().format(event.getInitialDate()));
+                } else {
+                    // If it is not today, only show the date
+                    return MyDateUtils.getDateMonthHourMinuteDateToUser(event.getInitialDate());
+                }
+            }
+        } else {
+            return "";
+        }
     }
 
     /**
      * Provides event date
      * @return event date
      */
-    // TODO: display a more interesting location. Maybe add in Parse interface an Event location summary field?
     public String getLocation() {
-        return event.getLatitude() + " - " + event.getLongitude();
+        return event.getLocationSummary();
     }
 
     /**

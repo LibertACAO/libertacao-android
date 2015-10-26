@@ -14,6 +14,7 @@ public class Event {
     public static final String EVENT = "Event";
     public static final String TYPE = "type";
     public static final String INITIAL_DATE = "initialDate";
+    public static final String END_DATE = "endDate";
 
     @DatabaseField(generatedId = true, columnName = "_id")
     private int id;
@@ -36,6 +37,9 @@ public class Event {
 
     @DatabaseField
     private double longitude;
+
+    @DatabaseField
+    private String locationSummary;
 
     @DatabaseField
     private String locationDescription;
@@ -61,13 +65,14 @@ public class Event {
     }
 
     public Event(@NonNull String objectId, @NonNull String title, String subtitle, String description, double latitude, double longitude,
-                 String locationDescription, String image, @NonNull Date initialDate, Date endDate, int type) {
+                 String locationSummary, String locationDescription, String image, @NonNull Date initialDate, Date endDate, int type) {
         this.objectId = objectId;
         this.title = title;
         this.subtitle = subtitle;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.locationSummary = locationSummary;
         this.locationDescription = locationDescription;
         this.image = image;
         this.initialDate = initialDate;
@@ -85,6 +90,7 @@ public class Event {
                 object.getString("description"),
                 location != null? location.getLatitude() : -1,
                 location != null? location.getLongitude() : -1,
+                object.getString("locationSummary"),
                 object.getString("locationDescription"),
                 parseFile != null? parseFile.getUrl() : null,
                 object.getDate("initialDate"),
@@ -132,11 +138,27 @@ public class Event {
         return longitude;
     }
 
+    public String getLocationSummary() {
+        return locationSummary;
+    }
+
+    public String getLocationDescription() {
+        return locationDescription;
+    }
+
     public Date getInitialDate() {
         return initialDate;
     }
 
+    public boolean hasInitialDate() {
+        return initialDate != null;
+    }
+
     public Date getEndDate() {
         return endDate;
+    }
+
+    public boolean hasEndDate() {
+        return endDate != null;
     }
 }

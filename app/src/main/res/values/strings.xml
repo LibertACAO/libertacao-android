@@ -71,4 +71,9 @@
     <string name="filterFeira">Feira</string>
     <string name="filterVaquinha">Vaquinha</string>
 
+    <!-- Event card -->
+    <string name="eventInitialDateToday">%1$s (%2$s)</string>
+    <string name="eventInitialAndEndDateSameDay">%1$s às %2$s</string>
+    <string name="eventInitialAndEndDateDifferentDay">%1$s até %2$s</string>
+
 </resources>

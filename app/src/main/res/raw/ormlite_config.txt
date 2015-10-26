@@ -29,6 +29,9 @@ fieldName=latitude
 fieldName=longitude
 # --field-end--
 # --field-start--
+fieldName=locationSummary
+# --field-end--
+# --field-start--
 fieldName=locationDescription
 # --field-end--
 # --field-start--
