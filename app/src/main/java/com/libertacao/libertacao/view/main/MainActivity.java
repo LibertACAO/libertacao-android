@@ -19,6 +19,8 @@ import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
+import com.libertacao.libertacao.view.admin.AdminFragment;
+import com.libertacao.libertacao.view.contact.ContactFragment;
 import com.libertacao.libertacao.view.login.ParseLoginActivity;
 import com.libertacao.libertacao.view.notificacoes.NotificacaoFragment;
 import com.libertacao.libertacao.view.perfil.PerfilFragment;
@@ -87,7 +89,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 startActivityForResult(intent, LOGIN_RESULT_CODE);
             }
         } else if(position == NavigationDrawerFragment.CONTATO){
-            // TODO: create contato screen
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, ContactFragment.newInstance()).commit();
+        } else if(position == NavigationDrawerFragment.ADMIN){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, AdminFragment.newInstance()).commit();
         }
     }
 

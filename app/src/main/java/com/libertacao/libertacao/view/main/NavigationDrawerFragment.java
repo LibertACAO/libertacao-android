@@ -37,13 +37,14 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Track drawer position
      */
-    @IntDef({NOTIFICACAO, CADASTRO_PERFIL, CONTATO})
+    @IntDef({NOTIFICACAO, CADASTRO_PERFIL, CONTATO, ADMIN})
     @Retention(RetentionPolicy.SOURCE)
     public @interface DrawerPosition {}
 
     public static final int NOTIFICACAO = 0;
     public static final int CADASTRO_PERFIL = 1;
     public static final int CONTATO = 2;
+    public static final int ADMIN = 3;
 
     /**
      * Remember the position of the selected item.
@@ -113,6 +114,9 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerStrings.add(getString(R.string.drawer_notificacoes));
         mDrawerStrings.add(getString(R.string.drawer_cadastro));
         mDrawerStrings.add(getString(R.string.drawer_contato));
+        if(LoginManager.getInstance().isAdmin()) {
+            mDrawerStrings.add(getString(R.string.drawer_admin));
+        }
         mDrawerArrayAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,

@@ -17,6 +17,7 @@
     <string name="drawer_cadastro">Cadastre-se</string>
     <string name="drawer_perfil">Perfil</string>
     <string name="drawer_contato">Contato</string>
+    <string name="drawer_admin">Administrar</string>
 
     <!-- Notifications -->
     <string name="empty_event_list">Sem nenhum evento :(…</string>
