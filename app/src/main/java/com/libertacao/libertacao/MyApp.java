@@ -21,7 +21,6 @@ import com.squareup.leakcanary.LeakCanary;
 import io.fabric.sdk.android.Fabric;
 
 // TODO: add custom notification
-// TODO: pedir imagens finais (logos, logos sem nome,...)
 // TODO: melhorar navigation drawer layout
 // TODO: add something including location (whereNear?) - https://parse.com/docs/android/guide#geopoints
 public class MyApp extends Application {
