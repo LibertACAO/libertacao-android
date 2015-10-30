@@ -3,7 +3,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_filter"
-        android:icon="@mipmap/ic_launcher"
         android:title="@string/filter"
         app:showAsAction="ifRoom"
         android:orderInCategory="1"/>
