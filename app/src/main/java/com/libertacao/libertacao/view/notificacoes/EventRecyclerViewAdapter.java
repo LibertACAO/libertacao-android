@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
-import com.libertacao.libertacao.databinding.RowNotificacaoBinding;
+import com.libertacao.libertacao.databinding.RowEventBinding;
 import com.libertacao.libertacao.view.customviews.OrmliteCursorRecyclerViewAdapter;
 import com.libertacao.libertacao.viewmodel.EventDataModel;
 
@@ -19,7 +19,7 @@ public class EventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<E
 
     @Override
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RowNotificacaoBinding binding = DataBindingUtil.inflate(
+        RowEventBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.row_event,
                 parent,
@@ -33,9 +33,9 @@ public class EventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<E
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {
-        final RowNotificacaoBinding binding;
+        final RowEventBinding binding;
 
-        public EventViewHolder(RowNotificacaoBinding binding) {
+        public EventViewHolder(RowEventBinding binding) {
             super(binding.cardView);
             this.binding = binding;
         }

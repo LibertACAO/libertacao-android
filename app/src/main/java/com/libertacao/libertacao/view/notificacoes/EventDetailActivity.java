@@ -6,11 +6,12 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.widget.Toast;
 
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
-import com.libertacao.libertacao.databinding.ActivityNotificacaoDetailBinding;
+import com.libertacao.libertacao.databinding.ActivityEventDetailBinding;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.map.MapFragment;
@@ -38,7 +39,7 @@ public class EventDetailActivity extends AppCompatActivity {
         } else {
             Event event = DatabaseHelper.getHelper(this).getEventIntegerRuntimeExceptionDao().queryForId(eventId);
             if(event != null){
-                ActivityNotificacaoDetailBinding binding = DataBindingUtil.setContentView(EventDetailActivity.this, R.layout.activity_event_detail);
+                ActivityEventDetailBinding binding = DataBindingUtil.setContentView(EventDetailActivity.this, R.layout.activity_event_detail);
                 binding.setEventDataModel(new EventDataModel(this, event));
                 ViewUtils.setHomeAsUpEnabled(EventDetailActivity.this);
 
@@ -48,6 +49,11 @@ public class EventDetailActivity extends AppCompatActivity {
                 notFoundEvent();
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
     /**

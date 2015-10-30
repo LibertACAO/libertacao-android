@@ -79,5 +79,6 @@
 
     <!-- Admin fragment-->
     <string name="addEvent">Adicionar evento</string>
+    <string name="editEvent">Editar evento</string>
 
 </resources>
