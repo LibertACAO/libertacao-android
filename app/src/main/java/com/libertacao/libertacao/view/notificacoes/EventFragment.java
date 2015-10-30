@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
-public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "NotificacaoFragment";
 
     // Array to keep track of current filter
@@ -51,11 +51,11 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
     @InjectView(R.id.event_recycler_view) EmptyRecyclerView mRecyclerView;
     @InjectView(R.id.empty_event_list_textview) TextView mEmptyTextView;
 
-    public static NotificacaoFragment newInstance() {
-        return new NotificacaoFragment();
+    public static EventFragment newInstance() {
+        return new EventFragment();
     }
 
-    public NotificacaoFragment() {
+    public EventFragment() {
         // Required empty public constructor
     }
 
@@ -141,7 +141,7 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
             LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
                 @Override
                 public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-                    return new OrmLiteCursorLoader<>(NotificacaoFragment.this.getContext(), eventIntegerDao, preparedQuery);
+                    return new OrmLiteCursorLoader<>(EventFragment.this.getContext(), eventIntegerDao, preparedQuery);
                 }
 
                 @Override
@@ -162,7 +162,7 @@ public class NotificacaoFragment extends Fragment implements SwipeRefreshLayout.
                 getLoaderManager().restartLoader(0, null, loaderCallbacks);
             }
         } catch (SQLException e) {
-            ViewUtils.showCriticalErrorMessageAndLogToCrashlytics(NotificacaoFragment.this.getContext(), mRecyclerView, TAG, e);
+            ViewUtils.showCriticalErrorMessageAndLogToCrashlytics(EventFragment.this.getContext(), mRecyclerView, TAG, e);
         }
     }
 

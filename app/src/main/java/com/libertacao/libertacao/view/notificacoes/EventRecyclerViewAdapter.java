@@ -21,7 +21,7 @@ public class EventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<E
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RowNotificacaoBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
-                R.layout.row_notificacao,
+                R.layout.row_event,
                 parent,
                 false);
         return new EventViewHolder(binding);

@@ -15,7 +15,7 @@ import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.util.MyDateUtils;
 import com.libertacao.libertacao.util.ShareUtils;
-import com.libertacao.libertacao.view.notificacoes.EventDetail;
+import com.libertacao.libertacao.view.notificacoes.EventDetailActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -192,7 +192,7 @@ public class EventDataModel extends BaseObservable {
      */
     @SuppressWarnings("unused")
     public void onEventClick(View view){
-        context.startActivity(EventDetail.newIntent(context, event));
+        context.startActivity(EventDetailActivity.newIntent(context, event));
     }
 
     /**

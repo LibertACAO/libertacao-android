@@ -41,7 +41,7 @@
         </activity>
 
         <activity
-            android:name=".view.notificacoes.EventDetail"
+            android:name=".view.notificacoes.EventDetailActivity"
               android:label="@string/details"
               android:parentActivityName=".view.main.MainActivity"
               android:screenOrientation="portrait" >

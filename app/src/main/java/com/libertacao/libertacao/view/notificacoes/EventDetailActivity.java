@@ -16,16 +16,16 @@ import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.libertacao.libertacao.viewmodel.EventDataModel;
 
-public class EventDetail extends AppCompatActivity {
+public class EventDetailActivity extends AppCompatActivity {
     private static final String EVENT_ID = "EVENT_ID";
 
     public static Intent newIntent(Context context, Event event){
-        Intent intent = new Intent(context, EventDetail.class);
+        Intent intent = new Intent(context, EventDetailActivity.class);
         intent.putExtra(EVENT_ID, event.getId());
         return intent;
     }
 
-    public EventDetail(){
+    public EventDetailActivity(){
         // Required empty public constructor
     }
 
@@ -38,9 +38,9 @@ public class EventDetail extends AppCompatActivity {
         } else {
             Event event = DatabaseHelper.getHelper(this).getEventIntegerRuntimeExceptionDao().queryForId(eventId);
             if(event != null){
-                ActivityNotificacaoDetailBinding binding = DataBindingUtil.setContentView(EventDetail.this, R.layout.activity_notificacao_detail);
+                ActivityNotificacaoDetailBinding binding = DataBindingUtil.setContentView(EventDetailActivity.this, R.layout.activity_event_detail);
                 binding.setEventDataModel(new EventDataModel(this, event));
-                ViewUtils.setHomeAsUpEnabled(EventDetail.this);
+                ViewUtils.setHomeAsUpEnabled(EventDetailActivity.this);
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.event_map, MapFragment.newInstance(event)).commit();

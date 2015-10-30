@@ -22,7 +22,7 @@ import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.admin.AdminFragment;
 import com.libertacao.libertacao.view.contact.ContactFragment;
 import com.libertacao.libertacao.view.login.ParseLoginActivity;
-import com.libertacao.libertacao.view.notificacoes.NotificacaoFragment;
+import com.libertacao.libertacao.view.notificacoes.EventFragment;
 import com.libertacao.libertacao.view.perfil.PerfilFragment;
 import com.parse.ParseUser;
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     public void setupEventFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.container, NotificacaoFragment.newInstance()).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, EventFragment.newInstance()).commit();
     }
 
     @Override
