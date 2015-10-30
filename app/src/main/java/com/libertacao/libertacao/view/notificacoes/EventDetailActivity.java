@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.databinding.ActivityEventDetailBinding;
+import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.map.MapFragment;
@@ -53,7 +55,19 @@ public class EventDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if(LoginManager.getInstance().isAdmin()) {
+            getMenuInflater().inflate(R.menu.event_detail_menu, menu);
+        }
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.menu_edit_event) {
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
