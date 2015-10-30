@@ -21,7 +21,7 @@
 
     <!-- Notifications -->
     <string name="empty_event_list">Sem nenhum evento :(…</string>
-    <string name="share">Share</string>
+    <string name="share">Compartilhar</string>
 
     <!-- Details -->
     <string name="details">Detalhes</string>
