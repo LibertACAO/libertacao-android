@@ -77,4 +77,7 @@
     <string name="eventInitialAndEndDateSameDay">%1$s às %2$s</string>
     <string name="eventInitialAndEndDateDifferentDay">%1$s até %2$s</string>
 
+    <!-- Admin fragment-->
+    <string name="addEvent">Adicionar evento</string>
+
 </resources>
