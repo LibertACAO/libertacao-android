@@ -3,6 +3,7 @@ package com.libertacao.libertacao.viewmodel;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +20,7 @@ import com.libertacao.libertacao.view.notificacoes.EventDetailActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
- * This class is the ViewModel of the MVVM architecture pattern. It provides data for row_notificao.xml layout.
+ * This class is the ViewModel of the MVVM architecture pattern, representing an Event
  */
 @SuppressWarnings("unused")
 public class EventDataModel extends BaseObservable {
@@ -31,7 +32,7 @@ public class EventDataModel extends BaseObservable {
     /**
      * Related event. This has all data that we need.
      */
-    private Event event;
+    protected Event event;
 
     /**
      * Standard constructor to build an EventDataModel
@@ -71,6 +72,7 @@ public class EventDataModel extends BaseObservable {
      * Provides event image URL
      * @return event image URL
      */
+    @Bindable
     public String getImage() {
         return event.getImage();
     }
@@ -80,7 +82,7 @@ public class EventDataModel extends BaseObservable {
      * @return View.VISIBLE if there is an image; View.GONE otherwise so the view does not take space
      */
     public int isImageVisible() {
-        return event.hasImage()? View.VISIBLE : View.GONE;
+        return event.hasImage() ? View.VISIBLE : View.GONE;
     }
 
     /**
@@ -170,15 +172,10 @@ public class EventDataModel extends BaseObservable {
     }
 
     /**
-     * Following methods are all used by DataBinding library
-     */
-
-    /**
      * Load image into imageView
      * @param imageView target
      * @param image source
      */
-    @SuppressWarnings("unused")
     @BindingAdapter({"bind:image"})
     public static void loadImage(@NonNull ImageView imageView, @Nullable String image) {
         if (image != null) {
@@ -190,7 +187,6 @@ public class EventDataModel extends BaseObservable {
      * Called when user pressed this event
      * @param view target
      */
-    @SuppressWarnings("unused")
     public void onEventClick(View view){
         context.startActivity(EventDetailActivity.newIntent(context, event));
     }
@@ -199,7 +195,6 @@ public class EventDataModel extends BaseObservable {
      * Called when user shared this event
      * @param view target
      */
-    @SuppressWarnings("unused")
     public void onShareClick(View view){
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);

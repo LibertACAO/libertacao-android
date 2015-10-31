@@ -37,6 +37,7 @@ public class AdminFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add_event:
+                startActivity(EditEventActivity.newIntent(getContext()));
                 return true;
         }
         return super.onOptionsItemSelected(item);

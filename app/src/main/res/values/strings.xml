@@ -81,4 +81,14 @@
     <string name="addEvent">Adicionar evento</string>
     <string name="editEvent">Editar evento</string>
 
+    <!-- Edit event -->
+    <string name="title">Título (Feira Vegana)</string>
+    <string name="subtitle">Subtítulo (Venha participar da Feira Vegana)</string>
+    <string name="initialDate">22/10 – 20h</string>
+    <string name="endDate">22/10 – 21h</string>
+    <string name="locationSummary">Localização (Porto Alegre, RS)</string>
+    <string name="locationDescription">Localização completa (Avenida Lajeado, 6520)</string>
+    <string name="createEdit">Criar/editar</string>
+    <string name="saveEvent">Salvar</string>
+
 </resources>

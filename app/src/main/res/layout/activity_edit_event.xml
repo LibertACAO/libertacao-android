@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context="com.libertacao.libertacao.view.admin.EditEventActivity">
+    <data>
+        <variable name="editEventDataModel" type="com.libertacao.libertacao.viewmodel.EditEventDataModel"/>
+    </data>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+
+        <include layout="@layout/toolbar"/>
+
+        <ImageView
+            android:id="@+id/notificacao_detail_image"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:image="@{editEventDataModel.image}"
+            android:scaleType="centerCrop"
+            android:background="@android:color/black"
+            android:onClick="@{editEventDataModel.onImageClick}"
+            tools:ignore="ContentDescription"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/notificacao_detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
+                android:text="@{editEventDataModel.title}"
+                android:inputType="textCapWords"
+                android:hint="@string/title"/>
+
+            <EditText
+                android:id="@+id/notificacao_detail_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                android:text="@{editEventDataModel.subtitle}"
+                android:inputType="textCapSentences"
+                android:hint="@string/subtitle"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{editEventDataModel.initialDate}"
+                android:focusable="false"
+                android:hint="@string/initialDate"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{editEventDataModel.endDate}"
+                android:focusable="false"
+                android:hint="@string/endDate"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{editEventDataModel.locationSummary}"
+                android:inputType="textCapWords"
+                android:hint="@string/locationSummary"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{editEventDataModel.locationDescription}"
+                android:inputType="textCapWords"
+                android:hint="@string/locationDescription"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/event_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</layout>

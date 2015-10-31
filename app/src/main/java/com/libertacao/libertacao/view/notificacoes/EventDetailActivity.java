@@ -16,11 +16,13 @@ import com.libertacao.libertacao.databinding.ActivityEventDetailBinding;
 import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.ViewUtils;
+import com.libertacao.libertacao.view.admin.EditEventActivity;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.libertacao.libertacao.viewmodel.EventDataModel;
 
 public class EventDetailActivity extends AppCompatActivity {
     private static final String EVENT_ID = "EVENT_ID";
+    private Event event;
 
     public static Intent newIntent(Context context, Event event){
         Intent intent = new Intent(context, EventDetailActivity.class);
@@ -39,11 +41,11 @@ public class EventDetailActivity extends AppCompatActivity {
         if (eventId == -1){
             notFoundEvent();
         } else {
-            Event event = DatabaseHelper.getHelper(this).getEventIntegerRuntimeExceptionDao().queryForId(eventId);
+            event = DatabaseHelper.getHelper(this).getEventIntegerRuntimeExceptionDao().queryForId(eventId);
             if(event != null){
-                ActivityEventDetailBinding binding = DataBindingUtil.setContentView(EventDetailActivity.this, R.layout.activity_event_detail);
+                ActivityEventDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_event_detail);
                 binding.setEventDataModel(new EventDataModel(this, event));
-                ViewUtils.setHomeAsUpEnabled(EventDetailActivity.this);
+                ViewUtils.setHomeAsUpEnabled(this);
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.event_map, MapFragment.newInstance(event)).commit();
@@ -64,7 +66,7 @@ public class EventDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_edit_event) {
-
+            startActivity(EditEventActivity.newIntent(this, event));
             return true;
         }
         return super.onOptionsItemSelected(item);
