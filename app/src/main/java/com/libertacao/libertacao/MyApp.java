@@ -19,6 +19,7 @@ import com.parse.ParseUser;
 import com.squareup.leakcanary.LeakCanary;
 
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 
 // TODO: add custom notification
 // TODO: melhorar navigation drawer layout
@@ -33,7 +34,10 @@ public class MyApp extends Application {
 
     public void onCreate() {
         super.onCreate();
-        if(!BuildConfig.DEBUG) {
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        } else {
             Fabric.with(this, new Crashlytics());
         }
         LeakCanary.install(this);
