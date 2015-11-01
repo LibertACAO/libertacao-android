@@ -23,16 +23,16 @@
             android:onClick="@{editEventDataModel.onImageClick}"
             tools:ignore="ContentDescription"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/activity_horizontal_margin">
 
             <EditText
                 android:id="@+id/notificacao_detail_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
                 android:text="@{editEventDataModel.title}"
                 android:inputType="textCapWords"
@@ -42,40 +42,79 @@
                 android:id="@+id/notificacao_detail_subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/notificacao_detail_title"
                 style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
                 android:text="@{editEventDataModel.subtitle}"
                 android:inputType="textCapSentences"
                 android:hint="@string/subtitle"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:id="@+id/notification_initial_date"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/notificacao_detail_subtitle"
                 android:text="@{editEventDataModel.initialDate}"
+                android:onClick="@{editEventDataModel.onInitialDateClick}"
                 android:focusable="false"
-                android:hint="@string/initialDate"/>
+                android:hint="@string/initialDate"
+                tools:ignore="TextFields"/>
 
             <EditText
-                android:layout_width="match_parent"
+                android:id="@+id/notification_initial_hour"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/notificacao_detail_subtitle"
+                android:layout_toRightOf="@+id/notification_initial_date"
+                android:layout_toEndOf="@+id/notification_initial_date"
+                android:text="@{editEventDataModel.initialHour}"
+                android:onClick="@{editEventDataModel.onInitialHourClick}"
+                android:focusable="false"
+                android:hint="@string/initialHour"
+                tools:ignore="TextFields"/>
+
+            <EditText
+                android:id="@+id/notification_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/notification_initial_date"
                 android:text="@{editEventDataModel.endDate}"
+                android:onClick="@{editEventDataModel.onEndDateClick}"
                 android:focusable="false"
-                android:hint="@string/endDate"/>
+                android:hint="@string/endDate"
+                tools:ignore="TextFields"/>
 
             <EditText
+                android:id="@+id/notification_end_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/notification_initial_date"
+                android:layout_toRightOf="@+id/notification_end_date"
+                android:layout_toEndOf="@+id/notification_end_date"
+                android:text="@{editEventDataModel.endHour}"
+                android:onClick="@{editEventDataModel.onEndHourClick}"
+                android:focusable="false"
+                android:hint="@string/endHour"
+                tools:ignore="TextFields"/>
+
+            <EditText
+                android:id="@+id/notification_location_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/notification_end_date"
                 android:text="@{editEventDataModel.locationSummary}"
                 android:inputType="textCapWords"
                 android:hint="@string/locationSummary"/>
 
             <EditText
+                android:id="@+id/notification_location_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/notification_location_summary"
                 android:text="@{editEventDataModel.locationDescription}"
                 android:inputType="textCapWords"
                 android:hint="@string/locationDescription"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <FrameLayout
             android:id="@+id/event_map"

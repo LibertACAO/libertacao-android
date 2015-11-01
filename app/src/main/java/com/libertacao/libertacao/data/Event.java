@@ -155,11 +155,19 @@ public class Event {
         return initialDate != null;
     }
 
+    public void setInitialDate(Date initialDate) {
+        this.initialDate = initialDate;
+    }
+
     public Date getEndDate() {
         return endDate;
     }
 
     public boolean hasEndDate() {
         return endDate != null;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

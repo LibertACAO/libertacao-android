@@ -27,7 +27,7 @@ public class EventDataModel extends BaseObservable {
     /**
      * Hold on context to perform start activities
      */
-    private final Context context;
+    protected final Context context;
 
     /**
      * Related event. This has all data that we need.
