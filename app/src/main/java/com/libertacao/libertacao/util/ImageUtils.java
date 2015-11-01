@@ -12,7 +12,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 // Code from http://stackoverflow.com/questions/26753223/select-image-from-gallery-in-android-fragment
 public class ImageUtils {
@@ -59,7 +58,6 @@ public class ImageUtils {
 
             filePath = getPath(activity.getBaseContext(), originalUri);
         }
-        Toast.makeText(activity, "Foto selecionada com sucesso!", Toast.LENGTH_LONG).show();
         return filePath;
     }
 

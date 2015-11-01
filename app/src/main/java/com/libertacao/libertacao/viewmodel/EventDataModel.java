@@ -158,7 +158,7 @@ public class EventDataModel extends BaseObservable {
      * @return View.VISIBLE if there is a latitude and a longitude; View.GONE otherwise so the view does not take space
      */
     public int isLocationVisible() {
-        return (event.getLatitude() != -1 && event.getLongitude() != -1)? View.VISIBLE : View.GONE;
+        return (event.hasLocation())? View.VISIBLE : View.GONE;
     }
 
     /**

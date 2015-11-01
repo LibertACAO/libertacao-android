@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.databinding.Bindable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -37,10 +38,14 @@ public class EditEventDataModel extends EventDataModel {
      */
     private Calendar initialDateCalendar;
 
+    private boolean initialDateSet;
+
     /**
      * Store selected event end date
      */
     private Calendar endDateCalendar;
+
+    private boolean endDateSet;
 
     /**
      * Complete constructor to build an EventDataModel
@@ -54,10 +59,16 @@ public class EditEventDataModel extends EventDataModel {
         initialDateCalendar = Calendar.getInstance(new Locale("pt", "BR"));
         if(event.hasInitialDate()) {
             initialDateCalendar.setTime(event.getInitialDate());
+            initialDateSet = true;
+        } else {
+            initialDateSet = false;
         }
         endDateCalendar = Calendar.getInstance(new Locale("pt", "BR"));
         if(event.hasEndDate()) {
             endDateCalendar.setTime(event.getEndDate());
+            endDateSet = true;
+        } else {
+            endDateSet = false;
         }
     }
 
@@ -186,6 +197,7 @@ public class EditEventDataModel extends EventDataModel {
             initialDateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             event.setInitialDate(initialDateCalendar.getTime());
             notifyPropertyChanged(BR.initialDate);
+            initialDateSet = true;
         }
     };
 
@@ -213,6 +225,7 @@ public class EditEventDataModel extends EventDataModel {
             initialDateCalendar.set(Calendar.MINUTE, minute);
             event.setInitialDate(initialDateCalendar.getTime());
             notifyPropertyChanged(BR.initialHour);
+            initialDateSet = true;
         }
     };
 
@@ -237,6 +250,7 @@ public class EditEventDataModel extends EventDataModel {
             endDateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             event.setEndDate(endDateCalendar.getTime());
             notifyPropertyChanged(BR.endDate);
+            endDateSet = true;
         }
     };
 
@@ -264,6 +278,7 @@ public class EditEventDataModel extends EventDataModel {
             endDateCalendar.set(Calendar.MINUTE, minute);
             event.setEndDate(endDateCalendar.getTime());
             notifyPropertyChanged(BR.endHour);
+            endDateSet = true;
         }
     };
 
@@ -275,5 +290,21 @@ public class EditEventDataModel extends EventDataModel {
         TimePickerDialog timePickerDialog = new TimePickerDialog(context, onEndHourTimeSetListener,
                 endDateCalendar.get(Calendar.HOUR_OF_DAY), endDateCalendar.get(Calendar.MINUTE), true);
         timePickerDialog.show();
+    }
+
+    /**
+     * Get initial date calendar
+     * @return initial date calendar
+     */
+    @Nullable public Calendar getInitialDateCalendar() {
+        return initialDateSet? initialDateCalendar : null;
+    }
+
+    /**
+     * Get end date calendar
+     * @return end date calendar
+     */
+    @Nullable public Calendar getEndDateCalendar() {
+        return endDateSet? endDateCalendar : null;
     }
 }

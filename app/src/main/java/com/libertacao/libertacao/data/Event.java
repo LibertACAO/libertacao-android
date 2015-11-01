@@ -12,6 +12,13 @@ import java.util.Date;
 
 public class Event {
     public static final String EVENT = "Event";
+    public static final String TITLE = "title";
+    public static final String SUBTITLE = "subtitle";
+    public static final String DESCRIPTION = "description";
+    public static final String LOCATION_SUMMARY = "locationSummary";
+    public static final String LOCATION_DESCRIPTION = "locationDescription";
+    public static final String LOCATION = "location";
+    public static final String IMAGE = "image";
     public static final String TYPE = "type";
     public static final String INITIAL_DATE = "initialDate";
     public static final String END_DATE = "endDate";
@@ -83,20 +90,20 @@ public class Event {
     }
 
     public static Event getEvent(@NonNull ParseObject object){
-        ParseGeoPoint location = object.getParseGeoPoint("location");
-        ParseFile parseFile = object.getParseFile("image");
+        ParseGeoPoint location = object.getParseGeoPoint(LOCATION);
+        ParseFile parseFile = object.getParseFile(IMAGE);
         return new Event(object.getObjectId(),
-                object.getString("title"),
-                object.getString("subtitle"),
-                object.getString("description"),
+                object.getString(TITLE),
+                object.getString(SUBTITLE),
+                object.getString(DESCRIPTION),
                 location != null? location.getLatitude() : -1,
                 location != null? location.getLongitude() : -1,
-                object.getString("locationSummary"),
-                object.getString("locationDescription"),
+                object.getString(LOCATION_SUMMARY),
+                object.getString(LOCATION_DESCRIPTION),
                 parseFile != null? parseFile.getUrl() : null,
-                object.getDate("initialDate"),
-                object.getDate("endDate"),
-                object.getInt("type"));
+                object.getDate(INITIAL_DATE),
+                object.getDate(END_DATE),
+                object.getInt(TYPE));
     }
 
     public int getId() {
@@ -137,6 +144,10 @@ public class Event {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public boolean hasLocation() {
+        return latitude != -1 && longitude != -1;
     }
 
     public String getLocationSummary() {

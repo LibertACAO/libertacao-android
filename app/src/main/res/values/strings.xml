@@ -92,5 +92,8 @@
     <string name="locationDescription">Localização completa (Avenida Lajeado, 6520)</string>
     <string name="createEdit">Criar/editar</string>
     <string name="saveEvent">Salvar</string>
+    <string name="photoSelectedSuccessfully">Foto selecionada com sucesso!</string>
+    <string name="savingEvent">Salvando evento…</string>
+    <string name="eventSavedSuccessfully">Evento salvo com sucesso!</string>
 
 </resources>

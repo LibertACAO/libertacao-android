@@ -33,7 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
                 android:text="@{editEventDataModel.title}"
                 android:inputType="textCapWords"
                 android:hint="@string/title"/>
@@ -43,7 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/notificacao_detail_title"
-                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
                 android:text="@{editEventDataModel.subtitle}"
                 android:inputType="textCapSentences"
                 android:hint="@string/subtitle"/>
