@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.notificacoes.EventDetailActivity"
+            android:name=".view.event.EventDetailActivity"
             android:label="@string/details"
             android:parentActivityName=".view.main.MainActivity"
             android:screenOrientation="portrait"

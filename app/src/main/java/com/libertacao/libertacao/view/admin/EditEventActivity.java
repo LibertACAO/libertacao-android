@@ -70,6 +70,8 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
         switch(item.getItemId()) {
             case R.id.menu_save_event:
                 Timber.d(editEventDataModel.getEvent().getTitle());
+                // TODO: add location
+                // TODO: create in Parse
                 return true;
             case android.R.id.home:
                 // Without this the back button doesn't work

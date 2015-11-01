@@ -22,7 +22,7 @@ import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.admin.AdminFragment;
 import com.libertacao.libertacao.view.contact.ContactFragment;
 import com.libertacao.libertacao.view.login.ParseLoginActivity;
-import com.libertacao.libertacao.view.notificacoes.EventFragment;
+import com.libertacao.libertacao.view.event.EventFragment;
 import com.libertacao.libertacao.view.perfil.PerfilFragment;
 import com.parse.ParseUser;
 

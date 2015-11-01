@@ -1,4 +1,4 @@
-package com.libertacao.libertacao.view.notificacoes;
+package com.libertacao.libertacao.view.event;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

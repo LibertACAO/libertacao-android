@@ -4,7 +4,6 @@
              android:layout_height="match_parent"
              tools:context="com.libertacao.libertacao.view.admin.AdminFragment">
 
-    <!-- TODO: Implement create event -->
     <!-- TODO: Implement add users to management role (only available to admins) -->
     <TextView
         android:layout_width="match_parent"

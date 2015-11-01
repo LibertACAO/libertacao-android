@@ -16,7 +16,7 @@ import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.util.MyDateUtils;
 import com.libertacao.libertacao.util.ShareUtils;
-import com.libertacao.libertacao.view.notificacoes.EventDetailActivity;
+import com.libertacao.libertacao.view.event.EventDetailActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
