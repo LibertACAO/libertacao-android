@@ -1,10 +1,13 @@
 package com.libertacao.libertacao.view.event;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +22,9 @@ import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.admin.EditEventActivity;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.libertacao.libertacao.viewmodel.EventDataModel;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 
 public class EventDetailActivity extends AppCompatActivity {
     private static final String EVENT_ID = "EVENT_ID";
@@ -58,16 +64,20 @@ public class EventDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(LoginManager.getInstance().isAdmin()) {
-            getMenuInflater().inflate(R.menu.event_detail_menu, menu);
+            getMenuInflater().inflate(R.menu.admin_event_detail_menu, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menu_edit_event) {
-            startActivity(EditEventActivity.newIntent(this, event));
-            return true;
+        switch(item.getItemId()) {
+            case R.id.menu_edit_event:
+                startActivity(EditEventActivity.newIntent(this, event));
+                return true;
+            case R.id.menu_delete_event:
+                deleteEvent();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -79,5 +89,30 @@ public class EventDetailActivity extends AppCompatActivity {
     private void notFoundEvent() {
         Toast.makeText(getBaseContext(), getString(R.string.eventNotFound), Toast.LENGTH_LONG).show();
         finish();
+    }
+
+    private void deleteEvent() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.delete))
+                .setMessage(getString(R.string.deleteConfirm))
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog pd = ViewUtils.showProgressDialog(EventDetailActivity.this, getString(R.string.deletingEvent), false);
+                        ParseObject eventParseObject = new ParseObject(Event.EVENT);
+                        eventParseObject.setObjectId(event.getObjectId());
+                        eventParseObject.deleteInBackground(new DeleteCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                ViewUtils.hideProgressDialog(pd);
+                                Toast.makeText(EventDetailActivity.this,
+                                        EventDetailActivity.this.getString(R.string.eventDeletedSuccessfully),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

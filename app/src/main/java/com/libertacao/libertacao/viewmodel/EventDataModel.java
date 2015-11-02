@@ -53,14 +53,6 @@ public class EventDataModel extends BaseObservable {
     }
 
     /**
-     * Provides subtitle attribute
-     * @return event subtitle
-     */
-    public String getSubtitle() {
-        return event.getSubtitle();
-    }
-
-    /**
      * Provides description attribute
      * @return event description
      */

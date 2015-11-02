@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
-                android:text="@{eventDataModel.subtitle}"
+                android:text="@{eventDataModel.description}"
                 tools:text="Faça a diferença na vida dos animais acolhidos pelo Rancho dos Gnomos. Juntos somos mais fortes, juntos podemos ir mais longe ;-)"/>
 
             <TextView

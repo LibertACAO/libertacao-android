@@ -13,13 +13,13 @@ import java.util.Date;
 public class Event {
     public static final String EVENT = "Event";
     public static final String TITLE = "title";
-    public static final String SUBTITLE = "subtitle";
     public static final String DESCRIPTION = "description";
     public static final String LOCATION_SUMMARY = "locationSummary";
     public static final String LOCATION_DESCRIPTION = "locationDescription";
     public static final String LOCATION = "location";
     public static final String IMAGE = "image";
     public static final String TYPE = "type";
+    public static final String ENABLED = "enabled";
     public static final String INITIAL_DATE = "initialDate";
     public static final String END_DATE = "endDate";
 
@@ -31,9 +31,6 @@ public class Event {
 
     @DatabaseField
     private String title;
-
-    @DatabaseField
-    private String subtitle;
 
     @DatabaseField
     private String description;
@@ -64,6 +61,9 @@ public class Event {
     @DatabaseField
     private int type;
 
+    @DatabaseField
+    private boolean enabled;
+
     @SuppressWarnings("FieldCanBeLocal")
     @DatabaseField(dataType = DataType.DATE_LONG)
     private Date lastSynced;
@@ -72,11 +72,11 @@ public class Event {
 
     }
 
-    public Event(@NonNull String objectId, @NonNull String title, String subtitle, String description, double latitude, double longitude,
-                 String locationSummary, String locationDescription, String image, @NonNull Date initialDate, Date endDate, int type) {
+    public Event(@NonNull String objectId, @NonNull String title, String description, double latitude, double longitude,
+                 String locationSummary, String locationDescription, String image, @NonNull Date initialDate, Date endDate, int type,
+                 boolean enabled) {
         this.objectId = objectId;
         this.title = title;
-        this.subtitle = subtitle;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -87,6 +87,7 @@ public class Event {
         this.endDate = endDate;
         this.type = type;
         this.lastSynced = new Date();
+        this.enabled = enabled;
     }
 
     public static Event getEvent(@NonNull ParseObject object){
@@ -94,7 +95,6 @@ public class Event {
         ParseFile parseFile = object.getParseFile(IMAGE);
         return new Event(object.getObjectId(),
                 object.getString(TITLE),
-                object.getString(SUBTITLE),
                 object.getString(DESCRIPTION),
                 location != null? location.getLatitude() : -1,
                 location != null? location.getLongitude() : -1,
@@ -103,7 +103,8 @@ public class Event {
                 parseFile != null? parseFile.getUrl() : null,
                 object.getDate(INITIAL_DATE),
                 object.getDate(END_DATE),
-                object.getInt(TYPE));
+                object.getInt(TYPE),
+                object.getBoolean(ENABLED));
     }
 
     public int getId() {
@@ -120,10 +121,6 @@ public class Event {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
     }
 
     public String getDescription() {

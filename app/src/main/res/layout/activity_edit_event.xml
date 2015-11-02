@@ -38,19 +38,19 @@
                 android:hint="@string/title"/>
 
             <EditText
-                android:id="@+id/notificacao_detail_subtitle"
+                android:id="@+id/notificacao_detail_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/notificacao_detail_title"
-                android:text="@{editEventDataModel.subtitle}"
+                android:text="@{editEventDataModel.description}"
                 android:inputType="textCapSentences"
-                android:hint="@string/subtitle"/>
+                android:hint="@string/description"/>
 
             <EditText
                 android:id="@+id/notification_initial_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/notificacao_detail_subtitle"
+                android:layout_below="@id/notificacao_detail_description"
                 android:text="@{editEventDataModel.initialDate}"
                 android:onClick="@{editEventDataModel.onInitialDateClick}"
                 android:focusable="false"
@@ -61,7 +61,7 @@
                 android:id="@+id/notification_initial_hour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/notificacao_detail_subtitle"
+                android:layout_below="@id/notificacao_detail_description"
                 android:layout_toRightOf="@+id/notification_initial_date"
                 android:layout_toEndOf="@+id/notification_initial_date"
                 android:text="@{editEventDataModel.initialHour}"

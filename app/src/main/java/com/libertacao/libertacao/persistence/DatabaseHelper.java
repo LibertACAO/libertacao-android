@@ -17,6 +17,7 @@ import com.j256.ormlite.table.TableUtils;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.DataConfig;
 import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.util.MyDateUtils;
 
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ import java.util.List;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int LAST_SYNCED_THRESHOLD_IN_MINUTES = -30; // time that instances have before being deleted by next sync
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
     private static final String TAG = "DatabaseHelper";
     private Dao<Event, Integer> eventIntegerDao = null;
     private RuntimeExceptionDao<Event, Integer> eventIntegerRuntimeExceptionDao = null;
@@ -153,6 +154,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         if(selectedFilter != 0) {
             where.eq(Event.TYPE, selectedFilter);
+            where.and(2);
+        }
+
+        if(!LoginManager.getInstance().isAdmin()) {
+            // If it is not admin, does not query not enabled events
+            where.eq(Event.ENABLED, true);
             where.and(2);
         }
 

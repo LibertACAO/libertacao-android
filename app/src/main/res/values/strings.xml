@@ -80,10 +80,11 @@
     <!-- Admin fragment-->
     <string name="addEvent">Adicionar evento</string>
     <string name="editEvent">Editar evento</string>
+    <string name="deleteEvent">Deletar evento</string>
 
     <!-- Edit event -->
     <string name="title">Título (Feira Vegana)</string>
-    <string name="subtitle">Subtítulo (Venha participar da Feira Vegana)</string>
+    <string name="description">Descrição (Venha participar da Feira Vegana…)</string>
     <string name="initialDate">22/10</string>
     <string name="initialHour">20h</string>
     <string name="endDate">22/10</string>
@@ -95,5 +96,11 @@
     <string name="photoSelectedSuccessfully">Foto selecionada com sucesso!</string>
     <string name="savingEvent">Salvando evento…</string>
     <string name="eventSavedSuccessfully">Evento salvo com sucesso!</string>
+
+    <!-- Event details - Admin -->
+    <string name="delete">Deletar</string>
+    <string name="deleteConfirm">Você tem certeza que quer deletar esse evento?</string>
+    <string name="deletingEvent">Deletando evento…</string>
+    <string name="eventDeletedSuccessfully">Evento deletado com sucesso!</string>
 
 </resources>

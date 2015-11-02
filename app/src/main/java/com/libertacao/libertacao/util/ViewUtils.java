@@ -1,5 +1,6 @@
 package com.libertacao.libertacao.util;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -41,5 +42,19 @@ public class ViewUtils {
             displayImageOptions = new DisplayImageOptions.Builder().displayer(new FadeInBitmapDisplayer(500)).build();
         }
         return displayImageOptions;
+    }
+
+    // Progress dialog
+    public static ProgressDialog showProgressDialog(Context context, String message, boolean isCancelable) {
+        final ProgressDialog pd = new ProgressDialog(context);
+        pd.setMessage(message);
+        pd.setCancelable(isCancelable);
+        pd.show();
+        return pd;
+    }
+
+    public static void hideProgressDialog(ProgressDialog pd) {
+        pd.dismiss();
+        pd.cancel();
     }
 }

@@ -17,9 +17,6 @@ fieldName=objectId
 fieldName=title
 # --field-end--
 # --field-start--
-fieldName=subtitle
-# --field-end--
-# --field-start--
 fieldName=description
 # --field-end--
 # --field-start--
@@ -45,6 +42,9 @@ fieldName=endDate
 # --field-end--
 # --field-start--
 fieldName=type
+# --field-end--
+# --field-start--
+fieldName=enabled
 # --field-end--
 # --field-start--
 fieldName=lastSynced
