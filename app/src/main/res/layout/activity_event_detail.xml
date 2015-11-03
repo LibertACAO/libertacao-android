@@ -5,72 +5,81 @@
     <data>
         <variable name="eventDataModel" type="com.libertacao.libertacao.viewmodel.EventDataModel"/>
     </data>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <include layout="@layout/toolbar"/>
-
-        <ImageView
-            android:id="@+id/notificacao_detail_image"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:image="@{eventDataModel.image}"
-            android:scaleType="centerCrop"
-            android:background="@android:color/black"
-            android:visibility="@{eventDataModel.isImageVisible}"
-            tools:ignore="ContentDescription"/>
+    <!-- TODO: add cool collapsing toolbar animations :D-->
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@{eventDataModel.enabled? @color/event_enabled : @color/event_not_enabled}"
+                android:id="@+id/event_detail_scroll_view">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/notificacao_detail_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
-                android:text="@{eventDataModel.title}"
-                tools:text="O SANTUÁRIO ECOLÓGICO RANCHO DOS GNOMOS PRECISA MUDAR"/>
+            <include layout="@layout/toolbar"/>
 
-            <TextView
-                android:id="@+id/notificacao_detail_subtitle"
+            <ImageView
+                android:id="@+id/notificacao_detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
-                android:text="@{eventDataModel.description}"
-                tools:text="Faça a diferença na vida dos animais acolhidos pelo Rancho dos Gnomos. Juntos somos mais fortes, juntos podemos ir mais longe ;-)"/>
+                android:layout_height="80dp"
+                app:image="@{eventDataModel.image}"
+                android:scaleType="centerCrop"
+                android:background="@android:color/black"
+                android:visibility="@{eventDataModel.isImageVisible}"
+                tools:ignore="ContentDescription"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{eventDataModel.date}"
-                tools:text="22/10 - 20h"/>
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{eventDataModel.locationSummary}"
-                android:visibility="@{eventDataModel.isLocationSummaryVisible}"
-                tools:text="Porto Alegre, RS"/>
+                <TextView
+                    android:id="@+id/notificacao_detail_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
+                    android:text="@{eventDataModel.title}"
+                    tools:text="O SANTUÁRIO ECOLÓGICO RANCHO DOS GNOMOS PRECISA MUDAR"/>
 
-            <TextView
+                <TextView
+                    android:id="@+id/notificacao_detail_subtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                    android:text="@{eventDataModel.description}"
+                    tools:text="Faça a diferença na vida dos animais acolhidos pelo Rancho dos Gnomos. Juntos somos mais fortes, juntos podemos ir mais longe ;-)"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{eventDataModel.date}"
+                    tools:text="22/10 - 20h"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{eventDataModel.locationSummary}"
+                    android:visibility="@{eventDataModel.isLocationSummaryVisible}"
+                    tools:text="Porto Alegre, RS"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{eventDataModel.locationDescription}"
+                    android:visibility="@{eventDataModel.isLocationDescriptionVisible}"
+                    tools:text="Avenida Lajeado, 6520"/>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/event_map"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{eventDataModel.locationDescription}"
-                android:visibility="@{eventDataModel.isLocationDescriptionVisible}"
-                tools:text="Avenida Lajeado, 6520"/>
+                android:layout_height="@dimen/map_fragment_height"
+                android:visibility="@{eventDataModel.isLocationVisible}"/>
 
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/event_map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{eventDataModel.isLocationVisible}"/>
-
-    </LinearLayout>
+    </ScrollView>
 </layout>

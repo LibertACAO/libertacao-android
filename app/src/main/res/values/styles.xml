@@ -13,9 +13,6 @@
     </style>
 
     <!-- Custom styles -->
-    <style name="LibertacaoCardView">
-        <item name="cardBackgroundColor">@color/FloralWhite</item>
-    </style>
 
     <style name="LogoImageView">
         <item name="android:layout_width">@dimen/logo_image_size</item>

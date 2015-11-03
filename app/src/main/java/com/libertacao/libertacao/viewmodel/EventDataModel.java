@@ -61,6 +61,14 @@ public class EventDataModel extends BaseObservable {
     }
 
     /**
+     * States if this event is enabled or not
+     * @return if event is enabled or not
+     */
+    public boolean isEnabled() {
+        return event.isEnabled();
+    }
+
+    /**
      * Provides event image URL
      * @return event image URL
      */

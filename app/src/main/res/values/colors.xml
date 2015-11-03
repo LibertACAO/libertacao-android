@@ -13,6 +13,9 @@
 
     <color name="medium_green">#27bf00</color>
 
+    <color name="event_enabled">@color/FloralWhite</color>
+    <color name="event_not_enabled">@color/red</color>
+
     <!-- Generic colors -->
     <color name="Black">#ff000000</color>
 

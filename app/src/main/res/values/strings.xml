@@ -5,6 +5,12 @@
     <string name="obrigatorio">Obrigatório</string>
     <string name="passwordNotMatch">Senhas não coincidem</string>
 
+    <!-- Event type -->
+    <string name="all">Todos</string>
+    <string name="feira">Feira</string>
+    <string name="vaquinha">Vaquinha</string>
+    <string name="outro">Outro</string>
+
     <!-- Alerts -->
     <string name="no_internet_connection">Sem conexão com a Internet. Para atualizar as informações, conecte-se a uma rede.</string>
     <string name="critical_error">Alguma coisa realmente errada aconteceu. Por favor, feche e reabra a aplicação.</string>
@@ -21,6 +27,7 @@
 
     <!-- Notifications -->
     <string name="empty_event_list">Sem nenhum evento :(…</string>
+    <string name="empty_event_list_with_filter">Sem nenhum evento :(…\nClique aqui para remover todos os filtros.</string>
     <string name="share">Compartilhar</string>
 
     <!-- Details -->
@@ -68,9 +75,7 @@
 
     <!-- Event Fragment -->
     <string name="filter">Filtrar</string>
-    <string name="filterAll">Todos</string>
-    <string name="filterFeira">Feira</string>
-    <string name="filterVaquinha">Vaquinha</string>
+    <string name="mustBeLoggedIn">Você precisa estar logado para acessar essa página</string>
 
     <!-- Event card -->
     <string name="eventInitialDateToday">%1$s (%2$s)</string>
@@ -92,10 +97,13 @@
     <string name="locationSummary">Localização (Porto Alegre, RS)</string>
     <string name="locationDescription">Localização completa (Avenida Lajeado, 6520)</string>
     <string name="createEdit">Criar/editar</string>
+    <string name="suggestEvent">Sugerir evento</string>
     <string name="saveEvent">Salvar</string>
     <string name="photoSelectedSuccessfully">Foto selecionada com sucesso!</string>
     <string name="savingEvent">Salvando evento…</string>
+    <string name="suggestingEvent">Sugerindo evento…</string>
     <string name="eventSavedSuccessfully">Evento salvo com sucesso!</string>
+    <string name="eventSuggestedSuccessfully">Evento sugerido com sucesso!</string>
 
     <!-- Event details - Admin -->
     <string name="delete">Deletar</string>

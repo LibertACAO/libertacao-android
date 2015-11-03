@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.support.OrmLiteCursorLoader;
 import com.j256.ormlite.dao.Dao;
@@ -24,10 +25,12 @@ import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.event.SyncedEvent;
 import com.libertacao.libertacao.manager.ConnectionManager;
+import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
+import com.libertacao.libertacao.view.admin.EditEventActivity;
 import com.libertacao.libertacao.view.customviews.EmptyRecyclerView;
 
 import java.sql.SQLException;
@@ -68,6 +71,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_fragment_menu, menu);
+        inflater.inflate(R.menu.add_event_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -75,7 +79,10 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_filter:
-                final CharSequence[] items = {getString(R.string.filterAll), getString(R.string.filterFeira), getString(R.string.filterVaquinha)};
+                CharSequence[] eventTypes = Event.getEventTypes();
+                CharSequence[] items = new CharSequence[eventTypes.length + 1];
+                items[0] = getString(R.string.all);
+                System.arraycopy(eventTypes, 0, items, 1, eventTypes.length);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.filter));
@@ -84,11 +91,19 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     public void onClick(DialogInterface dialog, int which) {
                         selectedFilter = which;
                         setupAdapterAndLoader();
+                        setupEmptyText();
                         dialog.dismiss();
                     }
                 });
                 builder.setNegativeButton(getString(android.R.string.cancel), null);
                 builder.show();
+                return true;
+            case R.id.menu_add_event:
+                if(LoginManager.getInstance().isLoggedIn()) {
+                    startActivity(EditEventActivity.newIntent(getContext()));
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.mustBeLoggedIn), Toast.LENGTH_SHORT).show();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -99,6 +114,16 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_events, container, false);
         ButterKnife.inject(this, layout);
+        mEmptyTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedFilter != 0) {
+                    selectedFilter = 0;
+                    setupAdapterAndLoader();
+                    setupEmptyText();
+                }
+            }
+        });
         setupRecyclerView();
         EventBus.getDefault().register(this);
         return layout;
@@ -110,7 +135,15 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         EventBus.getDefault().unregister(this);
     }
 
-    public void setupRecyclerView() {
+    private void setupEmptyText() {
+        if(selectedFilter == 0) {
+            mEmptyTextView.setText(R.string.empty_event_list);
+        } else {
+            mEmptyTextView.setText(R.string.empty_event_list_with_filter);
+        }
+    }
+
+    private void setupRecyclerView() {
         // Configure Swipe Refresh component
         mSwipeLayout.setOnRefreshListener(this);
         ViewUtils.setSwipeColorSchemeResources(mSwipeLayout);

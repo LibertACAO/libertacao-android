@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.libertacao.libertacao.R;
@@ -20,15 +21,21 @@ import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.admin.EditEventActivity;
+import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.libertacao.libertacao.viewmodel.EventDataModel;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class EventDetailActivity extends AppCompatActivity {
     private static final String EVENT_ID = "EVENT_ID";
     private Event event;
+
+    @InjectView(R.id.event_detail_scroll_view) ScrollView scrollView;
 
     public static Intent newIntent(Context context, Event event){
         Intent intent = new Intent(context, EventDetailActivity.class);
@@ -52,9 +59,17 @@ public class EventDetailActivity extends AppCompatActivity {
                 ActivityEventDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_event_detail);
                 binding.setEventDataModel(new EventDataModel(this, event));
                 ViewUtils.setHomeAsUpEnabled(this);
+                ButterKnife.inject(this);
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.event_map, MapFragment.newInstance(event)).commit();
+                MapFragment mapFragment = MapFragment.newInstance(event);
+                fragmentManager.beginTransaction().replace(R.id.event_map, mapFragment).commit();
+                mapFragment.setListener(new WorkaroundMapFragment.OnTouchListener() {
+                    @Override
+                    public void onTouch() {
+                        scrollView.requestDisallowInterceptTouchEvent(true);
+                    }
+                });
             } else {
                 notFoundEvent();
             }
@@ -107,6 +122,7 @@ public class EventDetailActivity extends AppCompatActivity {
                                 Toast.makeText(EventDetailActivity.this,
                                         EventDetailActivity.this.getString(R.string.eventDeletedSuccessfully),
                                         Toast.LENGTH_SHORT).show();
+                                finish();
                             }
                         });
                     }

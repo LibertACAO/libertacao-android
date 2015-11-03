@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.libertacao.libertacao.MyApp;
+import com.libertacao.libertacao.R;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -57,7 +59,7 @@ public class Event {
     @DatabaseField
     private Date endDate;
 
-    // 1 - Feira, 2 - Vaquinha
+    // 1 - Feira, 2 - Vaquinha, 3 - Outro
     @DatabaseField
     private int type;
 
@@ -177,5 +179,19 @@ public class Event {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public static CharSequence[] getEventTypes() {
+        return new CharSequence[]{MyApp.getAppContext().getString(R.string.feira),
+                MyApp.getAppContext().getString(R.string.vaquinha),
+                MyApp.getAppContext().getString(R.string.outro)};
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 }

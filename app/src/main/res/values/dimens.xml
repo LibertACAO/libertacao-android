@@ -14,4 +14,7 @@
     <dimen name="medium_margin">12dp</dimen>
     <dimen name="small_margin">6dp</dimen>
     <dimen name="logo_image_size">150dp</dimen>
+
+    <!-- Map -->
+    <dimen name="map_fragment_height">250dp</dimen>
 </resources>

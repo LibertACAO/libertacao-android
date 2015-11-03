@@ -10,7 +10,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,9 +18,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
+import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 
 // Based on: http://code.tutsplus.com/tutorials/getting-started-with-google-maps-for-android-basics--cms-24635
-public class MapFragment extends SupportMapFragment implements GoogleApiClient.ConnectionCallbacks,
+public class MapFragment extends WorkaroundMapFragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMapClickListener,

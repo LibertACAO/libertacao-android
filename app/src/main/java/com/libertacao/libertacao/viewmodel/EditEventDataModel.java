@@ -38,6 +38,9 @@ public class EditEventDataModel extends EventDataModel {
      */
     private Calendar initialDateCalendar;
 
+    /**
+     * Store if the initial date was set
+     */
     private boolean initialDateSet;
 
     /**
@@ -45,6 +48,9 @@ public class EditEventDataModel extends EventDataModel {
      */
     private Calendar endDateCalendar;
 
+    /**
+     * Store if the final date was set
+     */
     private boolean endDateSet;
 
     /**
@@ -92,6 +98,14 @@ public class EditEventDataModel extends EventDataModel {
         } else {
             return event.getImage();
         }
+    }
+
+    /**
+     * Return the event local image
+     * @return event local image
+     */
+    @Nullable public String getEventLocalImage() {
+        return eventLocalImage;
     }
 
     /**
