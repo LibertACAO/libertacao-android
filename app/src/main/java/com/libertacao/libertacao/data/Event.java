@@ -109,6 +109,10 @@ public class Event {
                 object.getBoolean(ENABLED));
     }
 
+    public boolean isSynced() {
+        return id != 0;
+    }
+
     public int getId() {
         return id;
     }
