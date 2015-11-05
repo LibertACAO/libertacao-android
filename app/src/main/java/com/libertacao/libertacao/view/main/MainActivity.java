@@ -4,15 +4,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.manager.ConnectionManager;
 import com.libertacao.libertacao.manager.LoginManager;
@@ -21,9 +25,10 @@ import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.admin.AdminFragment;
 import com.libertacao.libertacao.view.contact.ContactFragment;
-import com.libertacao.libertacao.view.login.ParseLoginActivity;
 import com.libertacao.libertacao.view.event.EventFragment;
+import com.libertacao.libertacao.view.login.ParseLoginActivity;
 import com.libertacao.libertacao.view.perfil.PerfilFragment;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 import java.util.concurrent.TimeUnit;
@@ -34,8 +39,9 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final int LOGIN_RESULT_CODE = 1;
     private BroadcastReceiver networkBroadcastReceiver;
     private Subscription syncSubscribe;
@@ -48,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
+    // Used to get last known location
+    private GoogleApiClient mGoogleApiClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         ButterKnife.inject(this);
         setupDrawer();
         registerNetworkReceiver();
+        if(LoginManager.getInstance().isLoggedIn()) {
+            buildGoogleApiClient();
+        }
     }
 
     private void setupDrawer() {
@@ -165,5 +177,38 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             syncSubscribe = null;
         }
 
+    }
+
+    /**
+     * Code to get last known location
+     */
+
+    private synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Timber.d("Google API client connection connected");
+        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (lastLocation != null) {
+            ParseUser.getCurrentUser().put("location", new ParseGeoPoint(lastLocation.getLatitude(), lastLocation.getLongitude()));
+            ParseUser.getCurrentUser().saveInBackground();
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Timber.d("Google API client connection suspended");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Timber.d("Google API client connection failed");
     }
 }

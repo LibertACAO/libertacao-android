@@ -190,9 +190,12 @@ public class Event {
     }
 
     public static CharSequence[] getEventTypes() {
-        return new CharSequence[]{MyApp.getAppContext().getString(R.string.feira),
+        return new CharSequence[]{MyApp.getAppContext().getString(R.string.event),
                 MyApp.getAppContext().getString(R.string.vaquinha),
-                MyApp.getAppContext().getString(R.string.outro)};
+                MyApp.getAppContext().getString(R.string.petition),
+                MyApp.getAppContext().getString(R.string.protest),
+                MyApp.getAppContext().getString(R.string.singleNew),
+                MyApp.getAppContext().getString(R.string.variado)};
     }
 
     public boolean isEnabled() {

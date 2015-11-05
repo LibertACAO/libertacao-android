@@ -19,6 +19,9 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+    <!-- Get the last known location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <permission
         android:name="${parse_permission}"
         android:protectionLevel="signature"/>

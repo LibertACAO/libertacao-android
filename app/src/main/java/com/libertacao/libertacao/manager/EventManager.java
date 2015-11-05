@@ -46,7 +46,7 @@ public class EventManager {
                                 @Override
                                 public void onCompleted() {
                                     DatabaseHelper.getHelper(context).deleteEventsNotRecentlySynced();
-                                    Log.d(TAG, "Finished processing evets");
+                                    Log.d(TAG, "Finished processing events");
                                 }
 
                                 @Override

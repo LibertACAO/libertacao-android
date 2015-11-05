@@ -7,9 +7,12 @@
 
     <!-- Event type -->
     <string name="all">Todos</string>
-    <string name="feira">Feira</string>
+    <string name="event">Evento</string>
     <string name="vaquinha">Vaquinha</string>
-    <string name="outro">Outro</string>
+    <string name="petition">Petição</string>
+    <string name="protest">Protesto</string>
+    <string name="singleNew">Noticia</string>
+    <string name="variado">Variado</string>
 
     <!-- Alerts -->
     <string name="no_internet_connection">Sem conexão com a Internet. Para atualizar as informações, conecte-se a uma rede.</string>
