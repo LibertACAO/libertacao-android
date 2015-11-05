@@ -27,6 +27,7 @@ import com.libertacao.libertacao.viewmodel.EventDataModel;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -80,6 +81,7 @@ public class EventDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if(LoginManager.getInstance().isAdmin()) {
             getMenuInflater().inflate(R.menu.admin_event_detail_menu, menu);
+            menu.findItem(R.id.menu_activate_event).setVisible(!event.isEnabled());
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -89,6 +91,9 @@ public class EventDetailActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.menu_edit_event:
                 startActivity(EditEventActivity.newIntent(this, event));
+                return true;
+            case R.id.menu_activate_event:
+                activateEvent();
                 return true;
             case R.id.menu_delete_event:
                 deleteEvent();
@@ -106,6 +111,32 @@ public class EventDetailActivity extends AppCompatActivity {
         finish();
     }
 
+    private void activateEvent() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.activate))
+                .setMessage(getString(R.string.activateConfirm))
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog pd = ViewUtils.showProgressDialog(EventDetailActivity.this, getString(R.string.activatingEvent), false);
+                        ParseObject eventParseObject = new ParseObject(Event.EVENT);
+                        eventParseObject.setObjectId(event.getObjectId());
+                        eventParseObject.put(Event.ENABLED, true);
+                        eventParseObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {ViewUtils.hideProgressDialog(pd);
+                                Toast.makeText(EventDetailActivity.this,
+                                        EventDetailActivity.this.getString(R.string.eventActivatedSuccessfully),
+                                        Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     private void deleteEvent() {
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.delete))
@@ -121,7 +152,7 @@ public class EventDetailActivity extends AppCompatActivity {
                                 ViewUtils.hideProgressDialog(pd);
                                 Toast.makeText(EventDetailActivity.this,
                                         EventDetailActivity.this.getString(R.string.eventDeletedSuccessfully),
-                                        Toast.LENGTH_SHORT).show();
+                                        Toast.LENGTH_LONG).show();
                                 finish();
                             }
                         });

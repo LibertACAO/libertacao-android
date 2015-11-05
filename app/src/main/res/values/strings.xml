@@ -5,7 +5,7 @@
     <string name="obrigatorio">Obrigatório</string>
     <string name="passwordNotMatch">Senhas não coincidem</string>
 
-    <!-- Event type -->
+    <!-- Event type TODO: make this pluralazied-->
     <string name="all">Todos</string>
     <string name="event">Evento</string>
     <string name="vaquinha">Vaquinha</string>
@@ -89,6 +89,7 @@
     <!-- Admin fragment-->
     <string name="addEvent">Adicionar evento</string>
     <string name="editEvent">Editar evento</string>
+    <string name="activateEvent">Ativar evento</string>
     <string name="deleteEvent">Deletar evento</string>
 
     <!-- Edit event -->
@@ -111,6 +112,10 @@
     <string name="eventSuggestedSuccessfully">Evento sugerido com sucesso!</string>
 
     <!-- Event details - Admin -->
+    <string name="activate">Ativar</string>
+    <string name="activateConfirm">Você tem certeza que deseja ativar esse evento?</string>
+    <string name="activatingEvent">Ativando evento…</string>
+    <string name="eventActivatedSuccessfully">Evento ativado com sucesso!</string>
     <string name="delete">Deletar</string>
     <string name="deleteConfirm">Você tem certeza que quer deletar esse evento?</string>
     <string name="deletingEvent">Deletando evento…</string>
