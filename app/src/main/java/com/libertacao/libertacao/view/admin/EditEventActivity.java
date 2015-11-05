@@ -24,28 +24,25 @@ import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.databinding.ActivityEditEventBinding;
 import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
+import com.libertacao.libertacao.util.DataUtils;
 import com.libertacao.libertacao.util.ImageUtils;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.libertacao.libertacao.viewmodel.EditEventDataModel;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class EditEventActivity extends AppCompatActivity implements EditEventDataModel.OnSelectImageClick {
+    //public static final int PLACE_PICKER_REQUEST_CODE = 1;
     public static final String EVENT_ID = "EVENT_ID";
     private EditEventDataModel editEventDataModel;
     private MapFragment mapFragment;
@@ -120,6 +117,9 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
             case R.id.menu_save_event:
                 saveEvent();
                 return true;
+            /*case R.id.menu_pick_event_place:
+                pickPlace();
+                return true;*/
             case android.R.id.home:
                 // Without this the back button doesn't work
                 onBackPressed();
@@ -157,11 +157,19 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String filePath = ImageUtils.onActivityResult(this, requestCode, resultCode, data);
-        if(filePath != null){
-            editEventDataModel.setEventLocalImage(filePath);
-            Toast.makeText(this, getString(R.string.photoSelectedSuccessfully), Toast.LENGTH_SHORT).show();
-        }
+        /*if (requestCode == PLACE_PICKER_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+            }
+        } else {*/
+            String filePath = ImageUtils.onActivityResult(this, requestCode, resultCode, data);
+            if (filePath != null) {
+                editEventDataModel.setEventLocalImage(filePath);
+                Toast.makeText(this, getString(R.string.photoSelectedSuccessfully), Toast.LENGTH_SHORT).show();
+            }
+        /*}*/
     }
 
     /**
@@ -180,7 +188,9 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
         int idx = typeRadioGroup.indexOfChild(radioButton);
 
         ParseObject event = new ParseObject(Event.EVENT);
-        event.setObjectId(editEventDataModel.getEvent().getObjectId());
+        if(editEventDataModel.getEvent().isSynced()) {
+            event.setObjectId(editEventDataModel.getEvent().getObjectId());
+        }
         event.put(Event.TITLE, titleEditText.getText().toString());
         event.put(Event.TYPE, idx + 1);
         event.put(Event.DESCRIPTION, descriptionEditText.getText().toString());
@@ -201,19 +211,17 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
         }
         event.put(Event.ENABLED, false);
 
-        // TODO - Put image
-        /*if(editEventDataModel.getEventLocalImage() != null) {
+        if(editEventDataModel.getEventLocalImage() != null) {
             try {
-                byte[] image = readInFile(editEventDataModel.getEventLocalImage());
-                ParseFile file = new ParseFile("picturePath.png", image);
+                byte[] image = DataUtils.readInFile(editEventDataModel.getEventLocalImage());
+                ParseFile file = new ParseFile("picture.jpg", image);
                 file.saveInBackground();
                 event.put(Event.IMAGE, file);
             } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(this, getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
             }
-        } else {
-            event.put(Event.IMAGE, editEventDataModel.getImage());
-        }*/
+        }
 
         event.saveInBackground(new SaveCallback() {
             @Override
@@ -229,18 +237,27 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
         });
     }
 
-    private byte[] readInFile(String path) throws IOException {
-        byte[] data;
-        File file = new File(path);
-        InputStream input_stream = new BufferedInputStream(new FileInputStream(file));
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        data = new byte[16384]; // 16K
-        int bytes_read;
-        while ((bytes_read = input_stream.read(data, 0, data.length)) != -1) {
-            buffer.write(data, 0, bytes_read);
+    /**
+     * Pick place
+     */
+    /**
+     * https://medium.com/@hitherejoe/exploring-play-services-place-picker-autocomplete-150809f739fe
+    private void pickPlace() {
+        PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
+        if(editEventDataModel.getEvent().hasLocation()) {
+            double longitude = editEventDataModel.getEvent().getLongitude();
+            double latitude = editEventDataModel.getEvent().getLatitude();
+            double offset = 0.01;
+            LatLng southwest = new LatLng(latitude - offset, longitude - offset);
+            LatLng northeast = new LatLng(latitude + offset, longitude + offset);
+            intentBuilder.setLatLngBounds(new LatLngBounds(southwest, northeast));
         }
-        input_stream.close();
-        return buffer.toByteArray();
-
+        try {
+            startActivityForResult(intentBuilder.build(this), PLACE_PICKER_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+        }
     }
+     **/
 }
