@@ -20,7 +20,12 @@ import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 
-// Based on: http://code.tutsplus.com/tutorials/getting-started-with-google-maps-for-android-basics--cms-24635
+/**
+ * This class is responsible to control a fragment that only contains a map. It can work in normal mode or in edit mode.
+ * Based on: http://code.tutsplus.com/tutorials/getting-started-with-google-maps-for-android-basics--cms-24635
+ *
+ * This is leaking because there is a known bug in Google Play Services: https://github.com/googlesamples/android-play-location/issues/26
+ */
 public class MapFragment extends WorkaroundMapFragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         GoogleMap.OnInfoWindowClickListener,
