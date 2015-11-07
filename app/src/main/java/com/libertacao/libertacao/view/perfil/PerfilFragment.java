@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.view.main.MainActivity;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
@@ -61,7 +62,8 @@ public class PerfilFragment extends Fragment {
                     Toast.makeText(getContext(), getContext().getString(R.string.performedLogoutError), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getContext(), getContext().getString(R.string.performedLogoutSuccess), Toast.LENGTH_SHORT).show();
-                    ((MainActivity)getActivity()).updateDrawer();
+                    LoginManager.getInstance().logout();
+                    ((MainActivity) getActivity()).updateDrawer();
                     ((MainActivity)getActivity()).openDrawer();
                     ((MainActivity)getActivity()).setupEventFragment();
                 }

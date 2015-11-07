@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.event.FirstLocationEncounteredEvent;
 import com.libertacao.libertacao.manager.ConnectionManager;
 import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.manager.SyncManager;
@@ -37,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -204,14 +206,16 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -239,5 +243,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Timber.d("Google API client connection failed");
+    }
+
+    /**
+     * Events
+     */
+
+    @SuppressWarnings("unused")
+    public void onEventMainThread(FirstLocationEncounteredEvent event) {
+        setupEventFragment();
     }
 }

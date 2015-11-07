@@ -1,5 +1,6 @@
 package com.libertacao.libertacao.manager;
 
+import com.libertacao.libertacao.persistence.UserPreferences;
 import com.parse.ParseUser;
 
 public class LoginManager {
@@ -24,5 +25,10 @@ public class LoginManager {
         } else {
             return false;
         }
+    }
+
+    public void logout() {
+        UserPreferences.clearSharedPreferences();
+        UserManager.getInstance().setCurrentLatLng(null);
     }
 }
