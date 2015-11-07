@@ -8,10 +8,15 @@ import android.os.Bundle;
 import android.os.StrictMode;
 
 import com.crashlytics.android.Crashlytics;
+import com.libertacao.libertacao.persistence.UserPreferences;
 import com.libertacao.libertacao.view.event.EditEventActivity;
 import com.libertacao.libertacao.view.event.EventDetailActivity;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseInstallation;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.squareup.leakcanary.AndroidExcludedRefs;
 import com.squareup.leakcanary.DisplayLeakService;
 import com.squareup.leakcanary.ExcludedRefs;
@@ -57,6 +62,23 @@ public class MyApp extends Application {
     private void setupParse() {
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
         ParseFacebookUtils.initialize(this);
+        // TODO: check if user logging out/logging in with another account we need to update this user
+        if(ParseUser.getCurrentUser() != null && !UserPreferences.isUserAssociatedWithInstallation()) {
+            // This should be done only once
+            ParseInstallation currentInstallation = ParseInstallation.getCurrentInstallation();
+            currentInstallation.put("user", ParseUser.getCurrentUser());
+            currentInstallation.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e != null) {
+                        Timber.d("Error when trying to associate user with installation: " + e.getLocalizedMessage());
+                    } else {
+                        Timber.d("User successfully associated with installation");
+                        UserPreferences.setUserAssociatedWithInstallation();
+                    }
+                }
+            });
+        }
     }
 
     /**
