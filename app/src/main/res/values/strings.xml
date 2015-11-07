@@ -107,6 +107,7 @@
 
     <!-- Admin fragment-->
     <string name="addEvent">Adicionar evento</string>
+    <string name="sendPush">Enviar push</string>
     <string name="editEvent">Editar evento</string>
     <string name="activateEvent">Ativar evento</string>
     <string name="deleteEvent">Deletar evento</string>
@@ -144,4 +145,10 @@
     <string name="deletingEvent">Deletando evento…</string>
     <string name="eventDeletedSuccessfully">Evento deletado com sucesso!</string>
 
+    <!-- Send push activity -->
+    <string name="alertTextHint">Texto do alerta (push notification)</string>
+    <string name="send">Enviar</string>
+    <string name="pushSendError">Não foi possível enviar o push. Tente novamente mais tarde.</string>
+    <string name="pushSendSuccess">Push enviado com sucesso!</string>
+    <string name="createNewEvent">Criar novo evento</string>
 </resources>

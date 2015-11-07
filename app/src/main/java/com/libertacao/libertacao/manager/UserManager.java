@@ -33,7 +33,13 @@ public class UserManager {
             EventBus.getDefault().post(new FirstLocationEncounteredEvent());
         }
         this.currentLatLng = currentLatLng;
-        UserPreferences.setLatitude(this.currentLatLng.latitude);
-        UserPreferences.setLongitude(this.currentLatLng.longitude);
+
+        if(this.currentLatLng == null) {
+            UserPreferences.setLatitude(Event.INVALID_LOCATION);
+            UserPreferences.setLongitude(Event.INVALID_LOCATION);
+        } else {
+            UserPreferences.setLatitude(this.currentLatLng.latitude);
+            UserPreferences.setLongitude(this.currentLatLng.longitude);
+        }
     }
 }

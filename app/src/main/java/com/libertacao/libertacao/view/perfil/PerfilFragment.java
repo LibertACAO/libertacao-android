@@ -47,7 +47,7 @@ public class PerfilFragment extends Fragment {
 
 
     @OnClick(R.id.btn_logout)
-    public void logout(){
+    public void logout() {
         final ProgressDialog pd = new ProgressDialog(getContext());
         pd.setMessage(getContext().getString(R.string.performingLogout));
         pd.setCancelable(false);

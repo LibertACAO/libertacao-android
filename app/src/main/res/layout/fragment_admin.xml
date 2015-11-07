@@ -1,13 +1,24 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+              android:orientation="vertical"
              tools:context="com.libertacao.libertacao.view.admin.AdminFragment">
 
     <!-- TODO: Implement add users to management role (only available to admins) -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Um usuário com permissões de admin irá poder criar/editar/remover eventos, e também enviar pushes gerais e localizados"/>
 
-</FrameLayout>
+    <Button
+        android:id="@+id/create_new_event_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/createNewEvent"/>
+
+    <Button
+        android:id="@+id/send_push_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:text="@string/sendPush"/>
+
+</LinearLayout>
