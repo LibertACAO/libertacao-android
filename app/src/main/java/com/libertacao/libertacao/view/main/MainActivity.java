@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         fragmentManager.beginTransaction().replace(R.id.container, EventFragment.newInstance()).commit();
     }
 
+    // FIXME: only update fragment if it is not already being displayed
     @Override
     public void onNavigationDrawerItemSelected(@NavigationDrawerFragment.DrawerPosition int position) {
         if(position == NavigationDrawerFragment.NOTIFICACAO) {
