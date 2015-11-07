@@ -1,5 +1,6 @@
 package com.libertacao.libertacao.view.admin;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,6 +26,7 @@ import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.DataUtils;
 import com.libertacao.libertacao.util.ImageUtils;
+import com.libertacao.libertacao.util.Validator;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 import com.libertacao.libertacao.view.map.MapFragment;
@@ -173,9 +174,52 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
     }
 
     /**
+     * Validate fields from Form
+     * @return if all required fields are present and all fields contain valid values
+     */
+
+    private boolean validate() {
+        boolean ret;
+        ret = Validator.validate(titleEditText, true);
+        ret = Validator.validate(descriptionEditText, ret);
+        ViewUtils.getIndexOfRadioGroupSelection(typeRadioGroup);
+        return ret;
+    }
+
+    /**
      * Save Event
      */
     private void saveEvent() {
+        // Valide EditTexts
+        if(!validate()) {
+            return;
+        }
+
+        // Validate event type
+        int selectedType = ViewUtils.getIndexOfRadioGroupSelection(typeRadioGroup);
+        if(selectedType == 0) {
+            new AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.selectAnEventType))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(getString(android.R.string.ok), null)
+                    .setCancelable(false)
+                    .show();
+            return;
+        }
+
+        // Validate initial date
+        Calendar initialDateCalendar = editEventDataModel.getInitialDateCalendar();
+        if(initialDateCalendar == null) {
+            new AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.selectADate))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(getString(android.R.string.ok), null)
+                    .setCancelable(false)
+                    .show();
+            return;
+        }
+
+        // Proceed to event creation
         final ProgressDialog pd;
         if(LoginManager.getInstance().isAdmin()) {
             pd = ViewUtils.showProgressDialog(this, getString(R.string.savingEvent), false);
@@ -183,16 +227,12 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
             pd = ViewUtils.showProgressDialog(this, getString(R.string.suggestingEvent), false);
         }
 
-        int radioButtonID = typeRadioGroup.getCheckedRadioButtonId();
-        View radioButton = typeRadioGroup.findViewById(radioButtonID);
-        int idx = typeRadioGroup.indexOfChild(radioButton);
-
         ParseObject event = new ParseObject(Event.EVENT);
         if(editEventDataModel.getEvent().isSynced()) {
             event.setObjectId(editEventDataModel.getEvent().getObjectId());
         }
         event.put(Event.TITLE, titleEditText.getText().toString());
-        event.put(Event.TYPE, idx + 1);
+        event.put(Event.TYPE, selectedType);
         event.put(Event.DESCRIPTION, descriptionEditText.getText().toString());
         event.put(Event.LOCATION_SUMMARY, locationSummaryEditText.getText().toString());
         event.put(Event.LOCATION_DESCRIPTION, locationDescriptionEditText.getText().toString());
@@ -201,10 +241,7 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
             ParseGeoPoint location = new ParseGeoPoint(selectedLatLng.latitude, selectedLatLng.longitude);
             event.put(Event.LOCATION, location);
         }
-        Calendar initialDateCalendar = editEventDataModel.getInitialDateCalendar();
-        if(initialDateCalendar != null) {
-            event.put(Event.INITIAL_DATE, initialDateCalendar.getTime());
-        }
+        event.put(Event.INITIAL_DATE, initialDateCalendar.getTime());
         Calendar endDateCalendar = editEventDataModel.getEndDateCalendar();
         if(endDateCalendar != null) {
             event.put(Event.END_DATE, endDateCalendar.getTime());

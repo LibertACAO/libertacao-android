@@ -95,9 +95,9 @@
     <!-- Edit event -->
     <string name="title">Título (Feira Vegana)</string>
     <string name="description">Descrição (Venha participar da Feira Vegana…)</string>
-    <string name="initialDate">22/10</string>
+    <string name="initialDate">Data (inicial): 22/10</string>
     <string name="initialHour">20h</string>
-    <string name="endDate">22/10</string>
+    <string name="endDate">Data final (opcional): 22/10</string>
     <string name="endHour">21h</string>
     <string name="locationSummary">Localização (Porto Alegre, RS)</string>
     <string name="locationDescription">Localização completa (Avenida Lajeado, 6520)</string>
@@ -106,6 +106,8 @@
     <string name="saveEvent">Salvar</string>
     <string name="pickEventPlace">Escolher local do evento</string>
     <string name="photoSelectedSuccessfully">Foto selecionada com sucesso!</string>
+    <string name="selectAnEventType">Por favor, selecione um tipo para o seu evento</string>
+    <string name="selectADate">Por favor, selecione uma data para o seu evento</string>
     <string name="savingEvent">Salvando evento…</string>
     <string name="suggestingEvent">Sugerindo evento…</string>
     <string name="eventSavedSuccessfully">Evento salvo com sucesso!</string>

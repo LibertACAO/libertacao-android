@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import com.libertacao.libertacao.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -56,5 +57,16 @@ public class ViewUtils {
     public static void hideProgressDialog(ProgressDialog pd) {
         pd.dismiss();
         pd.cancel();
+    }
+
+    /**
+     * Get selected index of given radio group
+     * @param radioGroup given radio group
+     * @return selected index (starting from 1), or 0 if there is no selection
+     */
+    public static int getIndexOfRadioGroupSelection(RadioGroup radioGroup) {
+        int radioButtonID = radioGroup.getCheckedRadioButtonId();
+        View radioButton = radioGroup.findViewById(radioButtonID);
+        return radioGroup.indexOfChild(radioButton) + 1;
     }
 }
