@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.util.MyDateUtils;
+import com.libertacao.libertacao.util.MyImageLoader;
 import com.libertacao.libertacao.util.ShareUtils;
 import com.libertacao.libertacao.view.event.EventDetailActivity;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * This class is the ViewModel of the MVVM architecture pattern, representing an Event
@@ -178,13 +178,7 @@ public class EventDataModel extends BaseObservable {
      */
     @BindingAdapter({"bind:image"})
     public static void loadImage(@NonNull ImageView imageView, @Nullable String image) {
-        // FIXME: After adding an event, images are loaded in wrong cells. Maybe adding a loading image solve this?
-        if (image != null) {
-            ImageLoader.getInstance().displayImage(image, imageView);
-        } else {
-            // TODO: Add a placeholder image
-            ImageLoader.getInstance().displayImage(null, imageView);
-        }
+        MyImageLoader.getInstance().displayEventImage(image, imageView);
     }
 
     /**

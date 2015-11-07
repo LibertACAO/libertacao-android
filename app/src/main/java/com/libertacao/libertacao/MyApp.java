@@ -10,8 +10,6 @@ import android.os.StrictMode;
 import com.crashlytics.android.Crashlytics;
 import com.libertacao.libertacao.view.admin.EditEventActivity;
 import com.libertacao.libertacao.view.event.EventDetailActivity;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.squareup.leakcanary.AndroidExcludedRefs;
@@ -54,7 +52,6 @@ public class MyApp extends Application {
         }
 
         setupParse();
-        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
     }
 
     private void setupParse() {
