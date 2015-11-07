@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.20.1'
     }
 }
 apply plugin: 'com.android.application'
@@ -69,9 +69,10 @@ dependencies {
     }
 
     // Parse
-    compile 'com.parse:parse-android:1.10.1'
+    compile 'com.parse:parse-android:1.10.3'
     compile project(':ParseLoginUI')
     compile 'com.facebook.android:facebook-android-sdk:4.0.1'
+    compile 'com.parse:parsefacebookutils-v4-android:1.10.3@aar'
 
     // Maps
     compile 'com.google.android.gms:play-services-maps:8.1.0'
