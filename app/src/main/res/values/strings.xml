@@ -12,9 +12,9 @@
         <item quantity="one">Evento</item>
         <item quantity="other">Eventos</item>
     </plurals>
-    <plurals name="vaquinha">
-        <item quantity="one">Vaquinha</item>
-        <item quantity="other">Vaquinhas</item>
+    <plurals name="vakinha">
+        <item quantity="one">Vakinha</item>
+        <item quantity="other">Vakinhas</item>
     </plurals>
     <plurals name="petition">
         <item quantity="one">Petição</item>

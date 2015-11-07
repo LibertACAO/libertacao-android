@@ -200,7 +200,7 @@ public class Event {
     public static CharSequence[] getEventTypes(boolean isPlural) {
         int quantity = isPlural? 2 : 1;
         return new CharSequence[]{MyApp.getAppContext().getResources().getQuantityString(R.plurals.event, quantity),
-                MyApp.getAppContext().getResources().getQuantityString(R.plurals.vaquinha, quantity),
+                MyApp.getAppContext().getResources().getQuantityString(R.plurals.vakinha, quantity),
                 MyApp.getAppContext().getResources().getQuantityString(R.plurals.petition, quantity),
                 MyApp.getAppContext().getResources().getQuantityString(R.plurals.protest, quantity),
                 MyApp.getAppContext().getResources().getQuantityString(R.plurals.singleNew, quantity),

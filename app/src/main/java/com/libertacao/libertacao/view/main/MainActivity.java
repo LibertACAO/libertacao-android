@@ -132,6 +132,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(networkBroadcastReceiver != null) {
+            this.unregisterReceiver(networkBroadcastReceiver);
+        }
+    }
+
     /**
      * Utility methods
      */

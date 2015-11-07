@@ -251,8 +251,7 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
 
         if(editEventDataModel.getEventLocalImage() != null) {
             try {
-                // TODO: URGENT: scale image down!
-                byte[] image = DataUtils.readInFile(editEventDataModel.getEventLocalImage());
+                byte[] image = DataUtils.getSmallFileData(editEventDataModel.getEventLocalImage());
                 ParseFile file = new ParseFile("picture.jpg", image);
                 file.saveInBackground();
                 event.put(Event.IMAGE, file);

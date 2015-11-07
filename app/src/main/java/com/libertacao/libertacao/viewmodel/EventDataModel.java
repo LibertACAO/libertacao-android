@@ -178,8 +178,12 @@ public class EventDataModel extends BaseObservable {
      */
     @BindingAdapter({"bind:image"})
     public static void loadImage(@NonNull ImageView imageView, @Nullable String image) {
+        // FIXME: After adding an event, images are loaded in wrong cells. Maybe adding a loading image solve this?
         if (image != null) {
             ImageLoader.getInstance().displayImage(image, imageView);
+        } else {
+            // TODO: Add a placeholder image
+            ImageLoader.getInstance().displayImage(null, imageView);
         }
     }
 
