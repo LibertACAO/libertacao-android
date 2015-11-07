@@ -79,7 +79,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_filter:
-                CharSequence[] eventTypes = Event.getEventTypes();
+                CharSequence[] eventTypes = Event.getEventTypes(true);
                 CharSequence[] items = new CharSequence[eventTypes.length + 1];
                 items[0] = getString(R.string.all);
                 System.arraycopy(eventTypes, 0, items, 1, eventTypes.length);

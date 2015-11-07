@@ -134,7 +134,7 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
      */
 
     private void setupTypeRadioGroup() {
-        CharSequence[] eventTypes = Event.getEventTypes();
+        CharSequence[] eventTypes = Event.getEventTypes(false);
         int i = 1;
         for(CharSequence charSequence : eventTypes) {
             RadioButton radioButton = new RadioButton(this);

@@ -5,14 +5,32 @@
     <string name="obrigatorio">Obrigatório</string>
     <string name="passwordNotMatch">Senhas não coincidem</string>
 
-    <!-- Event type TODO: make this pluralazied-->
+    <!-- Event types -->
     <string name="all">Todos</string>
-    <string name="event">Evento</string>
-    <string name="vaquinha">Vaquinha</string>
-    <string name="petition">Petição</string>
-    <string name="protest">Protesto</string>
-    <string name="singleNew">Noticia</string>
-    <string name="variado">Variado</string>
+    <plurals name="event">
+        <item quantity="one">Evento</item>
+        <item quantity="other">Eventos</item>
+    </plurals>
+    <plurals name="vaquinha">
+        <item quantity="one">Vaquinha</item>
+        <item quantity="other">Vaquinhas</item>
+    </plurals>
+    <plurals name="petition">
+        <item quantity="one">Petição</item>
+        <item quantity="other">Petições</item>
+    </plurals>
+    <plurals name="protest">
+        <item quantity="one">Protesto</item>
+        <item quantity="other">Protestos</item>
+    </plurals>
+    <plurals name="singleNew">
+        <item quantity="one">Noticia</item>
+        <item quantity="other">Noticias</item>
+    </plurals>
+    <plurals name="variado">
+        <item quantity="one">Variado</item>
+        <item quantity="other">Variados</item>
+    </plurals>
 
     <!-- Alerts -->
     <string name="no_internet_connection">Sem conexão com a Internet. Para atualizar as informações, conecte-se a uma rede.</string>

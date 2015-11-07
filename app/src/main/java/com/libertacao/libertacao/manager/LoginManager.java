@@ -16,7 +16,7 @@ public class LoginManager {
         return ParseUser.getCurrentUser() != null;
     }
 
-    // TODO: this is only temporary. We need to find a way to do this with roles!
+    // FIXME: this is only temporary. We need to find a way to do this with roles!
     public boolean isAdmin() {
         if(isLoggedIn()) {
             String objectId = ParseUser.getCurrentUser().getObjectId();

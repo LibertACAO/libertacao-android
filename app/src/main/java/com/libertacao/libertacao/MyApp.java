@@ -25,7 +25,7 @@ import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 // TODO: add custom notification
-// TODO: melhorar navigation drawer layout
+// FIXME: melhorar navigation drawer layout
 // TODO: add something including location (whereNear?) - https://parse.com/docs/android/guide#geopoints
 public class MyApp extends Application {
     // App context

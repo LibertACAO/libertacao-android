@@ -189,13 +189,19 @@ public class Event {
         return type;
     }
 
-    public static CharSequence[] getEventTypes() {
-        return new CharSequence[]{MyApp.getAppContext().getString(R.string.event),
-                MyApp.getAppContext().getString(R.string.vaquinha),
-                MyApp.getAppContext().getString(R.string.petition),
-                MyApp.getAppContext().getString(R.string.protest),
-                MyApp.getAppContext().getString(R.string.singleNew),
-                MyApp.getAppContext().getString(R.string.variado)};
+    /**
+     * Get a string array of available event types
+     * @param isPlural indicating if requested strings should be pluralized or not
+     * @return string array containing available event types
+     */
+    public static CharSequence[] getEventTypes(boolean isPlural) {
+        int quantity = isPlural? 2 : 1;
+        return new CharSequence[]{MyApp.getAppContext().getResources().getQuantityString(R.plurals.event, quantity),
+                MyApp.getAppContext().getResources().getQuantityString(R.plurals.vaquinha, quantity),
+                MyApp.getAppContext().getResources().getQuantityString(R.plurals.petition, quantity),
+                MyApp.getAppContext().getResources().getQuantityString(R.plurals.protest, quantity),
+                MyApp.getAppContext().getResources().getQuantityString(R.plurals.singleNew, quantity),
+                MyApp.getAppContext().getResources().getQuantityString(R.plurals.variado, quantity)};
     }
 
     public boolean isEnabled() {
