@@ -43,7 +43,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private static final String TAG = "NotificacaoFragment";
 
     // Array to keep track of current filter
-    private int selectedFilter = 0;
+    private int selectedFilter = 1;
 
     private boolean loaderInitied = false;
 
@@ -80,9 +80,11 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         switch (item.getItemId()) {
             case R.id.menu_filter:
                 CharSequence[] eventTypes = Event.getEventTypes(true);
-                CharSequence[] items = new CharSequence[eventTypes.length + 1];
+                int additionalOptions = 2;
+                CharSequence[] items = new CharSequence[eventTypes.length + additionalOptions];
                 items[0] = getString(R.string.all);
-                System.arraycopy(eventTypes, 0, items, 1, eventTypes.length);
+                items[1] = getString(R.string.nearMe);
+                System.arraycopy(eventTypes, 0, items, additionalOptions, eventTypes.length);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.filter));

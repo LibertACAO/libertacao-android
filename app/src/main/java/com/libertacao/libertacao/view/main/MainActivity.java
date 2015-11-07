@@ -17,10 +17,12 @@ import android.support.v7.widget.Toolbar;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.manager.ConnectionManager;
 import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.manager.SyncManager;
+import com.libertacao.libertacao.manager.UserManager;
 import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.admin.AdminFragment;
@@ -65,9 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         ButterKnife.inject(this);
         setupDrawer();
         registerNetworkReceiver();
-        if(LoginManager.getInstance().isLoggedIn()) {
-            buildGoogleApiClient();
-        }
+        buildGoogleApiClient();
     }
 
     private void setupDrawer() {
@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
      */
 
     private synchronized void buildGoogleApiClient() {
+        Timber.d("Initialized Google Api Client");
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -192,19 +193,39 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
     public void onConnected(Bundle bundle) {
         Timber.d("Google API client connection connected");
         Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (lastLocation != null) {
-            ParseUser.getCurrentUser().put("location", new ParseGeoPoint(lastLocation.getLatitude(), lastLocation.getLongitude()));
-            ParseUser.getCurrentUser().saveInBackground();
+            Timber.d("Got user location (" + lastLocation.getLatitude() + "," + lastLocation.getLongitude() + ")");
+            UserManager.getInstance().setCurrentLatLng(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
+            if(LoginManager.getInstance().isLoggedIn()) {
+                ParseUser.getCurrentUser().put("location", new ParseGeoPoint(lastLocation.getLatitude(), lastLocation.getLongitude()));
+                ParseUser.getCurrentUser().saveInBackground();
+            }
+        } else {
+            Timber.d("Received empty location");
         }
-
     }
 
     @Override
     public void onConnectionSuspended(int i) {
         Timber.d("Google API client connection suspended");
+        mGoogleApiClient.connect();
     }
 
     @Override

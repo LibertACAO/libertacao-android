@@ -41,6 +41,7 @@ import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import timber.log.Timber;
 
 public class EditEventActivity extends AppCompatActivity implements EditEventDataModel.OnSelectImageClick {
     //public static final int PLACE_PICKER_REQUEST_CODE = 1;
@@ -250,6 +251,7 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
 
         if(editEventDataModel.getEventLocalImage() != null) {
             try {
+                // TODO: URGENT: scale image down!
                 byte[] image = DataUtils.readInFile(editEventDataModel.getEventLocalImage());
                 ParseFile file = new ParseFile("picture.jpg", image);
                 file.saveInBackground();
@@ -264,10 +266,19 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
             @Override
             public void done(ParseException e) {
                 ViewUtils.hideProgressDialog(pd);
-                if(LoginManager.getInstance().isAdmin()) {
-                    Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSavedSuccessfully), Toast.LENGTH_SHORT).show();
+                if(e != null) {
+                    Timber.d("Error when saving event: " + e.getLocalizedMessage());
+                    if (LoginManager.getInstance().isAdmin()) {
+                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSavedError), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSuggestedError), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSuggestedSuccessfully), Toast.LENGTH_SHORT).show();
+                    if (LoginManager.getInstance().isAdmin()) {
+                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSavedSuccessfully), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSuggestedSuccessfully), Toast.LENGTH_SHORT).show();
+                    }
                 }
                 finish();
             }

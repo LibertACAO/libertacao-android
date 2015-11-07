@@ -7,6 +7,7 @@
 
     <!-- Event types -->
     <string name="all">Todos</string>
+    <string name="nearMe">Perto de mim</string>
     <plurals name="event">
         <item quantity="one">Evento</item>
         <item quantity="other">Eventos</item>
@@ -128,6 +129,8 @@
     <string name="selectADate">Por favor, selecione uma data para o seu evento</string>
     <string name="savingEvent">Salvando evento…</string>
     <string name="suggestingEvent">Sugerindo evento…</string>
+    <string name="eventSavedError">Não foi possível salvar o evento. Tente novamente mais tarde.</string>
+    <string name="eventSuggestedError">Não foi possível sugerir o evento :(. Por favor, tente novamente mais tarde.</string>
     <string name="eventSavedSuccessfully">Evento salvo com sucesso!</string>
     <string name="eventSuggestedSuccessfully">Evento sugerido com sucesso!</string>
 

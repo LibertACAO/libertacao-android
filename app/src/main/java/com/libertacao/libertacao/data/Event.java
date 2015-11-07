@@ -19,6 +19,9 @@ public class Event {
     public static final String LOCATION_SUMMARY = "locationSummary";
     public static final String LOCATION_DESCRIPTION = "locationDescription";
     public static final String LOCATION = "location";
+    public static final int INVALID_LOCATION = -1;
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
     public static final String IMAGE = "image";
     public static final String TYPE = "type";
     public static final String ENABLED = "enabled";
@@ -66,7 +69,7 @@ public class Event {
     @DatabaseField
     private boolean enabled;
 
-    @SuppressWarnings("FieldCanBeLocal")
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     @DatabaseField(dataType = DataType.DATE_LONG)
     private Date lastSynced;
 
@@ -98,8 +101,8 @@ public class Event {
         return new Event(object.getObjectId(),
                 object.getString(TITLE),
                 object.getString(DESCRIPTION),
-                location != null? location.getLatitude() : -1,
-                location != null? location.getLongitude() : -1,
+                location != null? location.getLatitude() : INVALID_LOCATION,
+                location != null? location.getLongitude() : INVALID_LOCATION,
                 object.getString(LOCATION_SUMMARY),
                 object.getString(LOCATION_DESCRIPTION),
                 parseFile != null? parseFile.getUrl() : null,
@@ -150,7 +153,7 @@ public class Event {
     }
 
     public boolean hasLocation() {
-        return latitude != -1 && longitude != -1;
+        return latitude != INVALID_LOCATION && longitude != INVALID_LOCATION;
     }
 
     public String getLocationSummary() {

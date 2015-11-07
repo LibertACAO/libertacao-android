@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -18,11 +19,14 @@ import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.DataConfig;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.manager.LoginManager;
+import com.libertacao.libertacao.manager.UserManager;
 import com.libertacao.libertacao.util.MyDateUtils;
 
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int LAST_SYNCED_THRESHOLD_IN_MINUTES = -30; // time that instances have before being deleted by next sync
@@ -152,7 +156,36 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         where.or(2);
 
-        if(selectedFilter != 0) {
+        // Check selected filter and add clauses accordingly
+        if(selectedFilter == 1) {
+            LatLng currentLatLng = UserManager.getInstance().getCurrentLatLng();
+            if(currentLatLng != null) {
+                // Filter by near me
+
+                // Event doesn't have a location (latitude/longitude)
+                where.eq(Event.LATITUDE, Event.INVALID_LOCATION);
+                where.eq(Event.LONGITUDE, Event.INVALID_LOCATION);
+                where.or(2);
+
+                // OR
+                // Is near me
+                where.gt(Event.LATITUDE, currentLatLng.latitude - DataConfig.LOCATION_OFFSET);
+                where.lt(Event.LATITUDE, currentLatLng.latitude + DataConfig.LOCATION_OFFSET);
+                where.gt(Event.LONGITUDE, currentLatLng.longitude - DataConfig.LOCATION_OFFSET);
+                where.lt(Event.LONGITUDE, currentLatLng.longitude + DataConfig.LOCATION_OFFSET);
+                where.and(4);
+
+                where.or(2);
+
+                // And with already existing where
+                where.and(2);
+
+                Timber.d("Filtered by near me (" + currentLatLng.latitude + "," + currentLatLng.longitude + ")");
+            } else {
+                Timber.d("Could not use 'Near me' filter because user doesn't have a valid location");
+            }
+        }
+        else if(selectedFilter > 1) {
             where.eq(Event.TYPE, selectedFilter);
             where.and(2);
         }
