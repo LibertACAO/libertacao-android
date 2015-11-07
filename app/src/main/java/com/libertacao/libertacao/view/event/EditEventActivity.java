@@ -1,4 +1,4 @@
-package com.libertacao.libertacao.view.admin;
+package com.libertacao.libertacao.view.event;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

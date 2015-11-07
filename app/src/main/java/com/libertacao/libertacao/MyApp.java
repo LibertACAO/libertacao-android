@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 
 import com.crashlytics.android.Crashlytics;
-import com.libertacao.libertacao.view.admin.EditEventActivity;
+import com.libertacao.libertacao.view.event.EditEventActivity;
 import com.libertacao.libertacao.view.event.EventDetailActivity;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;

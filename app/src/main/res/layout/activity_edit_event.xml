@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context="com.libertacao.libertacao.view.admin.EditEventActivity">
+        tools:context=".view.event.EditEventActivity">
     <data>
         <variable name="editEventDataModel" type="com.libertacao.libertacao.viewmodel.EditEventDataModel"/>
     </data>

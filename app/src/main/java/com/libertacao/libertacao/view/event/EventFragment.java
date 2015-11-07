@@ -30,7 +30,6 @@ import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
-import com.libertacao.libertacao.view.admin.EditEventActivity;
 import com.libertacao.libertacao.view.customviews.EmptyRecyclerView;
 
 import java.sql.SQLException;

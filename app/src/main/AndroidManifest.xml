@@ -57,7 +57,7 @@
                 android:value=".view.main.MainActivity"/>
         </activity>
 
-        <activity android:name=".view.admin.EditEventActivity"
+        <activity android:name=".view.event.EditEventActivity"
                   android:label="@string/createEdit"
                   android:screenOrientation="portrait">
         </activity>

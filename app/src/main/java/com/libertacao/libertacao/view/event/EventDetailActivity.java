@@ -20,7 +20,6 @@ import com.libertacao.libertacao.databinding.ActivityEventDetailBinding;
 import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.ViewUtils;
-import com.libertacao.libertacao.view.admin.EditEventActivity;
 import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.libertacao.libertacao.viewmodel.EventDataModel;
@@ -149,6 +148,7 @@ public class EventDetailActivity extends AppCompatActivity {
                         eventParseObject.deleteInBackground(new DeleteCallback() {
                             @Override
                             public void done(ParseException e) {
+                                DatabaseHelper.getHelper(EventDetailActivity.this).getEventIntegerRuntimeExceptionDao().delete(event);
                                 ViewUtils.hideProgressDialog(pd);
                                 Toast.makeText(EventDetailActivity.this,
                                         EventDetailActivity.this.getString(R.string.eventDeletedSuccessfully),

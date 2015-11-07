@@ -7,6 +7,7 @@
     </data>
 
     <!-- TODO: add cool collapsing toolbar animations :D-->
+    <!-- TODO: add shared element transition :D-->
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@{eventDataModel.enabled? @color/event_enabled : @color/event_not_enabled}"

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.view.event.EditEventActivity;
 
 public class AdminFragment extends Fragment {
     public static AdminFragment newInstance() {
