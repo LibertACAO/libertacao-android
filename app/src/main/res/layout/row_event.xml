@@ -71,15 +71,19 @@
                     style="@style/SmallGrayTextView"
                     tools:text="Porto Alegre, RS"/>
 
-                <Button
+                <ImageButton
                     android:id="@+id/btn_share_notification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/default_margin"
                     android:focusable="false"
+                    android:src="@android:drawable/ic_menu_share"
+                    android:background="@null"
                     android:onClick="@{eventDataModel.onShareClick}"
-                    android:text="@string/share"/>
+                    android:text="@string/share"
+                    android:contentDescription="@string/share"/>
 
             </RelativeLayout>
         </LinearLayout>
