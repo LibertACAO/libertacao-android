@@ -107,9 +107,7 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(LoginManager.getInstance().isAdmin()) {
-            getMenuInflater().inflate(R.menu.edit_event_activity_menu, menu);
-        }
+        getMenuInflater().inflate(R.menu.edit_event_activity_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
