@@ -71,6 +71,12 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_fragment_menu, menu);
         inflater.inflate(R.menu.add_event_menu, menu);
+        MenuItem menuAddEvent = menu.findItem(R.id.menu_add_event);
+        if(LoginManager.getInstance().isAdmin()) {
+            menuAddEvent.setTitle(getString(R.string.addEvent));
+        } else {
+            menuAddEvent.setTitle(getString(R.string.suggestEvent));
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 

@@ -47,6 +47,12 @@ fieldName=type
 fieldName=enabled
 # --field-end--
 # --field-start--
+fieldName=isGoing
+# --field-end--
+# --field-start--
+fieldName=going
+# --field-end--
+# --field-start--
 fieldName=lastSynced
 dataPersister=DATE_LONG
 # --field-end--

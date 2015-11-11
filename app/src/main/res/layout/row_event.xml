@@ -71,6 +71,34 @@
                     style="@style/SmallGrayTextView"
                     tools:text="Porto Alegre, RS"/>
 
+                <TextView
+                    android:id="@+id/going_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/going"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
+                    android:onClick="@{eventDataModel.onGoingClick}"
+                    android:visibility="@{eventDataModel.goingVisible}"
+                    android:layout_toLeftOf="@+id/btn_share_notification"
+                    android:layout_toStartOf="@+id/btn_share_notification"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="5000 indo"
+                    android:textColor="@color/holo_orange_dark"
+                    android:textStyle="italic"
+                    android:text="@{eventDataModel.goingNumber}"
+                    android:visibility="@{eventDataModel.numberGoingVisible}"
+                    android:layout_toLeftOf="@+id/btn_share_notification"
+                    android:layout_toStartOf="@+id/btn_share_notification"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:layout_below="@id/going_text_view"/>
+
                 <ImageButton
                     android:id="@+id/btn_share_notification"
                     android:layout_width="wrap_content"

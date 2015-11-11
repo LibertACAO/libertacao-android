@@ -12,12 +12,15 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.libertacao.libertacao.BR;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.MyDateUtils;
 import com.libertacao.libertacao.util.MyImageLoader;
 import com.libertacao.libertacao.util.ShareUtils;
 import com.libertacao.libertacao.view.event.EventDetailActivity;
+import com.parse.ParseObject;
 
 /**
  * This class is the ViewModel of the MVVM architecture pattern, representing an Event
@@ -199,5 +202,48 @@ public class EventDataModel extends BaseObservable {
         sendIntent.putExtra(Intent.EXTRA_TEXT, ShareUtils.getEventShareText(event));
         sendIntent.setType("text/plain");
         context.startActivity(sendIntent);
+    }
+    /**
+     * Called when user clicked on the Going text view
+     * @param view target
+     */
+    public void onGoingClick(View view){
+        ParseObject parseEvent = new ParseObject(Event.EVENT);
+        parseEvent.setObjectId(event.getObjectId());
+        parseEvent.increment(Event.GOING);
+        parseEvent.saveInBackground();
+        event.setIsGoing(true);
+        event.incrementGoing();
+        DatabaseHelper.getHelper(context).getEventIntegerRuntimeExceptionDao().update(event);
+        notifyPropertyChanged(BR.goingVisible);
+        notifyPropertyChanged(BR.goingNumber);
+        notifyPropertyChanged(BR.numberGoingVisible);
+    }
+
+    /**
+     * Returns if going text view is visible or gone
+     * @return View.VISIBLE if user is not going; View.GONE otherwise so the view does not take space
+     */
+    @Bindable
+    public int getGoingVisible() {
+        return (event.isGoing())? View.GONE : View.VISIBLE;
+    }
+
+    /**
+     * Provides event location summary
+     * @return event location summary
+     */
+    @Bindable
+    public String getGoingNumber() {
+        return String.format(context.getString(R.string.goingNumber),String.valueOf(event.getGoing()));
+    }
+
+    /**
+     * Returns if number going text view is visible or gone
+     * @return View.VISIBLE if there is at least one user going; View.GONE otherwise so the view does not take space
+     */
+    @Bindable
+    public int getNumberGoingVisible() {
+        return (event.hasGoing())? View.VISIBLE : View.GONE;
     }
 }

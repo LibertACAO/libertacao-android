@@ -31,6 +31,7 @@ import com.parse.SaveCallback;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+// TODO: add share button and facebook share button
 public class EventDetailActivity extends AppCompatActivity {
     private static final String EVENT_ID = "EVENT_ID";
     private Event event;
