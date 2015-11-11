@@ -4,17 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.util.Validator;
 import com.libertacao.libertacao.util.ViewUtils;
+import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
+import com.libertacao.libertacao.view.map.MapFragment;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 
 import java.util.HashMap;
 
@@ -25,7 +29,10 @@ import timber.log.Timber;
 
 public class SendPushActivity extends AppCompatActivity {
 
+    @InjectView(R.id.send_push_scroll_view) ScrollView scrollView;
     @InjectView(R.id.send_push_edit_text) EditText alertText;
+
+    private MapFragment mapFragment;
 
     public static Intent newIntent(@NonNull Context context) {
         return new Intent(context, SendPushActivity.class);
@@ -41,6 +48,19 @@ public class SendPushActivity extends AppCompatActivity {
         setContentView(R.layout.activity_send_push);
         ViewUtils.setHomeAsUpEnabled(this);
         ButterKnife.inject(this);
+        setupMap();
+    }
+
+    private void setupMap() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        mapFragment = MapFragment.newInstance(true);
+        fragmentManager.beginTransaction().replace(R.id.event_map, mapFragment).commit();
+        mapFragment.setListener(new WorkaroundMapFragment.OnTouchListener() {
+            @Override
+            public void onTouch() {
+                scrollView.requestDisallowInterceptTouchEvent(true);
+            }
+        });
     }
 
     /**
@@ -62,8 +82,14 @@ public class SendPushActivity extends AppCompatActivity {
         }
 
         HashMap<String, Object> params = new HashMap<>();
-        params.put("recipientId", ParseUser.getCurrentUser().getObjectId());
         params.put("message", alertText.getText().toString());
+
+        LatLng selectedLatLng = mapFragment.getSelectedLatLng();
+        if(selectedLatLng != null) {
+            params.put("latitude", selectedLatLng.latitude);
+            params.put("longitude", selectedLatLng.longitude);
+        }
+
         ParseCloud.callFunctionInBackground("sendPushToLocation", params, new FunctionCallback<String>() {
             public void done(String success, ParseException e) {
                 if (e != null) {

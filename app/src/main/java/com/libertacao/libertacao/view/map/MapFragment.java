@@ -39,14 +39,20 @@ public class MapFragment extends WorkaroundMapFragment implements GoogleApiClien
     private boolean editMode;
     @Nullable private Marker eventLocationMarker;
 
+    public static MapFragment newInstance(boolean editMode) {
+        return newInstance(null, editMode);
+    }
+
     public static MapFragment newInstance(Event event) {
         return newInstance(event, false);
     }
 
-    public static MapFragment newInstance(Event event, boolean editMode) {
+    public static MapFragment newInstance(@Nullable Event event, boolean editMode) {
         MapFragment mapFragment = new MapFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(EVENT_ID, event.getId());
+        if(event != null) {
+            bundle.putInt(EVENT_ID, event.getId());
+        }
         bundle.putBoolean(EDIT_MODE, editMode);
         mapFragment.setArguments(bundle);
         return mapFragment;
