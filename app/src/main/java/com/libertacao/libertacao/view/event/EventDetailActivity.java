@@ -7,11 +7,11 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.libertacao.libertacao.R;
@@ -36,7 +36,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private static final String EVENT_ID = "EVENT_ID";
     private Event event;
 
-    @InjectView(R.id.event_detail_scroll_view) ScrollView scrollView;
+    @InjectView(R.id.event_detail_scroll_view) NestedScrollView scrollView;
 
     public static Intent newIntent(Context context, Event event){
         Intent intent = new Intent(context, EventDetailActivity.class);
@@ -60,6 +60,9 @@ public class EventDetailActivity extends AppCompatActivity {
                 ActivityEventDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_event_detail);
                 binding.setEventDataModel(new EventDataModel(this, event));
                 ViewUtils.setHomeAsUpEnabled(this);
+                if(getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle("");
+                }
                 ButterKnife.inject(this);
 
                 FragmentManager fragmentManager = getSupportFragmentManager();

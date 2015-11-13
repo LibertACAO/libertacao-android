@@ -53,9 +53,6 @@
     <string name="empty_event_list_with_filter">Sem nenhum evento :(…\nClique aqui para remover todos os filtros.</string>
     <string name="share">Compartilhar</string>
 
-    <!-- Details -->
-    <string name="details">Detalhes</string>
-
     <!-- Profile -->
     <string name="profile">Perfil</string>
     <string name="profile_username">Username:</string>
