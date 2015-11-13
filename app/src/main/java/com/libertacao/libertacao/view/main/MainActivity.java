@@ -8,6 +8,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -34,6 +35,7 @@ import com.libertacao.libertacao.view.perfil.PerfilFragment;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
@@ -90,25 +92,21 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         fragmentManager.beginTransaction().replace(R.id.container, EventFragment.newInstance()).commit();
     }
 
-    // FIXME: only update fragment if it is not already being displayed
     @Override
     public void onNavigationDrawerItemSelected(@NavigationDrawerFragment.DrawerPosition int position) {
         if(position == NavigationDrawerFragment.NOTIFICACAO) {
-            setupEventFragment();
+            openFragment(EventFragment.newInstance());
         } else if(position == NavigationDrawerFragment.CADASTRO_PERFIL){
             if(LoginManager.getInstance().isLoggedIn()){
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, PerfilFragment.newInstance()).commit();
+                openFragment(PerfilFragment.newInstance());
             } else {
                 Intent intent = new Intent(this, ParseLoginActivity.class);
                 startActivityForResult(intent, LOGIN_RESULT_CODE);
             }
         } else if(position == NavigationDrawerFragment.CONTATO){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.container, ContactFragment.newInstance()).commit();
+            openFragment(ContactFragment.newInstance());
         } else if(position == NavigationDrawerFragment.ADMIN){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.container, AdminFragment.newInstance()).commit();
+            openFragment(AdminFragment.newInstance());
         }
     }
 
@@ -146,6 +144,23 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     /**
      * Utility methods
      */
+
+    /**
+     * Open fragment if it is not already being displayed at the second level of fragments (fragment #1 will be drawer fragment)
+     * @param fragment related fragment
+     */
+    private void openFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null && fragments.size() > 1){
+            Fragment currentFragment = fragments.get(1);
+            if(currentFragment.getClass().equals(fragment.getClass())){
+                // We are already showing this fragment
+                return;
+            }
+        }
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+    }
 
     private void registerNetworkReceiver() {
         if (networkBroadcastReceiver != null) {
