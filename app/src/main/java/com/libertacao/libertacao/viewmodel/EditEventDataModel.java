@@ -1,8 +1,8 @@
 package com.libertacao.libertacao.viewmodel;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.databinding.Bindable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -55,12 +55,12 @@ public class EditEventDataModel extends EventDataModel {
 
     /**
      * Complete constructor to build an EventDataModel
-     * @param context given context
+     * @param activity given activity
      * @param onSelectImageClickListener listener to be called when user has clicked on Select image
      * @param event related event
      */
-    public EditEventDataModel(@NonNull Context context, @NonNull OnSelectImageClick onSelectImageClickListener, @NonNull Event event) {
-        super(context, event);
+    public EditEventDataModel(@NonNull Activity activity, @NonNull OnSelectImageClick onSelectImageClickListener, @NonNull Event event) {
+        super(activity, event);
         this.onSelectImageClickListener = onSelectImageClickListener;
         initialDateCalendar = Calendar.getInstance(new Locale("pt", "BR"));
         if(event.hasInitialDate()) {
@@ -220,7 +220,7 @@ public class EditEventDataModel extends EventDataModel {
      * @param view target
      */
     public void onInitialDateClick(View view){
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context, onInitialDateSetListener,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(activity, onInitialDateSetListener,
                 initialDateCalendar.get(Calendar.YEAR), initialDateCalendar.get(Calendar.MONTH),
                 initialDateCalendar.get(Calendar.DAY_OF_MONTH));
         if (event.hasEndDate() && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
@@ -248,7 +248,7 @@ public class EditEventDataModel extends EventDataModel {
      * @param view target
      */
     public void onInitialHourClick(View view) {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(context, onInitialHourTimeSetListener,
+        TimePickerDialog timePickerDialog = new TimePickerDialog(activity, onInitialHourTimeSetListener,
                 initialDateCalendar.get(Calendar.HOUR_OF_DAY), initialDateCalendar.get(Calendar.MINUTE), true);
         timePickerDialog.show();
     }
@@ -273,7 +273,7 @@ public class EditEventDataModel extends EventDataModel {
      * @param view target
      */
     public void onEndDateClick(View view){
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context, onEndDateSetListener,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(activity, onEndDateSetListener,
                 endDateCalendar.get(Calendar.YEAR), endDateCalendar.get(Calendar.MONTH),
                 endDateCalendar.get(Calendar.DAY_OF_MONTH));
         if (event.hasEndDate() && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
@@ -301,7 +301,7 @@ public class EditEventDataModel extends EventDataModel {
      * @param view target
      */
     public void onEndHourClick(View view) {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(context, onEndHourTimeSetListener,
+        TimePickerDialog timePickerDialog = new TimePickerDialog(activity, onEndHourTimeSetListener,
                 endDateCalendar.get(Calendar.HOUR_OF_DAY), endDateCalendar.get(Calendar.MINUTE), true);
         timePickerDialog.show();
     }

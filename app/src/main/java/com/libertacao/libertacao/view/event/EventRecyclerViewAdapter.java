@@ -1,5 +1,6 @@
 package com.libertacao.libertacao.view.event;
 
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
@@ -42,9 +43,10 @@ public class EventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<E
 
         void bindRepository(Event event) {
             if (binding.getEventDataModel() == null) {
-                binding.setEventDataModel(new EventDataModel(itemView.getContext(), event));
+                binding.setEventDataModel(new EventDataModel((Activity)itemView.getContext(), event, binding.notificacaoImage));
             } else {
                 binding.getEventDataModel().setEvent(event);
+                binding.getEventDataModel().setEventImageView(binding.notificacaoImage);
             }
         }
     }

@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +39,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private Event event;
 
     @InjectView(R.id.event_detail_scroll_view) NestedScrollView scrollView;
+    @InjectView(R.id.appbar) AppBarLayout appbarLayout;
 
     public static Intent newIntent(Context context, Event event){
         Intent intent = new Intent(context, EventDetailActivity.class);
@@ -64,6 +67,10 @@ public class EventDetailActivity extends AppCompatActivity {
                     getSupportActionBar().setTitle("");
                 }
                 ButterKnife.inject(this);
+
+                if(!event.hasImage()) {
+                    appbarLayout.setExpanded(false);
+                }
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 MapFragment mapFragment = MapFragment.newInstance(event);
@@ -101,6 +108,12 @@ public class EventDetailActivity extends AppCompatActivity {
             case R.id.menu_delete_event:
                 deleteEvent();
                 return true;
+            case android.R.id.home:
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    finishAfterTransition();
+                    return true;
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

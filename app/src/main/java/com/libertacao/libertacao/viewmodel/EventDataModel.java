@@ -1,10 +1,12 @@
 package com.libertacao.libertacao.viewmodel;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -28,9 +30,9 @@ import com.parse.ParseObject;
 @SuppressWarnings("unused")
 public class EventDataModel extends BaseObservable {
     /**
-     * Hold on context to perform start activities
+     * Hold on to activity
      */
-    protected final Context context;
+    protected final Activity activity;
 
     /**
      * Related event. This has all data that we need.
@@ -38,13 +40,29 @@ public class EventDataModel extends BaseObservable {
     protected Event event;
 
     /**
+     * Image view of this event
+     */
+    private ImageView eventImageView;
+
+    /**
+     * Complete constructor to build an EventDataModel
+     * @param activity given activity
+     * @param event related event
+     * @param eventImageView image view of this event
+     */
+    public EventDataModel(@NonNull Activity activity, @NonNull Event event, @Nullable ImageView eventImageView) {
+        this.activity = activity;
+        this.event = event;
+        this.eventImageView = eventImageView;
+    }
+
+    /**
      * Standard constructor to build an EventDataModel
-     * @param context given context
+     * @param activity given activity
      * @param event related event
      */
-    public EventDataModel(@NonNull Context context, @NonNull Event event){
-        this.context = context;
-        this.event = event;
+    public EventDataModel(@NonNull Activity activity, @NonNull Event event){
+        this(activity, event, null);
     }
 
     /**
@@ -98,12 +116,12 @@ public class EventDataModel extends BaseObservable {
                 // Has initial and end date
                 if(MyDateUtils.isSameDay(event.getInitialDate(), event.getEndDate())) {
                     // If both dates are from the same day
-                    return String.format(context.getString(R.string.eventInitialAndEndDateSameDay),
+                    return String.format(activity.getString(R.string.eventInitialAndEndDateSameDay),
                             MyDateUtils.getDateMonthHourMinuteDateToUser(event.getInitialDate()),
                             MyDateUtils.getHourMinuteDateToUser(event.getEndDate()));
                 } else {
                     // If dates are from different days
-                    return String.format(context.getString(R.string.eventInitialAndEndDateDifferentDay),
+                    return String.format(activity.getString(R.string.eventInitialAndEndDateDifferentDay),
                             MyDateUtils.getDayMonthDateToUser(event.getInitialDate()),
                             MyDateUtils.getDayMonthDateToUser(event.getEndDate()));
                 }
@@ -111,7 +129,7 @@ public class EventDataModel extends BaseObservable {
                 // Has only initial date
                 if(DateUtils.isToday(event.getInitialDate().getTime())) {
                     // If it is today, use prettytime to give a relative time
-                    return String.format(context.getString(R.string.eventInitialDateToday),
+                    return String.format(activity.getString(R.string.eventInitialDateToday),
                             MyDateUtils.getDateMonthHourMinuteDateToUser(event.getInitialDate()),
                             MyDateUtils.getPrettyTime().format(event.getInitialDate()));
                 } else {
@@ -175,6 +193,14 @@ public class EventDataModel extends BaseObservable {
     }
 
     /**
+     * Set a new event image view. It allows recycling EventDataModels within the RecyclerView adapter.
+     * @param eventImageView new event image view
+     */
+    public void setEventImageView(ImageView eventImageView) {
+        this.eventImageView = eventImageView;
+    }
+
+    /**
      * Load image into imageView
      * @param imageView target
      * @param image source
@@ -189,7 +215,13 @@ public class EventDataModel extends BaseObservable {
      * @param view target
      */
     public void onEventClick(View view){
-        context.startActivity(EventDetailActivity.newIntent(context, event));
+        //noinspection PointlessBooleanExpression,ConstantConditions
+        if (event.hasImage() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, eventImageView, "eventImage");
+            activity.startActivity(EventDetailActivity.newIntent(activity, event), options.toBundle());
+        } else {
+            activity.startActivity(EventDetailActivity.newIntent(activity, event));
+        }
     }
 
     /**
@@ -201,7 +233,7 @@ public class EventDataModel extends BaseObservable {
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, ShareUtils.getEventShareText(event));
         sendIntent.setType("text/plain");
-        context.startActivity(sendIntent);
+        activity.startActivity(sendIntent);
     }
     /**
      * Called when user clicked on the Going text view
@@ -214,7 +246,7 @@ public class EventDataModel extends BaseObservable {
         parseEvent.saveInBackground();
         event.setIsGoing(true);
         event.incrementGoing();
-        DatabaseHelper.getHelper(context).getEventIntegerRuntimeExceptionDao().update(event);
+        DatabaseHelper.getHelper(activity).getEventIntegerRuntimeExceptionDao().update(event);
         notifyPropertyChanged(BR.goingVisible);
         notifyPropertyChanged(BR.goingNumber);
         notifyPropertyChanged(BR.numberGoingVisible);
@@ -235,7 +267,7 @@ public class EventDataModel extends BaseObservable {
      */
     @Bindable
     public String getGoingNumber() {
-        return String.format(context.getString(R.string.goingNumber),String.valueOf(event.getGoing()));
+        return String.format(activity.getString(R.string.goingNumber),String.valueOf(event.getGoing()));
     }
 
     /**
