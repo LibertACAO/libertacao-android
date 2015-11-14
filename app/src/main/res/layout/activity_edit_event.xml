@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/notificacao_detail_title"
                     android:text="@{editEventDataModel.description}"
-                    android:inputType="textCapSentences"
+                    android:inputType="textMultiLine"
                     android:hint="@string/description"/>
 
                 <EditText
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/notification_location_summary"
                     android:text="@{editEventDataModel.locationDescription}"
-                    android:inputType="textCapWords"
+                    android:inputType="textMultiLine"
                     android:hint="@string/locationDescription"/>
 
             </RelativeLayout>

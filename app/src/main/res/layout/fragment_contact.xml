@@ -1,13 +1,38 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.libertacao.libertacao.view.contact.ContactFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_margin="@dimen/default_margin"
+              tools:context="com.libertacao.libertacao.view.contact.ContactFragment">
 
-    <!-- TODO: Define text (maybe add other vegan apps?) -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="TODO - Definir o que vai ser mostrado aqui"/>
+        android:layout_height="wrap_content"
+        android:text="@string/contactExplanation"/>
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/contact_email_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/emailOptional"
+        android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:id="@+id/contact_message_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/message"
+        android:inputType="textMultiLine"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/send_message_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_send"
+        android:layout_gravity="bottom|end"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"/>
+
+</LinearLayout>

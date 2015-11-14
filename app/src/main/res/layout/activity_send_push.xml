@@ -20,9 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
-            android:minLines="3"
             android:maxEms="140"
-            android:inputType="textCapSentences"
+            android:inputType="textMultiLine"
             android:hint="@string/alertTextHint"/>
 
         <Button

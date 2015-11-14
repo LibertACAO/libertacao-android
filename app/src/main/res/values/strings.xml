@@ -145,9 +145,17 @@
     <string name="eventDeletedSuccessfully">Evento deletado com sucesso!</string>
 
     <!-- Send push activity -->
-    <string name="alertTextHint">Texto do alerta (push notification)</string>
+    <string name="alertTextHint">Texto do alerta (push notification) (máximo: 140 caracteres)</string>
     <string name="send">Enviar</string>
     <string name="pushSendError">Não foi possível enviar o push. Tente novamente mais tarde.</string>
     <string name="pushSendSuccess">Push enviado com sucesso!</string>
     <string name="createNewEvent">Criar novo evento</string>
+
+    <!-- Contact fragment -->
+    <string name="emailOptional">E-mail (opcional)</string>
+    <string name="message">Digite aqui sua mensagem</string>
+    <string name="contactExplanation">Possui alguma sugestão, crítica ou dúvida sobre o app? Preencha o formulário abaixo. Se você quiser receber uma resposta, preencha o campo e-mail; caso contrário, você enviará sua mensagem como anônimo e não poderemos dar uma resposta.</string>
+    <string name="savingMessage">Enviando mensagem…</string>
+    <string name="messageSavedError">Error! Não foi possível enviar sua mensagem. Tente novamente mais tarde.</string>
+    <string name="messageSavedSuccessfully">Mensagem enviada com sucesso!</string>
 </resources>
