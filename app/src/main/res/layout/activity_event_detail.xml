@@ -10,7 +10,6 @@
             type="com.libertacao.libertacao.viewmodel.EventDataModel"/>
     </data>
 
-    <!-- TODO: add shared element transition :D-->
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
