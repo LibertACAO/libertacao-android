@@ -33,8 +33,6 @@ public class EventManager {
 
     public void sync(@NonNull final Context context){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Event.EVENT);
-        // FIXME: only request up-to-coming events
-        //query.whereEqualTo("playerName", "Dan Stemkoski");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> events, ParseException e) {
                 if (e == null) {

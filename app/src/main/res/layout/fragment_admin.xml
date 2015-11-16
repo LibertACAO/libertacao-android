@@ -6,6 +6,7 @@
              tools:context="com.libertacao.libertacao.view.admin.AdminFragment">
 
     <!-- TODO: Implement add users to management role (only available to admins) -->
+    <!-- TODO: Implement remove old events -->
 
     <Button
         android:id="@+id/create_new_event_button"
