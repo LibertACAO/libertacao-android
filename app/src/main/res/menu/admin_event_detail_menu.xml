@@ -14,6 +14,12 @@
         app:showAsAction="ifRoom"
         android:orderInCategory="2"/>
     <item
+        android:id="@+id/menu_deactivate_event"
+        android:title="@string/deactivateEvent"
+        android:icon="@android:drawable/ic_menu_revert"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="2"/>
+    <item
         android:id="@+id/menu_delete_event"
         android:title="@string/deleteEvent"
         android:icon="@android:drawable/ic_menu_delete"

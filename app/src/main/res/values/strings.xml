@@ -112,6 +112,7 @@
     <string name="sendPush">Enviar push</string>
     <string name="editEvent">Editar evento</string>
     <string name="activateEvent">Ativar evento</string>
+    <string name="deactivateEvent">Desativar evento</string>
     <string name="deleteEvent">Deletar evento</string>
 
     <!-- Edit event -->
@@ -144,8 +145,13 @@
     <string name="activateConfirm">Você tem certeza que deseja ativar esse evento?</string>
     <string name="activatingEvent">Ativando evento…</string>
     <string name="eventActivatedSuccessfully">Evento ativado com sucesso!</string>
+    <string name="deactivate">Desativar</string>
+    <string name="deactivateConfirm">Você tem certeza que deseja desativar esse evento?</string>
+    <string name="deactivatingEvent">Desativando evento…</string>
+    <string name="eventDeactivatedSuccessfully">Evento desativado com sucesso!</string>
     <string name="delete">Deletar</string>
-    <string name="deleteConfirm">Você tem certeza que quer deletar esse evento?</string>
+    <string name="deleteConfirm">Você tem certeza que quer deletar esse evento? Essa alteração irá levar em torno de 30 minutos para ser
+        refletida para os usuários. Caso você queira algo instantâneo, primeiro desative o evento, e após uma hora delete ele.</string>
     <string name="deletingEvent">Deletando evento…</string>
     <string name="eventDeletedSuccessfully">Evento deletado com sucesso!</string>
 

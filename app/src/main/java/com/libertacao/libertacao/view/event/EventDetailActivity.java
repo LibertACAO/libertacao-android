@@ -91,6 +91,7 @@ public class EventDetailActivity extends AppCompatActivity {
         if(LoginManager.getInstance().isAdmin()) {
             getMenuInflater().inflate(R.menu.admin_event_detail_menu, menu);
             menu.findItem(R.id.menu_activate_event).setVisible(!event.isEnabled());
+            menu.findItem(R.id.menu_deactivate_event).setVisible(event.isEnabled());
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -103,6 +104,9 @@ public class EventDetailActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_activate_event:
                 activateEvent();
+                return true;
+            case R.id.menu_deactivate_event:
+                deactivateEvent();
                 return true;
             case R.id.menu_delete_event:
                 deleteEvent();
@@ -141,6 +145,32 @@ public class EventDetailActivity extends AppCompatActivity {
                             public void done(ParseException e) {ViewUtils.hideProgressDialog(pd);
                                 Toast.makeText(EventDetailActivity.this,
                                         EventDetailActivity.this.getString(R.string.eventActivatedSuccessfully),
+                                        Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void deactivateEvent() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.deactivate))
+                .setMessage(getString(R.string.deactivateConfirm))
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog pd = ViewUtils.showProgressDialog(EventDetailActivity.this, getString(R.string.deactivatingEvent), false);
+                        ParseObject eventParseObject = new ParseObject(Event.EVENT);
+                        eventParseObject.setObjectId(event.getObjectId());
+                        eventParseObject.put(Event.ENABLED, false);
+                        eventParseObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {ViewUtils.hideProgressDialog(pd);
+                                Toast.makeText(EventDetailActivity.this,
+                                        EventDetailActivity.this.getString(R.string.eventDeactivatedSuccessfully),
                                         Toast.LENGTH_LONG).show();
                                 finish();
                             }
