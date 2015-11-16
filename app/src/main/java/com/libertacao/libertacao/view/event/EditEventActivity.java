@@ -3,6 +3,7 @@ package com.libertacao.libertacao.view.event;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -195,29 +197,48 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
         }
 
         // Validate event type
-        int selectedType = ViewUtils.getIndexOfRadioGroupSelection(typeRadioGroup);
+        final int selectedType = ViewUtils.getIndexOfRadioGroupSelection(typeRadioGroup);
         if(selectedType == 0) {
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.selectAnEventType))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(getString(android.R.string.ok), null)
-                    .setCancelable(false)
                     .show();
             return;
         }
 
         // Validate initial date
-        Calendar initialDateCalendar = editEventDataModel.getInitialDateCalendar();
+        final Calendar initialDateCalendar = editEventDataModel.getInitialDateCalendar();
         if(initialDateCalendar == null) {
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.selectADate))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(getString(android.R.string.ok), null)
-                    .setCancelable(false)
                     .show();
             return;
         }
 
+        LatLng selectedLatLng = mapFragment.getSelectedLatLng();
+        String locationSummary = locationSummaryEditText.getText().toString();
+        String locationDescription = locationDescriptionEditText.getText().toString();
+        if((!TextUtils.isEmpty(locationSummary) || !TextUtils.isEmpty(locationDescription)) && selectedLatLng == null) {
+            new AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.latLngNotSet))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            reallySaveEvent(selectedType, initialDateCalendar);
+                        }
+                    })
+                    .setNegativeButton(getString(android.R.string.no), null)
+                    .show();
+        } else {
+            reallySaveEvent(selectedType, initialDateCalendar);
+        }
+    }
+
+    private void reallySaveEvent(int selectedType, Calendar initialDateCalendar) {
         // Proceed to event creation
         final ProgressDialog pd;
         if(LoginManager.getInstance().isAdmin()) {
@@ -229,6 +250,9 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
         ParseObject event = new ParseObject(Event.EVENT);
         if(editEventDataModel.getEvent().isSynced()) {
             event.setObjectId(editEventDataModel.getEvent().getObjectId());
+            event.put(Event.ENABLED, editEventDataModel.getEvent().isEnabled());
+        } else {
+            event.put(Event.ENABLED, false);
         }
         event.put(Event.TITLE, titleEditText.getText().toString());
         event.put(Event.TYPE, selectedType);
@@ -245,7 +269,6 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
         if(endDateCalendar != null) {
             event.put(Event.END_DATE, endDateCalendar.getTime());
         }
-        event.put(Event.ENABLED, false);
 
         if(editEventDataModel.getEventLocalImage() != null) {
             try {

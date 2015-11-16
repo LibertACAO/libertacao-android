@@ -106,7 +106,6 @@
 
     <!-- Event details -->
     <string name="participarDaAcao">Vou participar da ação</string>
-    <string name="shareOnFacebook">Compartilhar no Facebook</string>
 
     <!-- Admin fragment-->
     <string name="addEvent">Adicionar evento</string>
@@ -131,6 +130,8 @@
     <string name="photoSelectedSuccessfully">Foto selecionada com sucesso!</string>
     <string name="selectAnEventType">Por favor, selecione um tipo para o seu evento</string>
     <string name="selectADate">Por favor, selecione uma data para o seu evento</string>
+    <string name="latLngNotSet">Você forneceu uma localização textual, mas não selecionou a latitude/longitude por meio do mapa. Isso se
+        tornará um evento global. Deseja continuar mesmo assim?</string>
     <string name="savingEvent">Salvando evento…</string>
     <string name="suggestingEvent">Sugerindo evento…</string>
     <string name="eventSavedError">Não foi possível salvar o evento. Tente novamente mais tarde.</string>

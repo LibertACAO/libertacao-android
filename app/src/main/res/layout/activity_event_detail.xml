@@ -180,7 +180,7 @@
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:orientation="vertical"
-                    android:onClick="@{eventDataModel.onShareFacebookClick}"
+                    android:onClick="@{eventDataModel.onShareClick}"
                     app:cardElevation="8dp"
                     app:contentPadding="16dp"
                     app:cardBackgroundColor="@color/holo_blue_dark">
@@ -190,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:textStyle="bold"
-                        android:text="@string/shareOnFacebook"/>
+                        android:text="@string/share"/>
 
                 </android.support.v7.widget.CardView>
 

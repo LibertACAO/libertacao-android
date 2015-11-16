@@ -235,6 +235,7 @@ public class EventDataModel extends BaseObservable {
         sendIntent.setType("text/plain");
         activity.startActivity(sendIntent);
     }
+
     /**
      * Called when user clicked on the Going text view
      * @param view target
