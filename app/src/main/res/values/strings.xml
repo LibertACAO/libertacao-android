@@ -104,6 +104,10 @@
     <string name="going">Vou!</string>
     <string name="goingNumber">%1$s indo</string>
 
+    <!-- Event details -->
+    <string name="participarDaAcao">Vou participar da ação</string>
+    <string name="shareOnFacebook">Compartilhar no Facebook</string>
+
     <!-- Admin fragment-->
     <string name="addEvent">Adicionar evento</string>
     <string name="sendPush">Enviar push</string>
@@ -158,4 +162,5 @@
     <string name="savingMessage">Enviando mensagem…</string>
     <string name="messageSavedError">Error! Não foi possível enviar sua mensagem. Tente novamente mais tarde.</string>
     <string name="messageSavedSuccessfully">Mensagem enviada com sucesso!</string>
+
 </resources>
