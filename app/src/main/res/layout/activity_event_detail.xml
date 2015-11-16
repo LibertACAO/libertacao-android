@@ -28,7 +28,6 @@
                 app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <!-- TODO: we need a better placeholder image for apps without image-->
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

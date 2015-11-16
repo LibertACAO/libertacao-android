@@ -33,7 +33,6 @@ public class EventManager {
 
     public void sync(@NonNull final Context context){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Event.EVENT);
-        // FIXME: Request only near events (or events without location) - https://parse.com/docs/android/guide#geopoints
         // FIXME: only request up-to-coming events
         //query.whereEqualTo("playerName", "Dan Stemkoski");
         query.findInBackground(new FindCallback<ParseObject>() {

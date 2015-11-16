@@ -64,7 +64,6 @@ public class MyApp extends Application {
     private void setupParse() {
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
         ParseFacebookUtils.initialize(this);
-        // TODO: check if user logging out/logging in with another account we need to update this user
         if(ParseUser.getCurrentUser() != null && !UserPreferences.isUserAssociatedWithInstallation()) {
             // This should be done only once
             ParseInstallation currentInstallation = ParseInstallation.getCurrentInstallation();
