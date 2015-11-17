@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class DataUtils {
-    private static final int SMALL_IMAGE_HEIGHT = 128;
+    private static final int SMALL_IMAGE_HEIGHT = 512;
     private static final int SMALL_IMAGE_WIDTH = 512;
     private DataUtils() {
         // Do not allow instantiation
