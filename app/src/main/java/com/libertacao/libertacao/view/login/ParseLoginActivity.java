@@ -14,8 +14,8 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.util.MyImageLoader;
 import com.libertacao.libertacao.util.ViewUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ui.ParseOnLoadingListener;
@@ -46,7 +46,7 @@ public class ParseLoginActivity extends FragmentActivity implements
             getSupportFragmentManager().beginTransaction().add(R.id.container, ParseLoginFragment.newInstance(configOptions)).commit();
         }
 
-        ImageLoader.getInstance().displayImage("drawable://" + R.drawable.background, (ImageView) findViewById(R.id.background_image_view),
+        MyImageLoader.getInstance().displayImage("drawable://" + R.drawable.background, (ImageView) findViewById(R.id.background_image_view),
                 ViewUtils.getFadeInDisplayImageOptions());
     }
 

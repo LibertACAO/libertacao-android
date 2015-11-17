@@ -21,7 +21,6 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.ui.ParseLoginConfig;
-import com.parse.ui.ParseLoginFragmentBase;
 import com.parse.ui.ParseOnLoadingListener;
 import com.parse.ui.ParseOnLoginSuccessListener;
 

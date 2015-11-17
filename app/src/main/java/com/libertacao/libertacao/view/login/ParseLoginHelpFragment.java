@@ -15,7 +15,6 @@ import com.libertacao.libertacao.util.Validator;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
-import com.parse.ui.ParseLoginFragmentBase;
 import com.parse.ui.ParseOnLoadingListener;
 
 /**

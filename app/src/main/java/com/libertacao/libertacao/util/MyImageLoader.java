@@ -44,6 +44,10 @@ public class MyImageLoader {
         ImageLoader.getInstance().displayImage(uri, imageView);
     }
 
+    public void displayImage(String uri, ImageView imageView, DisplayImageOptions displayImageOptions) {
+        ImageLoader.getInstance().displayImage(uri, imageView, displayImageOptions);
+    }
+
     public void displayEventImage(String uri, ImageView imageView) {
         ImageLoader.getInstance().displayImage(uri, imageView, eventOptions);
     }
