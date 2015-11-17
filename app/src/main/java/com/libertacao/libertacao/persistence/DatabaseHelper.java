@@ -187,7 +187,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             }
         }
         else if(selectedFilter > 1) {
-            where.eq(Event.TYPE, selectedFilter);
+            where.eq(Event.TYPE, selectedFilter - 1);
             where.and(2);
         }
 
