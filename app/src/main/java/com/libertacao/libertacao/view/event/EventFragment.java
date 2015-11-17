@@ -39,10 +39,11 @@ import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private static final String TAG = "NotificacaoFragment";
-
     // Array to keep track of current filter
-    private int selectedFilter = 1;
+    public static final int ALL_FILTER = 0;
+    public static final int NEAR_ME_FILTER = 1;
+    public static final int DEFAULT_FILTER = NEAR_ME_FILTER;
+    private int selectedFilter = DEFAULT_FILTER;
 
     private boolean loaderInitied = false;
 
@@ -124,8 +125,8 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mEmptyTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedFilter != 0) {
-                    selectedFilter = 0;
+                if (selectedFilter != ALL_FILTER && selectedFilter != NEAR_ME_FILTER) {
+                    selectedFilter = DEFAULT_FILTER;
                     setupAdapterAndLoader();
                     setupEmptyText();
                 }
@@ -143,7 +144,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     private void setupEmptyText() {
-        if(selectedFilter == 0) {
+        if(selectedFilter == ALL_FILTER || selectedFilter == NEAR_ME_FILTER) {
             mEmptyTextView.setText(R.string.empty_event_list);
         } else {
             mEmptyTextView.setText(R.string.empty_event_list_with_filter);
@@ -202,7 +203,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 getLoaderManager().restartLoader(0, null, loaderCallbacks);
             }
         } catch (SQLException e) {
-            ViewUtils.showCriticalErrorMessageAndLogToCrashlytics(EventFragment.this.getContext(), mRecyclerView, TAG, e);
+            ViewUtils.showCriticalErrorMessageAndLogToCrashlytics(EventFragment.this.getContext(), mRecyclerView, "EventFragment", e);
         }
     }
 
