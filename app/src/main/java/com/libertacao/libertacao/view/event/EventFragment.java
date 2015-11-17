@@ -39,11 +39,17 @@ import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    // Array to keep track of current filter
+    // Current filter
     public static final int ALL_FILTER = 0;
     public static final int NEAR_ME_FILTER = 1;
     public static final int DEFAULT_FILTER = NEAR_ME_FILTER;
     private int selectedFilter = DEFAULT_FILTER;
+
+    // Order by
+    public static final int ORDER_BY_INITIAL_DATE = 0;
+    public static final int ORDER_BY_LAST_UPDATED = 1;
+    public static final int DEFAULT_ORDER_BY_FILTER = ORDER_BY_INITIAL_DATE;
+    private int selectedOrderBy = DEFAULT_ORDER_BY_FILTER;
 
     private boolean loaderInitied = false;
 
@@ -113,6 +119,24 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     Toast.makeText(getContext(), getString(R.string.mustBeLoggedIn), Toast.LENGTH_SHORT).show();
                 }
                 return true;
+            case R.id.menu_order_by_event:
+                CharSequence[] orderByItems = new CharSequence[2];
+                orderByItems[0] = getString(R.string.orderByInitialDate);
+                orderByItems[1] = getString(R.string.orderByLastUpdated);
+                AlertDialog.Builder orderByBuilder = new AlertDialog.Builder(getContext());
+                orderByBuilder.setTitle(getString(R.string.orderBy));
+                orderByBuilder.setSingleChoiceItems(orderByItems, selectedOrderBy, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectedOrderBy = which;
+                        setupAdapterAndLoader();
+                        setupEmptyText();
+                        dialog.dismiss();
+                    }
+                });
+                orderByBuilder.setNegativeButton(getString(android.R.string.cancel), null);
+                orderByBuilder.show();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -176,7 +200,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         final PreparedQuery<Event> preparedQuery;
         try {
             final Dao<Event, Integer> eventIntegerDao = DatabaseHelper.getHelper(getContext()).getEventIntegerDao();
-            preparedQuery = DatabaseHelper.getHelper(getContext()).getEventPreparedQuery(selectedFilter);
+            preparedQuery = DatabaseHelper.getHelper(getContext()).getEventPreparedQuery(selectedFilter, selectedOrderBy);
 
             // Using LoaderManager to change cursor when some data change in database
             LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {

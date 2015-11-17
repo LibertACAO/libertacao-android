@@ -30,6 +30,7 @@ public class Event {
     public static final String GOING = "going";
     public static final String LINK_URL = "linkUrl";
     public static final String LINK_TEXT = "linkText";
+    public static final String UPDATED_AT = "updatedAt";
 
     @DatabaseField(generatedId = true, columnName = "_id")
     private int id;

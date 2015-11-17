@@ -138,7 +138,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Prepared queries
      */
 
-    public PreparedQuery<Event> getEventPreparedQuery(int selectedFilter) throws SQLException {
+    public PreparedQuery<Event> getEventPreparedQuery(int selectedFilter, int selectedOrderBy) throws SQLException {
         QueryBuilder<Event, Integer> queryBuilder = getEventIntegerRuntimeExceptionDao().queryBuilder();
 
         // Where
@@ -200,7 +200,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         queryBuilder.setWhere(where);
 
         // Order by
-        queryBuilder.orderBy(Event.INITIAL_DATE, true);
+        if(selectedOrderBy == 0) {
+            queryBuilder.orderBy(Event.INITIAL_DATE, true);
+        } else {
+            queryBuilder.orderBy(Event.UPDATED_AT, false);
+        }
 
         return queryBuilder.prepare();
     }

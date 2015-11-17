@@ -95,6 +95,9 @@
 
     <!-- Event Fragment -->
     <string name="filter">Filtrar</string>
+    <string name="orderBy">Ordenar por…</string>
+    <string name="orderByInitialDate">Data inicial</string>
+    <string name="orderByLastUpdated">Mais atualizados</string>
     <string name="mustBeLoggedIn">Você precisa estar logado para acessar essa página</string>
 
     <!-- Event card -->
