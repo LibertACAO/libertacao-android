@@ -17,4 +17,15 @@ public class ConnectionManager {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
+
+    private static final String HTTP = "http://";
+    private static final String HTTPS = "https://";
+
+    private static boolean shouldAddHttp(String url) {
+        return (url != null) && !(url.startsWith(ConnectionManager.HTTP) && url.startsWith(ConnectionManager.HTTPS));
+    }
+
+    public static String getUrlWithHttp(String url) {
+        return shouldAddHttp(url)? (HTTP + url) : url;
+    }
 }

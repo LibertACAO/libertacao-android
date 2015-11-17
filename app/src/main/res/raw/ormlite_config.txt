@@ -53,6 +53,15 @@ fieldName=isGoing
 fieldName=going
 # --field-end--
 # --field-start--
+fieldName=linkUrl
+# --field-end--
+# --field-start--
+fieldName=linkText
+# --field-end--
+# --field-start--
+fieldName=updatedAt
+# --field-end--
+# --field-start--
 fieldName=lastSynced
 dataPersister=DATE_LONG
 # --field-end--

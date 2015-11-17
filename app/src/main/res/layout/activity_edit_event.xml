@@ -105,10 +105,28 @@
                     tools:ignore="TextFields"/>
 
                 <EditText
-                    android:id="@+id/notification_location_summary"
+                    android:id="@+id/event_link_url"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/notification_end_date"
+                    android:text="@{editEventDataModel.linkUrl}"
+                    android:inputType="textUri"
+                    android:hint="@string/linkUrl"/>
+
+                <EditText
+                    android:id="@+id/event_link_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/event_link_url"
+                    android:text="@{editEventDataModel.linkText}"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/linkText"/>
+
+                <EditText
+                    android:id="@+id/notification_location_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/event_link_text"
                     android:text="@{editEventDataModel.locationSummary}"
                     android:inputType="textCapWords"
                     android:hint="@string/locationSummary"/>

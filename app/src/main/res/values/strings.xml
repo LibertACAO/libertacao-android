@@ -25,8 +25,8 @@
         <item quantity="other">Protestos</item>
     </plurals>
     <plurals name="singleNew">
-        <item quantity="one">Noticia</item>
-        <item quantity="other">Noticias</item>
+        <item quantity="one">Notícia</item>
+        <item quantity="other">Notícias</item>
     </plurals>
     <plurals name="variado">
         <item quantity="one">Variado</item>
@@ -106,6 +106,7 @@
 
     <!-- Event details -->
     <string name="participarDaAcao">Vou participar da ação</string>
+    <string name="notFoundActivity">Erro! Não foi encontrado nenhum app capaz de abrir essa URL.</string>
 
     <!-- Admin fragment-->
     <string name="addEvent">Adicionar evento</string>
@@ -122,6 +123,8 @@
     <string name="initialHour">20h</string>
     <string name="endDate">Data final (opcional): 22/10</string>
     <string name="endHour">21h</string>
+    <string name="linkUrl">Link URL (opcional)</string>
+    <string name="linkText">Link texto (opcional)</string>
     <string name="locationSummary">Localização (Porto Alegre, RS)</string>
     <string name="locationDescription">Localização completa (Avenida Lajeado, 6520)</string>
     <string name="createEdit">Criar/editar</string>
@@ -131,6 +134,7 @@
     <string name="photoSelectedSuccessfully">Foto selecionada com sucesso!</string>
     <string name="selectAnEventType">Por favor, selecione um tipo para o seu evento</string>
     <string name="selectADate">Por favor, selecione uma data para o seu evento</string>
+    <string name="typeALink">Você forneceu um texto para aparecer junto com o link, mas não o link URL</string>
     <string name="latLngNotSet">Você forneceu uma localização textual, mas não selecionou a latitude/longitude por meio do mapa. Isso se
         tornará um evento global. Deseja continuar mesmo assim?</string>
     <string name="savingEvent">Salvando evento…</string>

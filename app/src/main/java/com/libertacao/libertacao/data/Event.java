@@ -12,7 +12,6 @@ import com.parse.ParseObject;
 
 import java.util.Date;
 
-// TODO: add link field and link text field (e.g. www.google.com - Google)
 public class Event {
     public static final String EVENT = "Event";
     public static final String TITLE = "title";
@@ -29,6 +28,8 @@ public class Event {
     public static final String INITIAL_DATE = "initialDate";
     public static final String END_DATE = "endDate";
     public static final String GOING = "going";
+    public static final String LINK_URL = "linkUrl";
+    public static final String LINK_TEXT = "linkText";
 
     @DatabaseField(generatedId = true, columnName = "_id")
     private int id;
@@ -77,6 +78,15 @@ public class Event {
     @DatabaseField
     private long going;
 
+    @DatabaseField
+    private String linkUrl;
+
+    @DatabaseField
+    private String linkText;
+
+    @DatabaseField
+    private Date updatedAt;
+
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     @DatabaseField(dataType = DataType.DATE_LONG)
     private Date lastSynced;
@@ -87,7 +97,7 @@ public class Event {
 
     public Event(@NonNull String objectId, @NonNull String title, String description, double latitude, double longitude,
                  String locationSummary, String locationDescription, String image, @NonNull Date initialDate, Date endDate, int type,
-                 boolean enabled, long going) {
+                 boolean enabled, long going, String linkUrl, String linkText, Date updatedAt) {
         this.objectId = objectId;
         this.title = title;
         this.description = description;
@@ -103,6 +113,9 @@ public class Event {
         this.enabled = enabled;
         this.isGoing = false;
         this.going = going;
+        this.linkUrl = linkUrl;
+        this.linkText = linkText;
+        this.updatedAt = updatedAt;
     }
 
     public static Event getEvent(@NonNull ParseObject object){
@@ -120,7 +133,10 @@ public class Event {
                 object.getDate(END_DATE),
                 object.getInt(TYPE),
                 object.getBoolean(ENABLED),
-                (object.getNumber(GOING) != null)? object.getNumber(GOING).longValue() : 0
+                (object.getNumber(GOING) != null)? object.getNumber(GOING).longValue() : 0,
+                object.getString(LINK_URL),
+                object.getString(LINK_TEXT),
+                object.getUpdatedAt()
         );
     }
 
@@ -241,5 +257,13 @@ public class Event {
 
     public void incrementGoing() {
         this.going++;
+    }
+
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public String getLinkText() {
+        return linkText;
     }
 }

@@ -31,7 +31,7 @@ import timber.log.Timber;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int LAST_SYNCED_THRESHOLD_IN_MINUTES = -30; // time that instances have before being deleted by next sync
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static final String TAG = "DatabaseHelper";
     private Dao<Event, Integer> eventIntegerDao = null;
     private RuntimeExceptionDao<Event, Integer> eventIntegerRuntimeExceptionDao = null;

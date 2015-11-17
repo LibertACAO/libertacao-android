@@ -55,6 +55,8 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
     @InjectView(R.id.event_detail_type_radio_group) RadioGroup typeRadioGroup;
     @InjectView(R.id.notificacao_detail_title) EditText titleEditText;
     @InjectView(R.id.notificacao_detail_description) EditText descriptionEditText;
+    @InjectView(R.id.event_link_url) EditText linkUrlEditText;
+    @InjectView(R.id.event_link_text) EditText linkTextEditText;
     @InjectView(R.id.notification_location_summary) EditText locationSummaryEditText;
     @InjectView(R.id.notification_location_description) EditText locationDescriptionEditText;
 
@@ -218,6 +220,13 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
             return;
         }
 
+        // Validate links
+        if(TextUtils.isEmpty(linkUrlEditText.getText().toString()) && !TextUtils.isEmpty(linkTextEditText.getText().toString())) {
+            linkUrlEditText.setError(getString(R.string.typeALink));
+            linkUrlEditText.requestFocus();
+            return;
+        }
+
         LatLng selectedLatLng = mapFragment.getSelectedLatLng();
         String locationSummary = locationSummaryEditText.getText().toString();
         String locationDescription = locationDescriptionEditText.getText().toString();
@@ -269,6 +278,8 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
         if(endDateCalendar != null) {
             event.put(Event.END_DATE, endDateCalendar.getTime());
         }
+        event.put(Event.LINK_URL, linkUrlEditText.getText().toString());
+        event.put(Event.LINK_TEXT, linkTextEditText.getText().toString());
 
         if(editEventDataModel.getEventLocalImage() != null) {
             try {

@@ -26,5 +26,8 @@ You can use an Android device, Android Studio simulator or Genymotion emulator (
 * Android 2.3+
 
 ## Types of events (this is more related to Parse api, but will place here while there is no common API)
-1. Feiras
-2. Vaquinhas
+1. Vakinha
+2. Petição
+3. Protesto
+4. Notícia
+5. Variado

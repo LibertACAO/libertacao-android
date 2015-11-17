@@ -2,10 +2,12 @@ package com.libertacao.libertacao.viewmodel;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,10 +15,12 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.libertacao.libertacao.BR;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.manager.ConnectionManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.MyDateUtils;
 import com.libertacao.libertacao.util.MyImageLoader;
@@ -278,5 +282,50 @@ public class EventDataModel extends BaseObservable {
     @Bindable
     public int getNumberGoingVisible() {
         return (event.hasGoing())? View.VISIBLE : View.GONE;
+    }
+
+    /**
+     * Provides event link url
+     * @return event link url
+     */
+    public String getLinkUrl() {
+        return event.getLinkUrl();
+    }
+
+    /**
+     * Provides event link text
+     * @return event link text
+     */
+    public String getLinkText() {
+        return event.getLinkText();
+    }
+
+    /**
+     * Returns if URL visible or gone
+     * @return View.VISIBLE if is there a URL; View.GONE otherwise so the view does not take space
+     */
+    public int isUrlVisible() {
+        return (TextUtils.isEmpty(event.getLinkUrl()))? View.GONE : View.VISIBLE;
+    }
+
+    /**
+     * Provides event link
+     * @return event link
+     */
+    public String getUrl() {
+        return (TextUtils.isEmpty(event.getLinkText()))? event.getLinkUrl() : event.getLinkText();
+    }
+
+    /**
+     * Called when user clicked to open url
+     * @param view target
+     */
+    public void onUrlClick(View view){
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ConnectionManager.getUrlWithHttp(event.getLinkUrl())));
+            activity.startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            Toast.makeText(activity, activity.getString(R.string.notFoundActivity), Toast.LENGTH_LONG).show();
+        }
     }
 }
