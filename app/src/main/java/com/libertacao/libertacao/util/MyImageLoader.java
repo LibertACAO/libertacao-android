@@ -39,6 +39,10 @@ public class MyImageLoader {
                 .build();
     }
 
+    public ImageLoader getImageLoader() {
+        return ImageLoader.getInstance();
+    }
+
     @SuppressWarnings("unused")
     public void displayImage(String uri, ImageView imageView) {
         ImageLoader.getInstance().displayImage(uri, imageView);

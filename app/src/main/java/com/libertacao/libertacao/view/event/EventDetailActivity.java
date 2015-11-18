@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
@@ -39,6 +40,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     @InjectView(R.id.event_detail_scroll_view) NestedScrollView scrollView;
     @InjectView(R.id.appbar) AppBarLayout appbarLayout;
+    @InjectView(R.id.collapsing_toolbar_layout) CollapsingToolbarLayout collapsingToolbarLayout;
 
     public static Intent newIntent(Context context, Event event){
         Intent intent = new Intent(context, EventDetailActivity.class);
@@ -80,6 +82,23 @@ public class EventDetailActivity extends AppCompatActivity {
                         scrollView.requestDisallowInterceptTouchEvent(true);
                     }
                 });
+
+                /*if(event.hasImage()) {
+                    MyImageLoader.getInstance().getImageLoader().loadImage(event.getImage(), new SimpleImageLoadingListener() {
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            super.onLoadingComplete(imageUri, view, loadedImage);
+                            Palette.from(loadedImage).generate(new Palette.PaletteAsyncListener() {
+                                @Override
+                                public void onGenerated(Palette palette) {
+                                    int mutedColor = palette.getMutedColor(getResources().getColor(R.color.primary));
+                                    collapsingToolbarLayout.setContentScrimColor(mutedColor);
+                                }
+                            });
+                        }
+                    });
+                }*/
+
             } else {
                 notFoundEvent();
             }
