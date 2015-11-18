@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -13,8 +14,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.libertacao.libertacao.R;
@@ -22,10 +26,12 @@ import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.databinding.ActivityEventDetailBinding;
 import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
+import com.libertacao.libertacao.util.MyImageLoader;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.libertacao.libertacao.viewmodel.EventDataModel;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -73,31 +79,8 @@ public class EventDetailActivity extends AppCompatActivity {
                     appbarLayout.setExpanded(false);
                 }
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                MapFragment mapFragment = MapFragment.newInstance(event);
-                fragmentManager.beginTransaction().replace(R.id.event_map, mapFragment).commit();
-                mapFragment.setListener(new WorkaroundMapFragment.OnTouchListener() {
-                    @Override
-                    public void onTouch() {
-                        scrollView.requestDisallowInterceptTouchEvent(true);
-                    }
-                });
-
-                /*if(event.hasImage()) {
-                    MyImageLoader.getInstance().getImageLoader().loadImage(event.getImage(), new SimpleImageLoadingListener() {
-                        @Override
-                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                            super.onLoadingComplete(imageUri, view, loadedImage);
-                            Palette.from(loadedImage).generate(new Palette.PaletteAsyncListener() {
-                                @Override
-                                public void onGenerated(Palette palette) {
-                                    int mutedColor = palette.getMutedColor(getResources().getColor(R.color.primary));
-                                    collapsingToolbarLayout.setContentScrimColor(mutedColor);
-                                }
-                            });
-                        }
-                    });
-                }*/
+                setupMapFragment();
+                setToolbarAndStatusColorAccordingToEventImage();
 
             } else {
                 notFoundEvent();
@@ -226,5 +209,41 @@ public class EventDetailActivity extends AppCompatActivity {
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    private void setupMapFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        MapFragment mapFragment = MapFragment.newInstance(event);
+        fragmentManager.beginTransaction().replace(R.id.event_map, mapFragment).commit();
+        mapFragment.setListener(new WorkaroundMapFragment.OnTouchListener() {
+            @Override
+            public void onTouch() {
+                scrollView.requestDisallowInterceptTouchEvent(true);
+            }
+        });
+    }
+
+    private void setToolbarAndStatusColorAccordingToEventImage() {
+        if(event.hasImage()) {
+            MyImageLoader.getInstance().getImageLoader().loadImage(event.getImage(), new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    Palette.from(loadedImage).generate(new Palette.PaletteAsyncListener() {
+                        @Override
+                        public void onGenerated(Palette palette) {
+                            int darkVibrantColor = palette.getDarkVibrantColor(getResources().getColor(R.color.primaryDark));
+                            int vibrantColor = palette.getVibrantColor(getResources().getColor(R.color.primary));
+                            collapsingToolbarLayout.setContentScrimColor(vibrantColor);
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                Window window = EventDetailActivity.this.getWindow();
+                                window.setStatusBarColor(darkVibrantColor);
+                            }
+                        }
+                    });
+                }
+            });
+        }
     }
 }
