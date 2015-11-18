@@ -1,6 +1,5 @@
 package com.libertacao.libertacao.view.perfil;
 
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +14,7 @@ import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.view.main.MainActivity;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
 import butterknife.ButterKnife;
@@ -41,7 +41,11 @@ public class PerfilFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_perfil, container, false);
         ButterKnife.inject(this, layout);
         ParseUser currentUser = ParseUser.getCurrentUser();
-        mProfileUsernameTextView.setText(currentUser.getUsername());
+        if(ParseFacebookUtils.isLinked(currentUser)) {
+            mProfileUsernameTextView.setText(currentUser.getString("name"));
+        } else {
+            mProfileUsernameTextView.setText(currentUser.getUsername());
+        }
         return layout;
     }
 
