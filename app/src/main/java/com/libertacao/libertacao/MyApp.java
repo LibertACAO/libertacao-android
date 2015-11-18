@@ -43,7 +43,6 @@ public class MyApp extends Application {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
             refWatcher = installLeakCanary();
-            // FIXME: add no-op leak canary to release build (to do this, we need to put the code to setup leakcanary to a debug app file)
         } else {
             Fabric.with(this, new Crashlytics());
         }
