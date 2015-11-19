@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == LOGIN_RESULT_CODE) {
             if(resultCode == RESULT_OK && LoginManager.getInstance().isLoggedIn()) {
-                SnackbarUtils.showDefaultSnackbar(mDrawerLayout, getResources().getString(R.string.welcomeUser, ParseUser.getCurrentUser().getUsername()));
+                SnackbarUtils.showDefaultSnackbar(mDrawerLayout, getResources().getString(R.string.welcomeUser, LoginManager.getInstance().getUsername()));
             }
         }
     }

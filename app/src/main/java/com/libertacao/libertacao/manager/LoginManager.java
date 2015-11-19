@@ -1,6 +1,9 @@
 package com.libertacao.libertacao.manager;
 
+import android.support.annotation.Nullable;
+
 import com.libertacao.libertacao.persistence.UserPreferences;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
 public class LoginManager {
@@ -30,5 +33,19 @@ public class LoginManager {
     public void logout() {
         UserPreferences.clearSharedPreferences();
         UserManager.getInstance().setCurrentLatLng(null);
+    }
+
+    @Nullable
+    public String getUsername() {
+        if(isLoggedIn()) {
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if(ParseFacebookUtils.isLinked(currentUser)) {
+                return currentUser.getString("name");
+            } else {
+                return currentUser.getUsername();
+            }
+        } else {
+            return null;
+        }
     }
 }
