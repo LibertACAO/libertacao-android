@@ -24,8 +24,8 @@ android {
         applicationId "com.libertacao.libertacao"
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 9
-        versionName "0.9.5"
+        versionCode 10
+        versionName "1.0"
         manifestPlaceholders = [ parse_permission:"com.libertacao.libertacao.permission.C2D_MESSAGE"]
     }
     buildTypes {
