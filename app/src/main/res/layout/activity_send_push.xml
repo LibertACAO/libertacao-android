@@ -2,6 +2,7 @@
 <ScrollView
     android:id="@+id/send_push_scroll_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,27 +16,57 @@
 
         <include layout="@layout/toolbar"/>
 
-        <EditText
-            android:id="@+id/send_push_edit_text"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
-            android:maxEms="140"
-            android:inputType="textMultiLine"
-            android:hint="@string/alertTextHint"/>
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/send_push_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:layout_gravity="end"
-            android:text="@string/send"/>
+            <CheckBox
+                android:id="@+id/send_push_only_local_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/send_push_only_local_info"/>
 
-        <FrameLayout
-            android:id="@+id/event_map"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/map_fragment_height"/>
+            <EditText
+                android:id="@+id/send_push_title_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title"
+                android:inputType="textCapWords"/>
+
+            <EditText
+                android:id="@+id/send_push_message_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/alertTextHint"
+                android:inputType="textMultiLine"
+                android:maxEms="140"/>
+
+            <EditText
+                android:id="@+id/send_push_uri_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/uriTextHint"
+                android:inputType="textUri"/>
+
+            <FrameLayout
+                android:id="@+id/event_map"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/map_fragment_height"
+                tools:background="@color/gray"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/send_push_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/default_margin"
+                android:src="@android:drawable/ic_menu_send"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 

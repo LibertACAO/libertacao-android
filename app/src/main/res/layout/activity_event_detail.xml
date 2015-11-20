@@ -117,7 +117,8 @@
                             android:id="@+id/event_map"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/map_fragment_height"
-                            android:visibility="@{eventDataModel.isLocationVisible}"/>
+                            android:visibility="@{eventDataModel.isLocationVisible}"
+                            tools:background="@color/gray"/>
 
                     </LinearLayout>
 

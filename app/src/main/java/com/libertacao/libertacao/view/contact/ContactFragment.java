@@ -70,9 +70,11 @@ public class ContactFragment extends Fragment {
                 ViewUtils.hideProgressDialog(pd);
                 Context context = ContactFragment.this.getContext();
                 if (e != null) {
-                    Toast.makeText(context, context.getString(R.string.messageSavedError), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.messageSavedError), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(context, context.getString(R.string.messageSavedSuccessfully), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getString(R.string.messageSavedSuccessfully), Toast.LENGTH_LONG).show();
+                    emailEditText.setText("");
+                    messageEditText.setText("");
                 }
             }
         });

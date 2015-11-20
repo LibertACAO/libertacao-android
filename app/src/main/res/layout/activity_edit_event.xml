@@ -17,26 +17,34 @@
 
             <include layout="@layout/toolbar"/>
 
-            <ImageView
-                android:id="@+id/notificacao_detail_image"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:image="@{editEventDataModel.image}"
-                android:scaleType="centerCrop"
-                android:background="@android:color/black"
-                android:onClick="@{editEventDataModel.onImageClick}"
-                tools:ignore="ContentDescription"/>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin">
 
+                <TextView
+                    android:id="@+id/select_photo_to_event_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/selectPhotoToEventInfo"/>
+
+                <ImageView
+                    android:id="@+id/notificacao_detail_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    app:image="@{editEventDataModel.image}"
+                    android:scaleType="centerCrop"
+                    android:background="@android:color/black"
+                    android:onClick="@{editEventDataModel.onImageClick}"
+                    android:layout_below="@+id/select_photo_to_event_text_view"
+                    tools:ignore="ContentDescription"/>
+
                 <RadioGroup
                     android:id="@+id/event_detail_type_radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"/>
+                    android:layout_below="@+id/notificacao_detail_image"/>
 
                 <EditText
                     android:id="@+id/notificacao_detail_title"
@@ -145,7 +153,18 @@
             <FrameLayout
                 android:id="@+id/event_map"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/map_fragment_height"/>
+                android:layout_height="@dimen/map_fragment_height"
+                tools:background="@color/gray"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/save_event_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_send"
+                android:layout_margin="@dimen/default_margin"
+                android:layout_gravity="bottom|end"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"/>
 
         </LinearLayout>
 

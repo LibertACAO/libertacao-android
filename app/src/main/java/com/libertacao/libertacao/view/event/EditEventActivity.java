@@ -43,6 +43,7 @@ import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 public class EditEventActivity extends AppCompatActivity implements EditEventDataModel.OnSelectImageClick {
@@ -130,6 +131,11 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.save_event_button)
+    public void saveEventButtonClicked() {
+        saveEvent();
     }
 
     /**
@@ -289,7 +295,7 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
                 event.put(Event.IMAGE, file);
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(this, getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
             }
         }
 
@@ -300,18 +306,18 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
                 if(e != null) {
                     Timber.d("Error when saving event: " + e.getLocalizedMessage());
                     if (LoginManager.getInstance().isAdmin()) {
-                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSavedError), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSavedError), Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSuggestedError), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSuggestedError), Toast.LENGTH_LONG).show();
                     }
                 } else {
                     if (LoginManager.getInstance().isAdmin()) {
-                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSavedSuccessfully), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSavedSuccessfully), Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSuggestedSuccessfully), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditEventActivity.this, EditEventActivity.this.getString(R.string.eventSuggestedSuccessfully), Toast.LENGTH_LONG).show();
                     }
+                    finish();
                 }
-                finish();
             }
         });
     }
@@ -335,7 +341,7 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
             startActivityForResult(intentBuilder.build(this), PLACE_PICKER_REQUEST_CODE);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
-            Toast.makeText(this, getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
         }
     }
      **/

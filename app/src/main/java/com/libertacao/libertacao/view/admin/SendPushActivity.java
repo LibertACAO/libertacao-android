@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -31,7 +33,10 @@ import timber.log.Timber;
 public class SendPushActivity extends AppCompatActivity {
 
     @InjectView(R.id.send_push_scroll_view) ScrollView scrollView;
-    @InjectView(R.id.send_push_edit_text) EditText alertText;
+    @InjectView(R.id.send_push_only_local_checkbox) CheckBox onlyLocalCheckbox;
+    @InjectView(R.id.send_push_title_edit_text) EditText titleEditText;
+    @InjectView(R.id.send_push_message_edit_text) EditText messageEditText;
+    @InjectView(R.id.send_push_uri_edit_text) EditText uriEditText;
 
     private MapFragment mapFragment;
 
@@ -71,7 +76,7 @@ public class SendPushActivity extends AppCompatActivity {
 
     private boolean validate() {
         boolean ret;
-        ret = Validator.validate(alertText, true);
+        ret = Validator.validate(messageEditText, true);
         return ret;
     }
 
@@ -83,8 +88,21 @@ public class SendPushActivity extends AppCompatActivity {
         }
 
         HashMap<String, Object> params = new HashMap<>();
-        params.put("message", alertText.getText().toString());
+        String title = titleEditText.getText().toString();
+        if(!TextUtils.isEmpty(title)) {
+            params.put("title", title);
+        }
+        params.put("message", messageEditText.getText().toString());
+
+        String uri = uriEditText.getText().toString();
+        if(!TextUtils.isEmpty(uri)) {
+            params.put("uri", uri);
+        }
         params.put("userObjectId", ParseUser.getCurrentUser().getObjectId());
+
+        if(onlyLocalCheckbox.isChecked()) {
+            params.put("recipientId", ParseUser.getCurrentUser().getObjectId());
+        }
 
         LatLng selectedLatLng = mapFragment.getSelectedLatLng();
         if(selectedLatLng != null) {
@@ -96,9 +114,12 @@ public class SendPushActivity extends AppCompatActivity {
             public void done(String success, ParseException e) {
                 if (e != null) {
                     Timber.d("Error when sending push: " + e.getLocalizedMessage());
-                    Toast.makeText(SendPushActivity.this, SendPushActivity.this.getString(R.string.pushSendError), Toast.LENGTH_SHORT).show();
+                    String toastText = TextUtils.isEmpty(e.getLocalizedMessage()) ?
+                            SendPushActivity.this.getString(R.string.pushSendError) : e.getLocalizedMessage();
+                    Toast.makeText(SendPushActivity.this, toastText, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(SendPushActivity.this, SendPushActivity.this.getString(R.string.pushSendSuccess), Toast.LENGTH_SHORT).show();
+                    String toastText = TextUtils.isEmpty(success) ? SendPushActivity.this.getString(R.string.pushSendSuccess) : success;
+                    Toast.makeText(SendPushActivity.this, toastText, Toast.LENGTH_SHORT).show();
                 }
             }
         });
