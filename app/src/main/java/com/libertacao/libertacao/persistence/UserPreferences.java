@@ -50,16 +50,4 @@ public class UserPreferences {
         putDouble(editor, "LONGITUDE", newValue);
         editor.apply();
     }
-
-    // Already associated user with installation
-    public static boolean isUserAssociatedWithInstallation() {
-        return getSharedPreferences().getBoolean("IS_USER_ASSOCIATED_WITH_INSTALLATION", false);
-    }
-
-    public static void setUserAssociatedWithInstallation() {
-        SharedPreferences sharedPref = UserPreferences.getSharedPreferences();
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("IS_USER_ASSOCIATED_WITH_INSTALLATION", true);
-        editor.apply();
-    }
 }

@@ -32,8 +32,6 @@ import com.libertacao.libertacao.view.contact.ContactFragment;
 import com.libertacao.libertacao.view.event.EventFragment;
 import com.libertacao.libertacao.view.login.ParseLoginActivity;
 import com.libertacao.libertacao.view.perfil.PerfilFragment;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseUser;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -241,10 +239,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         if (lastLocation != null) {
             Timber.d("Got user location (" + lastLocation.getLatitude() + "," + lastLocation.getLongitude() + ")");
             UserManager.getInstance().setCurrentLatLng(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
-            if(LoginManager.getInstance().isLoggedIn()) {
-                ParseUser.getCurrentUser().put("location", new ParseGeoPoint(lastLocation.getLatitude(), lastLocation.getLongitude()));
-                ParseUser.getCurrentUser().saveInBackground();
-            }
         } else {
             Timber.d("Received empty location");
         }
