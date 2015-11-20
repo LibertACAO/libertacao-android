@@ -19,6 +19,7 @@ import com.libertacao.libertacao.view.map.MapFragment;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.HashMap;
 
@@ -83,6 +84,7 @@ public class SendPushActivity extends AppCompatActivity {
 
         HashMap<String, Object> params = new HashMap<>();
         params.put("message", alertText.getText().toString());
+        params.put("userObjectId", ParseUser.getCurrentUser().getObjectId());
 
         LatLng selectedLatLng = mapFragment.getSelectedLatLng();
         if(selectedLatLng != null) {
