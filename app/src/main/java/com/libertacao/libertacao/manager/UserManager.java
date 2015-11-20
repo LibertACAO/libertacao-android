@@ -8,7 +8,7 @@ import com.libertacao.libertacao.event.FirstLocationEncounteredEvent;
 import com.libertacao.libertacao.persistence.UserPreferences;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseInstallation;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import de.greenrobot.event.EventBus;
@@ -27,7 +27,7 @@ public class UserManager {
     private UserManager() {
         double latitude = UserPreferences.getLatitude();
         double longitude = UserPreferences.getLongitude();
-        if(latitude != Event.INVALID_LOCATION && longitude != Event.INVALID_LOCATION) {
+        if (latitude != Event.INVALID_LOCATION && longitude != Event.INVALID_LOCATION) {
             currentLatLng = new LatLng(latitude, longitude);
         }
     }
@@ -39,58 +39,63 @@ public class UserManager {
 
     public void setCurrentLatLng(@Nullable LatLng currentLatLng) {
         boolean shouldPostEvent = false;
-        if(this.currentLatLng == null && currentLatLng != null) {
+        if (this.currentLatLng == null && currentLatLng != null) {
             shouldPostEvent = true;
         }
 
-        if(currentLatLng == null) {
+        if (currentLatLng == null) {
             UserPreferences.setLatitude(Event.INVALID_LOCATION);
             UserPreferences.setLongitude(Event.INVALID_LOCATION);
         } else {
-            if(this.currentLatLng == null ||
-                    distance((float)this.currentLatLng.latitude, (float) this.currentLatLng.longitude,
-                            (float)currentLatLng.latitude, (float)currentLatLng.longitude) > DISTANCE_THRESHOLD) {
-                // If we don't have a current latlng yet, or if the new received distance is from a distance greater than the threshold, update
-                // ParseInstallation object and UserPreferences
+            if (LoginManager.getInstance().isLoggedIn()) {
+                if (this.currentLatLng == null ||
+                        distance((float) this.currentLatLng.latitude, (float) this.currentLatLng.longitude,
+                                (float) currentLatLng.latitude, (float) currentLatLng.longitude) > DISTANCE_THRESHOLD) {
+                    // If we don't have a current latlng yet, or if the new received distance is from a distance greater than the threshold, update
+                    // ParseUser object and UserPreferences
+                    UserPreferences.setLatitude(currentLatLng.latitude);
+                    UserPreferences.setLongitude(currentLatLng.longitude);
+
+                    final double previousLatitude = this.currentLatLng != null ? this.currentLatLng.latitude : Event.INVALID_LOCATION;
+                    final double previousLongitude = this.currentLatLng != null ? this.currentLatLng.longitude : Event.INVALID_LOCATION;
+
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    currentUser.put("location", new ParseGeoPoint(currentLatLng.latitude, currentLatLng.longitude));
+                    currentUser.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                // Something bad occurred. Rollback UserPreferences
+                                UserPreferences.setLatitude(previousLatitude);
+                                UserPreferences.setLongitude(previousLongitude);
+                                Timber.d("Rolling back saved locations in UserPreferences because could not get it saved in Parse.");
+                            }
+                        }
+                    });
+                }
+            } else {
                 UserPreferences.setLatitude(currentLatLng.latitude);
                 UserPreferences.setLongitude(currentLatLng.longitude);
-
-                final double previousLatitude = this.currentLatLng != null? this.currentLatLng.latitude : Event.INVALID_LOCATION;
-                final double previousLongitude = this.currentLatLng != null? this.currentLatLng.longitude : Event.INVALID_LOCATION;
-
-                ParseInstallation currentInstallation = ParseInstallation.getCurrentInstallation();
-                currentInstallation.put("location", new ParseGeoPoint(currentLatLng.latitude, currentLatLng.longitude));
-                currentInstallation.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e != null) {
-                            // Something bad occurred. Rollback UserPreferences
-                            UserPreferences.setLatitude(previousLatitude);
-                            UserPreferences.setLongitude(previousLongitude);
-                            Timber.d("Rolling back saved locations in UserPreferences because could not get it saved in Parse.");
-                        }
-                    }
-                });
             }
         }
 
         this.currentLatLng = currentLatLng;
 
-        if(shouldPostEvent) {
+        if (shouldPostEvent) {
             // Only post event after this..currentLatLng has the right value
             EventBus.getDefault().post(new FirstLocationEncounteredEvent());
         }
     }
 
     // Code from: http://stackoverflow.com/questions/8832071/how-can-i-get-the-distance-between-two-point-by-latlng
-    private float distance (float lat_a, float lng_a, float lat_b, float lng_b ) {
+    private float distance(float lat_a, float lng_a, float lat_b, float lng_b) {
         double earthRadius = 3958.75;
-        double latDiff = Math.toRadians(lat_b-lat_a);
-        double lngDiff = Math.toRadians(lng_b-lng_a);
-        double a = Math.sin(latDiff /2) * Math.sin(latDiff /2) +
+        double latDiff = Math.toRadians(lat_b - lat_a);
+        double lngDiff = Math.toRadians(lng_b - lng_a);
+        double a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
                 Math.cos(Math.toRadians(lat_a)) * Math.cos(Math.toRadians(lat_b)) *
-                        Math.sin(lngDiff /2) * Math.sin(lngDiff /2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                        Math.sin(lngDiff / 2) * Math.sin(lngDiff / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double distance = earthRadius * c;
 
         int meterConversion = 1609;
