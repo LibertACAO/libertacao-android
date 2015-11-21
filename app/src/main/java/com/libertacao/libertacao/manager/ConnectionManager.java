@@ -22,7 +22,7 @@ public class ConnectionManager {
     private static final String HTTPS = "https://";
 
     private static boolean shouldAddHttp(String url) {
-        return (url != null) && !(url.startsWith(ConnectionManager.HTTP) && url.startsWith(ConnectionManager.HTTPS));
+        return (url != null) && !(url.startsWith(ConnectionManager.HTTP) || url.startsWith(ConnectionManager.HTTPS));
     }
 
     public static String getUrlWithHttp(String url) {
