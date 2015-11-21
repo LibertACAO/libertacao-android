@@ -27,7 +27,6 @@ import com.squareup.leakcanary.ServiceHeapDumpListener;
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
-// TODO: add custom notification
 // FIXME: melhorar navigation drawer layout
 public class MyApp extends Application {
     // App context

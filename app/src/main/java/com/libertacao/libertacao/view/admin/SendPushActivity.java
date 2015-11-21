@@ -1,5 +1,6 @@
 package com.libertacao.libertacao.view.admin;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -86,6 +87,7 @@ public class SendPushActivity extends AppCompatActivity {
         if(!validate()) {
             return;
         }
+        final ProgressDialog pd = ViewUtils.showProgressDialog(this, getString(R.string.sendingPush), false);
 
         HashMap<String, Object> params = new HashMap<>();
         String title = titleEditText.getText().toString();
@@ -112,6 +114,7 @@ public class SendPushActivity extends AppCompatActivity {
 
         ParseCloud.callFunctionInBackground("sendPushToLocation", params, new FunctionCallback<String>() {
             public void done(String success, ParseException e) {
+                ViewUtils.hideProgressDialog(pd);
                 if (e != null) {
                     Timber.d("Error when sending push: " + e.getLocalizedMessage());
                     String toastText = TextUtils.isEmpty(e.getLocalizedMessage()) ?
@@ -120,6 +123,10 @@ public class SendPushActivity extends AppCompatActivity {
                 } else {
                     String toastText = TextUtils.isEmpty(success) ? SendPushActivity.this.getString(R.string.pushSendSuccess) : success;
                     Toast.makeText(SendPushActivity.this, toastText, Toast.LENGTH_SHORT).show();
+                    onlyLocalCheckbox.setChecked(true);
+                    titleEditText.setText("");
+                    messageEditText.setText("");
+                    uriEditText.setText("");
                 }
             }
         });
