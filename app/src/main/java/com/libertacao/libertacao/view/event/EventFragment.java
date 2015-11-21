@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.support.OrmLiteCursorLoader;
 import com.j256.ormlite.dao.Dao;
@@ -31,6 +30,8 @@ import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.customviews.EmptyRecyclerView;
+import com.libertacao.libertacao.view.main.MainActivity;
+import com.libertacao.libertacao.view.main.NavigationDrawerFragment;
 
 import java.sql.SQLException;
 
@@ -116,7 +117,17 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 if(LoginManager.getInstance().isLoggedIn()) {
                     startActivity(EditEventActivity.newIntent(getContext()));
                 } else {
-                    Toast.makeText(getContext(), getString(R.string.mustBeLoggedIn), Toast.LENGTH_SHORT).show();
+                    new android.app.AlertDialog.Builder(getContext())
+                            .setMessage(getString(R.string.mustBeLoggedIn))
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(getString(android.R.string.ok), null)
+                            .setNegativeButton(getString(R.string.login), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ((MainActivity) getActivity()).onNavigationDrawerItemSelected(NavigationDrawerFragment.CADASTRO_PERFIL);
+                                }
+                            })
+                            .show();
                 }
                 return true;
             case R.id.menu_order_by_event:
