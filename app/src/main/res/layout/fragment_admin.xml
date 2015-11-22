@@ -1,25 +1,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/default_margin"
               android:orientation="vertical"
-             tools:context="com.libertacao.libertacao.view.admin.AdminFragment">
+              tools:context="com.libertacao.libertacao.view.admin.AdminFragment">
 
     <!-- TODO: Implement add users to management role (only available to admins) -->
-    <!-- TODO: Implement remove old events -->
 
     <Button
         android:id="@+id/create_new_event_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
         android:text="@string/createNewEvent"/>
 
     <Button
         android:id="@+id/send_push_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
         android:text="@string/sendPush"/>
+
+    <Button
+        android:id="@+id/remove_old_events_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/removeOldEvents"/>
 
 </LinearLayout>

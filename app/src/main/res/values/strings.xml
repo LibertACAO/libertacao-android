@@ -114,6 +114,7 @@
     <!-- Admin fragment-->
     <string name="addEvent">Adicionar evento</string>
     <string name="sendPush">Enviar push</string>
+    <string name="removeOldEvents">Remover eventos antigos</string>
     <string name="sendingPush">Enviando push</string>
     <string name="editEvent">Editar evento</string>
     <string name="activateEvent">Ativar evento</string>

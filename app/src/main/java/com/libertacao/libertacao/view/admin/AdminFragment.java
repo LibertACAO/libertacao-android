@@ -67,4 +67,9 @@ public class AdminFragment extends Fragment {
     public void sendNewPush() {
         startActivity(SendPushActivity.newIntent(getContext()));
     }
+
+    @OnClick(R.id.remove_old_events_button)
+    public void removeOldEvents() {
+        // TODO: Implement remove old events
+    }
 }
