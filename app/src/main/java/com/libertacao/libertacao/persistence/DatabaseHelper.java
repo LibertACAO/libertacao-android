@@ -18,9 +18,9 @@ import com.j256.ormlite.table.TableUtils;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.DataConfig;
 import com.libertacao.libertacao.data.Event;
-import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.manager.UserManager;
 import com.libertacao.libertacao.util.MyDateUtils;
+import com.libertacao.libertacao.view.event.EventFragmentBase;
 
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -138,8 +138,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Prepared queries
      */
 
-    public PreparedQuery<Event> getEventPreparedQuery(int selectedFilter, int selectedOrderBy) throws SQLException {
+    public PreparedQuery<Event> getEventPreparedQuery(int selectedCategory, int selectedOrderBy) throws SQLException {
         QueryBuilder<Event, Integer> queryBuilder = getEventIntegerRuntimeExceptionDao().queryBuilder();
+
+        if(selectedCategory == EventFragmentBase.ADMIN) {
+            queryBuilder.where().eq(Event.ENABLED, false);
+            return queryBuilder.prepare();
+        }
 
         // Where
         Where<Event, Integer> where = queryBuilder.where();
@@ -158,7 +163,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         where.or(2);
 
         // Check selected filter and add clauses accordingly
-        if(selectedFilter == 1) {
+        if(selectedCategory == EventFragmentBase.NEAR_ME) {
             LatLng currentLatLng = UserManager.getInstance().getCurrentLatLng();
             if(currentLatLng != null) {
                 // Filter by near me
@@ -185,25 +190,24 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             } else {
                 Timber.d("Could not use 'Near me' filter because user doesn't have a valid location");
             }
-        }
-        else if(selectedFilter > 1) {
-            where.eq(Event.TYPE, selectedFilter - 1);
+        } else if(selectedCategory >= EventFragmentBase.EVENT && selectedCategory <= EventFragmentBase.OTHERS) {
+            where.eq(Event.TYPE, selectedCategory);
             where.and(2);
         }
 
-        if(!LoginManager.getInstance().isAdmin()) {
-            // If it is not admin, does not query not enabled events
-            where.eq(Event.ENABLED, true);
-            where.and(2);
-        }
+        // Does not query not enabled events
+        where.eq(Event.ENABLED, true);
+        where.and(2);
 
         queryBuilder.setWhere(where);
 
         // Order by
         if(selectedOrderBy == 0) {
             queryBuilder.orderBy(Event.INITIAL_DATE, true);
-        } else {
+        } else if(selectedOrderBy == 1) {
             queryBuilder.orderBy(Event.UPDATED_AT, false);
+        } else if(selectedOrderBy == 3) {
+            queryBuilder.orderBy(Event.GOING, false);
         }
 
         return queryBuilder.prepare();

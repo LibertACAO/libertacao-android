@@ -1,65 +1,34 @@
 package com.libertacao.libertacao.view.event;
 
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.j256.ormlite.android.apptools.support.OrmLiteCursorLoader;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.PreparedQuery;
 import com.libertacao.libertacao.R;
-import com.libertacao.libertacao.data.Event;
-import com.libertacao.libertacao.event.SyncedEvent;
-import com.libertacao.libertacao.manager.ConnectionManager;
 import com.libertacao.libertacao.manager.LoginManager;
-import com.libertacao.libertacao.manager.SyncManager;
-import com.libertacao.libertacao.persistence.DatabaseHelper;
-import com.libertacao.libertacao.util.SnackbarUtils;
-import com.libertacao.libertacao.util.ViewUtils;
-import com.libertacao.libertacao.view.customviews.EmptyRecyclerView;
+import com.libertacao.libertacao.persistence.UserPreferences;
 import com.libertacao.libertacao.view.main.MainActivity;
 import com.libertacao.libertacao.view.main.NavigationDrawerFragment;
 
-import java.sql.SQLException;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
+import timber.log.Timber;
 
-public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    // Current filter
-    public static final int ALL_FILTER = 0;
-    public static final int NEAR_ME_FILTER = 1;
-    public static final int DEFAULT_FILTER = NEAR_ME_FILTER;
-    private int selectedFilter = DEFAULT_FILTER;
-
-    // Order by
-    public static final int ORDER_BY_INITIAL_DATE = 0;
-    public static final int ORDER_BY_LAST_UPDATED = 1;
-    public static final int DEFAULT_ORDER_BY_FILTER = ORDER_BY_INITIAL_DATE;
-    private int selectedOrderBy = DEFAULT_ORDER_BY_FILTER;
-
-    private boolean loaderInitied = false;
+public class EventFragment extends Fragment {
 
     /**
      * Interface elements
      */
-    @InjectView(R.id.swipe_container) SwipeRefreshLayout mSwipeLayout;
-    @InjectView(R.id.event_recycler_view) EmptyRecyclerView mRecyclerView;
-    @InjectView(R.id.empty_event_list_textview) TextView mEmptyTextView;
+    @InjectView(R.id.events_tab_layout) TabLayout tabLayout;
+    @InjectView(R.id.events_view_pager) ViewPager viewPager;
 
     public static EventFragment newInstance() {
         return new EventFragment();
@@ -73,11 +42,24 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Timber.d("onCreate");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View layout = inflater.inflate(R.layout.fragment_events, container, false);
+        ButterKnife.inject(this, layout);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+        setupTabLayoutListener();
+        viewPager.setCurrentItem(UserPreferences.getSelectedTab());
+        Timber.d("onCreateView");
+        return layout;
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.event_fragment_menu, menu);
         inflater.inflate(R.menu.add_event_menu, menu);
         MenuItem menuAddEvent = menu.findItem(R.id.menu_add_event);
         if(LoginManager.getInstance().isAdmin()) {
@@ -91,28 +73,6 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_filter:
-                CharSequence[] eventTypes = Event.getEventTypes(true);
-                int additionalOptions = 2;
-                CharSequence[] items = new CharSequence[eventTypes.length + additionalOptions];
-                items[0] = getString(R.string.all);
-                items[1] = getString(R.string.nearMe);
-                System.arraycopy(eventTypes, 0, items, additionalOptions, eventTypes.length);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(getString(R.string.filter));
-                builder.setSingleChoiceItems(items, selectedFilter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selectedFilter = which;
-                        setupAdapterAndLoader();
-                        setupEmptyText();
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton(getString(android.R.string.cancel), null);
-                builder.show();
-                return true;
             case R.id.menu_add_event:
                 if(LoginManager.getInstance().isLoggedIn()) {
                     startActivity(EditEventActivity.newIntent(getContext()));
@@ -130,138 +90,46 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                             .show();
                 }
                 return true;
-            case R.id.menu_order_by_event:
-                CharSequence[] orderByItems = new CharSequence[2];
-                orderByItems[0] = getString(R.string.orderByInitialDate);
-                orderByItems[1] = getString(R.string.orderByLastUpdated);
-                AlertDialog.Builder orderByBuilder = new AlertDialog.Builder(getContext());
-                orderByBuilder.setTitle(getString(R.string.orderBy));
-                orderByBuilder.setSingleChoiceItems(orderByItems, selectedOrderBy, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selectedOrderBy = which;
-                        setupAdapterAndLoader();
-                        setupEmptyText();
-                        dialog.dismiss();
-                    }
-                });
-                orderByBuilder.setNegativeButton(getString(android.R.string.cancel), null);
-                orderByBuilder.show();
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_events, container, false);
-        ButterKnife.inject(this, layout);
-        mEmptyTextView.setOnClickListener(new View.OnClickListener() {
+    /**
+     * Helper UI methods
+     */
+
+    private void setupTabLayoutListener() {
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                if (selectedFilter != ALL_FILTER && selectedFilter != NEAR_ME_FILTER) {
-                    selectedFilter = DEFAULT_FILTER;
-                    setupAdapterAndLoader();
-                    setupEmptyText();
-                }
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                UserPreferences.setSelectedTab(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
-        setupRecyclerView();
-        EventBus.getDefault().register(this);
-        return layout;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        EventBus.getDefault().unregister(this);
-    }
-
-    private void setupEmptyText() {
-        if(selectedFilter == ALL_FILTER || selectedFilter == NEAR_ME_FILTER) {
-            mEmptyTextView.setText(R.string.empty_event_list);
-        } else {
-            mEmptyTextView.setText(R.string.empty_event_list_with_filter);
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+        if(LoginManager.getInstance().isAdmin()) {
+            adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.ADMIN), getString(R.string.admin));
         }
-    }
-
-    private void setupRecyclerView() {
-        // Configure Swipe Refresh component
-        mSwipeLayout.setOnRefreshListener(this);
-        ViewUtils.setSwipeColorSchemeResources(mSwipeLayout);
-
-        // Configure Recycler View
-        // Changes in Recycler View content does not change it itself
-        mRecyclerView.setEmptyView(mEmptyTextView);
-
-        // Linear Vertical layout (like old ListView)
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(llm);
-
-        setupAdapterAndLoader();
-    }
-
-    private void setupAdapterAndLoader() {
-        // Create and set adapter (data source)
-        final EventRecyclerViewAdapter mAdapter = new EventRecyclerViewAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
-
-        final PreparedQuery<Event> preparedQuery;
-        try {
-            final Dao<Event, Integer> eventIntegerDao = DatabaseHelper.getHelper(getContext()).getEventIntegerDao();
-            preparedQuery = DatabaseHelper.getHelper(getContext()).getEventPreparedQuery(selectedFilter, selectedOrderBy);
-
-            // Using LoaderManager to change cursor when some data change in database
-            LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
-                @Override
-                public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-                    return new OrmLiteCursorLoader<>(EventFragment.this.getContext(), eventIntegerDao, preparedQuery);
-                }
-
-                @Override
-                public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-                    mAdapter.changeCursor(cursor, ((OrmLiteCursorLoader<Event>) loader).getQuery());
-                }
-
-                @Override
-                public void onLoaderReset(Loader<Cursor> loader) {
-                    mAdapter.changeCursor(null, null);
-                }
-            };
-
-            if(!loaderInitied) {
-                getLoaderManager().initLoader(0, null, loaderCallbacks);
-                loaderInitied = true;
-            } else {
-                getLoaderManager().restartLoader(0, null, loaderCallbacks);
-            }
-        } catch (SQLException e) {
-            ViewUtils.showCriticalErrorMessageAndLogToCrashlytics(EventFragment.this.getContext(), mRecyclerView, "EventFragment", e);
-        }
-    }
-
-    /**
-     * Required by SwipeRefreshLayout.OnRefreshListener interface. It is called when user manually refreshes RecyclerView.
-     */
-
-    @Override
-    public void onRefresh() {
-        if (ConnectionManager.getInstance().isOnline(getActivity())) {
-            SyncManager.getInstance().sync(getContext());
-        } else {
-            SnackbarUtils.showNoInternetConnectionSnackbar(getActivity(), mSwipeLayout);
-            mSwipeLayout.setRefreshing(false);
-        }
-    }
-
-    /**
-     * Events
-     */
-
-    @SuppressWarnings("unused")
-    public void onEventMainThread(SyncedEvent event) {
-        mSwipeLayout.setRefreshing(false);
+        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.NEAR_ME), getString(R.string.nearMe));
+        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.THIRD_PARTY_NEWS), getString(R.string.thirdPartyNew));
+        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.EVENT), getResources().getQuantityString(R.plurals.event, 2));
+        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.VAKINHAS), getResources().getQuantityString(R.plurals.vakinha, 2));
+        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.PETITIONS), getResources().getQuantityString(R.plurals.petition, 2));
+        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.PROTEST), getResources().getQuantityString(R.plurals.protest, 2));
+        adapter.addFrag(ThirdPartyNewsFragment.newInstance(), getResources().getQuantityString(R.plurals.singleNew, 2));
+        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.OTHERS), getResources().getQuantityString(R.plurals.variado, 2));
+        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.ALL), getString(R.string.all));
+        viewPager.setAdapter(adapter);
     }
 }

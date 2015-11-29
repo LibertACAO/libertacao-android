@@ -8,6 +8,8 @@
     <!-- Event types -->
     <string name="all">Todos</string>
     <string name="nearMe">Perto de mim</string>
+    <string name="admin">Admin</string>
+    <string name="thirdPartyNew">Notícias externas</string>
     <plurals name="event">
         <item quantity="one">Evento</item>
         <item quantity="other">Eventos</item>
@@ -49,8 +51,7 @@
     <string name="drawer_admin">Administrar</string>
 
     <!-- Notifications -->
-    <string name="empty_event_list">Sem nenhum evento :(…</string>
-    <string name="empty_event_list_with_filter">Sem nenhum evento :(…\nClique aqui para remover todos os filtros.</string>
+    <string name="empty_event_list">Sem nenhum evento nesta categoria :(…</string>
     <string name="share">Compartilhar</string>
 
     <!-- Profile -->
@@ -94,10 +95,10 @@
     <string name="unknownSignupError">Não foi possível fazer o cadastro. Por favor, tente novamente mais tarde.</string>
 
     <!-- Event Fragment -->
-    <string name="filter">Filtrar</string>
     <string name="orderBy">Ordenar por…</string>
     <string name="orderByInitialDate">Data inicial</string>
     <string name="orderByLastUpdated">Mais atualizados</string>
+    <string name="orderByMostPopular">Mais populares</string>
     <string name="mustBeLoggedIn">Você precisa estar logado para acessar essa página</string>
 
     <!-- Event card -->

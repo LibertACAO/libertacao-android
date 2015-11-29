@@ -62,4 +62,16 @@ public class UserPreferences {
         editor.putBoolean("IS_USER_ASSOCIATED_WITH_INSTALLATION", true);
         editor.apply();
     }
+
+    // Selected tab
+    public static int getSelectedTab() {
+        return getSharedPreferences().getInt("SELECTED_TAB", 0);
+    }
+
+    public static void setSelectedTab(int newValue) {
+        SharedPreferences sharedPref = UserPreferences.getSharedPreferences();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("SELECTED_TAB", newValue);
+        editor.apply();
+    }
 }
