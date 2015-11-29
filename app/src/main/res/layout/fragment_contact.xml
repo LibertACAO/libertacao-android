@@ -1,38 +1,44 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_margin="@dimen/default_margin"
               tools:context="com.libertacao.libertacao.view.contact.ContactFragment">
-
-    <TextView
+    
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/contactExplanation"/>
+        android:layout_margin="@dimen/default_margin"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/contact_email_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/emailOptional"
-        android:inputType="textEmailAddress"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contactExplanation"/>
 
-    <EditText
-        android:id="@+id/contact_message_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/message"
-        android:inputType="textMultiLine"/>
+        <EditText
+            android:id="@+id/contact_email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/emailOptional"
+            android:inputType="textEmailAddress"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/send_message_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_send"
-        android:layout_gravity="bottom|end"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"/>
+        <EditText
+            android:id="@+id/contact_message_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/message"
+            android:inputType="textMultiLine"/>
 
-</LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/send_message_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_send"
+            android:layout_gravity="bottom|end"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"/>
+
+    </LinearLayout>
+
+</ScrollView>
