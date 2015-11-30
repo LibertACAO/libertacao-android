@@ -13,8 +13,11 @@ import android.widget.TextView;
 
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.databinding.RowRssItemBinding;
+import com.libertacao.libertacao.manager.ConnectionManager;
 import com.libertacao.libertacao.rss.RssItem;
 import com.libertacao.libertacao.rss.RssReader;
+import com.libertacao.libertacao.util.SnackbarUtils;
+import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.customviews.ArrayAdapter;
 import com.libertacao.libertacao.view.customviews.EmptyRecyclerView;
 
@@ -76,8 +79,8 @@ public class ThirdPartyNewsFragment extends Fragment implements SwipeRefreshLayo
         };
 
         // Configure Swipe Refresh component
-        /*mSwipeLayout.setOnRefreshListener(this);
-        ViewUtils.setSwipeColorSchemeResources(mSwipeLayout);*/
+        mSwipeLayout.setOnRefreshListener(this);
+        ViewUtils.setSwipeColorSchemeResources(mSwipeLayout);
 
         // Configure Recycler View
         // Changes in Recycler View content does not change it itself
@@ -120,13 +123,13 @@ public class ThirdPartyNewsFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-        mSwipeLayout.setRefreshing(false);
-//        if (ConnectionManager.getInstance().isOnline(getActivity())) {
-//            new GetRssFeed().execute("http://feeds.feedburner.com/Anda-AgnciaDeNotciasDeDireitosAnimais?format=xml");
-//        } else {
-//            SnackbarUtils.showNoInternetConnectionSnackbar(getActivity(), mSwipeLayout);
-//            mSwipeLayout.setRefreshing(false);
-//        }
+//        mSwipeLayout.setRefreshing(false);
+        if (ConnectionManager.getInstance().isOnline(getActivity())) {
+            new GetRssFeed().execute("http://feeds.feedburner.com/Anda-AgnciaDeNotciasDeDireitosAnimais?format=xml");
+        } else {
+            SnackbarUtils.showNoInternetConnectionSnackbar(getActivity(), mSwipeLayout);
+            mSwipeLayout.setRefreshing(false);
+        }
     }
 
 }

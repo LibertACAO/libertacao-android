@@ -163,7 +163,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         where.or(2);
 
         // Check selected filter and add clauses accordingly
-        if(selectedCategory == EventFragmentBase.NEAR_ME) {
+        if(selectedCategory != EventFragmentBase.ALL) {
+            // Add near me events
             LatLng currentLatLng = UserManager.getInstance().getCurrentLatLng();
             if(currentLatLng != null) {
                 // Filter by near me
@@ -190,7 +191,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             } else {
                 Timber.d("Could not use 'Near me' filter because user doesn't have a valid location");
             }
-        } else if(selectedCategory >= EventFragmentBase.EVENT && selectedCategory <= EventFragmentBase.OTHERS) {
+        }
+
+        if(selectedCategory >= EventFragmentBase.EVENT && selectedCategory <= EventFragmentBase.OTHERS) {
             where.eq(Event.TYPE, selectedCategory);
             where.and(2);
         }

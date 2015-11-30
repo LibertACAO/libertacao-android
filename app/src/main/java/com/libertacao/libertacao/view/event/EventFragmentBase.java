@@ -1,6 +1,5 @@
 package com.libertacao.libertacao.view.event;
 
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -8,12 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -112,7 +107,7 @@ public class EventFragmentBase extends Fragment implements SwipeRefreshLayout.On
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
+    /*TODO: @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_fragment_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -141,7 +136,7 @@ public class EventFragmentBase extends Fragment implements SwipeRefreshLayout.On
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     /**
      * Helper UI methods
