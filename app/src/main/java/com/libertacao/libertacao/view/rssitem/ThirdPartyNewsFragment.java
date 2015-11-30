@@ -22,12 +22,12 @@ import com.libertacao.libertacao.view.customviews.ArrayAdapter;
 import com.libertacao.libertacao.view.customviews.EmptyRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import timber.log.Timber;
 
-// TODO: add swipe refresh layout
 public class ThirdPartyNewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     /**
@@ -91,17 +91,19 @@ public class ThirdPartyNewsFragment extends Fragment implements SwipeRefreshLayo
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
+        // Set adapter
+        mRecyclerView.setAdapter(adapter);
+
         new GetRssFeed().execute("http://feeds.feedburner.com/Anda-AgnciaDeNotciasDeDireitosAnimais?format=xml");
     }
 
     private class GetRssFeed extends AsyncTask<String, Void, Void> {
+        private List<RssItem> rssItems;
         @Override
         protected Void doInBackground(String... params) {
             try {
                 RssReader rssReader = new RssReader(params[0]);
-                for (RssItem item : rssReader.getItems()) {
-                    adapter.add(item);
-                }
+                rssItems = rssReader.getItems();
             } catch (Exception e) {
                 Timber.e("Error Parsing Data: " + e.getLocalizedMessage());
             }
@@ -111,9 +113,15 @@ public class ThirdPartyNewsFragment extends Fragment implements SwipeRefreshLayo
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            adapter.notifyDataSetChanged();
-            mRecyclerView.setAdapter(adapter);
-//            mSwipeLayout.setRefreshing(false);
+            if(isAdded()) {
+                if(rssItems != null && !rssItems.isEmpty()) {
+                    for (RssItem item : rssItems) {
+                        adapter.add(item);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+                mSwipeLayout.setRefreshing(false);
+            }
         }
     }
 
