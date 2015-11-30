@@ -63,6 +63,18 @@ public class UserPreferences {
         editor.apply();
     }
 
+    // Already associated user with installation
+    public static boolean isNotificationEnabled() {
+        return getSharedPreferences().getBoolean("IS_NOTIFICATION_ENABLED", true);
+    }
+
+    public static void setIsNotificationEnabled(boolean newValue) {
+        SharedPreferences sharedPref = UserPreferences.getSharedPreferences();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("IS_NOTIFICATION_ENABLED", newValue);
+        editor.apply();
+    }
+
     // Selected tab
     public static int getSelectedTab() {
         return getSharedPreferences().getInt("SELECTED_TAB", 0);

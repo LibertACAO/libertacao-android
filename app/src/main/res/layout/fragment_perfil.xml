@@ -9,7 +9,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,6 +29,29 @@
             android:layout_margin="@dimen/default_margin"
             style="@style/TextAppearance.AppCompat.Large"
             tools:text="Ada Lovelace"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/default_margin"
+            android:gravity="end"
+            style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+            android:text="@string/enableNotifications"/>
+
+        <ToggleButton
+            android:id="@+id/enable_notification_toogle_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
 

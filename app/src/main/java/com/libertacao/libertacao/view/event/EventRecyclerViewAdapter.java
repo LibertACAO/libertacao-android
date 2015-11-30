@@ -30,7 +30,7 @@ public class EventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<E
 
     @Override
     public void onBindViewHolder(final EventViewHolder holder, final Event event) {
-        holder.bindRepository(event);
+        holder.bindEvent(event);
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {
@@ -41,7 +41,7 @@ public class EventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<E
             this.binding = binding;
         }
 
-        void bindRepository(Event event) {
+        void bindEvent(Event event) {
             if (binding.getEventDataModel() == null) {
                 binding.setEventDataModel(new EventDataModel((Activity)itemView.getContext(), event, binding.notificacaoImage));
             } else {

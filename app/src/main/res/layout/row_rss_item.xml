@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="rssItemDataModel"
+            type="com.libertacao.libertacao.viewmodel.RssItemDataModel"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        cardBackgroundColor="@color/FloralWhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        app:cardElevation="8dp"
+        card_view:cardCornerRadius="2dp">
+
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="@{rssItemDataModel.onRssItemClick}"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Base.TextAppearance.AppCompat.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_view_text_margin"
+                android:layout_marginRight="@dimen/list_view_text_margin"
+                android:layout_marginTop="@dimen/list_view_text_margin"
+                android:text="@{rssItemDataModel.title}"
+                tools:text="Algum titulo de noticia"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_view_text_margin"
+                android:layout_marginRight="@dimen/list_view_text_margin"
+                android:text="@{rssItemDataModel.description}"
+                tools:text="Algum subtitulo de noticia"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/list_view_text_margin"
+                android:layout_marginLeft="@dimen/list_view_text_margin"
+                android:layout_marginRight="@dimen/list_view_text_margin"
+                android:gravity="end"
+                android:text="@{rssItemDataModel.poweredBy}"
+                android:textColor="@color/gray"
+                tools:text="Fonte: Anda"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</layout>

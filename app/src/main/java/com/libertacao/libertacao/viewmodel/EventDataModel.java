@@ -39,7 +39,7 @@ public class EventDataModel extends BaseObservable {
     protected final Activity activity;
 
     /**
-     * Related event. This has all data that we need.
+     * Related event
      */
     protected Event event;
 

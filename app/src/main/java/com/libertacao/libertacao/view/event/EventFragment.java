@@ -17,10 +17,10 @@ import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.persistence.UserPreferences;
 import com.libertacao.libertacao.view.main.MainActivity;
 import com.libertacao.libertacao.view.main.NavigationDrawerFragment;
+import com.libertacao.libertacao.view.rssitem.ThirdPartyNewsFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import timber.log.Timber;
 
 public class EventFragment extends Fragment {
 
@@ -42,7 +42,6 @@ public class EventFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Timber.d("onCreate");
     }
 
     @Override
@@ -54,7 +53,6 @@ public class EventFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         setupTabLayoutListener();
         viewPager.setCurrentItem(UserPreferences.getSelectedTab());
-        Timber.d("onCreateView");
         return layout;
     }
 
@@ -122,12 +120,12 @@ public class EventFragment extends Fragment {
             adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.ADMIN), getString(R.string.admin));
         }
         adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.NEAR_ME), getString(R.string.nearMe));
-        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.THIRD_PARTY_NEWS), getString(R.string.thirdPartyNew));
+        adapter.addFrag(ThirdPartyNewsFragment.newInstance(), getString(R.string.thirdPartyNew));
         adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.EVENT), getResources().getQuantityString(R.plurals.event, 2));
         adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.VAKINHAS), getResources().getQuantityString(R.plurals.vakinha, 2));
         adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.PETITIONS), getResources().getQuantityString(R.plurals.petition, 2));
         adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.PROTEST), getResources().getQuantityString(R.plurals.protest, 2));
-        adapter.addFrag(ThirdPartyNewsFragment.newInstance(), getResources().getQuantityString(R.plurals.singleNew, 2));
+        adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.COMMUNITY_NEWS), getResources().getQuantityString(R.plurals.singleNew, 2));
         adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.OTHERS), getResources().getQuantityString(R.plurals.variado, 2));
         adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.ALL), getString(R.string.all));
         viewPager.setAdapter(adapter);
