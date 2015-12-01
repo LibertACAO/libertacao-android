@@ -2,6 +2,7 @@ package com.libertacao.libertacao.view.admin;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -84,9 +85,29 @@ public class SendPushActivity extends AppCompatActivity {
     @OnClick(R.id.send_push_button)
     public void sendPush() {
         // Valide EditTexts
-        if(!validate()) {
+        if (!validate()) {
             return;
         }
+
+        LatLng selectedLatLng = mapFragment.getSelectedLatLng();
+        if(selectedLatLng != null) {
+            actuallySendPush();
+        } else {
+            new android.app.AlertDialog.Builder(this)
+                    .setMessage(getString(R.string.areYouSureYouWantToSendPush))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            actuallySendPush();
+                        }
+                    })
+                    .setNegativeButton(getString(android.R.string.cancel), null)
+                    .show();
+        }
+    }
+
+    private void actuallySendPush() {
         final ProgressDialog pd = ViewUtils.showProgressDialog(this, getString(R.string.sendingPush), false);
 
         HashMap<String, Object> params = new HashMap<>();

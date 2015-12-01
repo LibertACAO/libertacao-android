@@ -178,6 +178,7 @@
     <string name="pushSendError">Não foi possível enviar o push. Tente novamente mais tarde.</string>
     <string name="pushSendSuccess">Push enviado com sucesso!</string>
     <string name="send_push_only_local_info">Testar push localmente (só você receberá esse push. É útil para ter certeza que ele irá no formato que você definiu.)</string>
+    <string name="areYouSureYouWantToSendPush">Você tem certeza que deseja enviar o push? Ele será enviado para TODOS os usuários do app.</string>
 
     <!-- Contact fragment -->
     <string name="emailOptional">E-mail (opcional)</string>
