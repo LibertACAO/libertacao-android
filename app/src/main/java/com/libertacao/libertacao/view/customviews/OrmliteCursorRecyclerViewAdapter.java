@@ -1,6 +1,5 @@
 package com.libertacao.libertacao.view.customviews;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 
@@ -13,8 +12,8 @@ import java.sql.SQLException;
 public abstract class OrmliteCursorRecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> extends CursorRecyclerViewAdapter<VH> {
     protected PreparedQuery<T> preparedQuery;
 
-    public OrmliteCursorRecyclerViewAdapter(Context context){
-        super(context,null);
+    public OrmliteCursorRecyclerViewAdapter(){
+        super(null);
     }
 
     public abstract void onBindViewHolder(VH holder, T t);

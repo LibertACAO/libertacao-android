@@ -1,7 +1,6 @@
 package com.libertacao.libertacao.view.event;
 
 import android.app.Activity;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,9 +13,6 @@ import com.libertacao.libertacao.view.customviews.OrmliteCursorRecyclerViewAdapt
 import com.libertacao.libertacao.viewmodel.EventDataModel;
 
 public class EventRecyclerViewAdapter extends OrmliteCursorRecyclerViewAdapter<Event, EventRecyclerViewAdapter.EventViewHolder> {
-    public EventRecyclerViewAdapter(Context context) {
-        super(context);
-    }
 
     @Override
     public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

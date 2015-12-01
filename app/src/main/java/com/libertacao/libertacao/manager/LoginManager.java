@@ -20,14 +20,24 @@ public class LoginManager {
         return ParseUser.getCurrentUser() != null;
     }
 
-    // FIXME: this is only temporary. We need to find a way to do this with roles!
+    public boolean isSuperAdmin() {
+        if(isLoggedIn()) {
+            int type = ParseUser.getCurrentUser().getInt("type");
+            if(type == 666) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isAdmin() {
         if(isLoggedIn()) {
-            String objectId = ParseUser.getCurrentUser().getObjectId();
-            return objectId.equals("dpbBxLtkMY") || objectId.equals("4r1i9gZkYD");
-        } else {
-            return false;
+            int type = ParseUser.getCurrentUser().getInt("type");
+            if(type % 66 == 6) {
+                return true;
+            }
         }
+        return false;
     }
 
     public void logout() {

@@ -127,7 +127,7 @@ public class EventFragmentBase extends Fragment implements SwipeRefreshLayout.On
 
     private void setupAdapterAndLoader() {
         // Create and set adapter (data source)
-        final EventRecyclerViewAdapter mAdapter = new EventRecyclerViewAdapter(getContext());
+        final EventRecyclerViewAdapter mAdapter = new EventRecyclerViewAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
         final PreparedQuery<Event> preparedQuery;

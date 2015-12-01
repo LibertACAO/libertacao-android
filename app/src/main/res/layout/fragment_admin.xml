@@ -6,8 +6,6 @@
               android:orientation="vertical"
               tools:context="com.libertacao.libertacao.view.admin.AdminFragment">
 
-    <!-- TODO: Implement add users to management role (only available to admins) -->
-
     <Button
         android:id="@+id/create_new_event_button"
         android:layout_width="match_parent"
@@ -24,6 +22,8 @@
         android:id="@+id/remove_old_events_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:text="@string/removeOldEvents"/>
 
 </LinearLayout>
