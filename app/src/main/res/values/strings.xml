@@ -73,8 +73,8 @@
     <string name="emailHint">E-mail</string>
     <string name="passwordHint">Senha</string>
     <string name="welcomeUser">Bem-vinda(o) %1$s!</string>
-    <string name="invalidCredentials">Usuário e senha incorretos</string>
-    <string name="unknownLoginError">Não foi possível fazer o login. Por favor, tente novamente mais tarde.</string>
+    <string name="invalidCredentials">Usuário e senha incorretos. Se você não possui uma conta, clique em "Cadastre-se".</string>
+    <string name="unknownLoginError">Não foi possível fazer o login. Por favor, tente novamente mais tarde. Se você não possui uma conta, clique em "Cadastre-se".</string>
     <string name="facebookLoginError">Erro ao tentar logar com o Facebook</string>
 
     <string-array name="my_facebook_permissions">
