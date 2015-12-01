@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_margin="@dimen/default_margin"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/goVeganForAnimalRights"/>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/holo_gray_bright"
+                android:orientation="vertical">
 
     <Button
         android:id="@+id/like_our_page_in_facebook"
+        style="@style/ParseLoginUI.Button.ThirdPartyLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/default_margin"
+        android:background="@drawable/com_parse_ui_facebook_login_button_background_selector"
+        android:drawableLeft="@drawable/com_parse_ui_facebook_login_logo"
+        android:drawableStart="@drawable/com_parse_ui_facebook_login_logo"
         android:text="@string/likeOurPage"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/freeSoftwareWarning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/goVeganForAnimalsTextView"
+        android:layout_margin="@dimen/default_margin"
+        android:gravity="center"
+        android:text="@string/freeSoftware"/>
+
+    <TextView
+        android:id="@+id/goVeganForAnimalsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/default_margin"
+        android:gravity="center"
+        android:text="@string/goVeganForAnimalRights"
+        android:textColor="@color/DarkGreen"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

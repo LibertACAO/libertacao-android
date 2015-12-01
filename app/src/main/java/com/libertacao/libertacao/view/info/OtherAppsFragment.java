@@ -1,5 +1,6 @@
 package com.libertacao.libertacao.view.info;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.libertacao.libertacao.R;
 
@@ -32,7 +34,11 @@ public class OtherAppsFragment extends Fragment {
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
         } catch (android.content.ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            } catch(ActivityNotFoundException ex) {
+                Toast.makeText(getActivity(), getString(R.string.error_start_activity), Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

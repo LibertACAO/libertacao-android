@@ -39,6 +39,15 @@ public class AboutFragment extends Fragment {
         }
     }
 
+    @OnClick(R.id.freeSoftwareWarning)
+    public void freeSoftwareWarningClicked() {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/LibertACAO/libertacao-android")));
+        } catch(ActivityNotFoundException ex) {
+            Toast.makeText(getActivity(), getString(R.string.error_start_activity), Toast.LENGTH_LONG).show();
+        }
+    }
+
     /**
      * Intent to open the official Facebook app. If the Facebook app is not installed then the
      * default web browser will be used.
