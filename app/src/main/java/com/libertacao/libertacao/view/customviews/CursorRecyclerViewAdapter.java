@@ -17,33 +17,22 @@ package com.libertacao.libertacao.view.customviews;
  *
  */
 
-import android.content.Context;
 import android.database.Cursor;
-import android.database.DataSetObserver;
 import android.support.v7.widget.RecyclerView;
 
 // Code from https://gist.github.com/skyfishjy/443b7448f59be978bc59
+// Fix to remove observers (when using CursorLoaders) by: https://gist.github.com/quanturium/46541c81aae2a916e31d
 public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
-    private final Context mContext;
-
     private Cursor mCursor;
-
     private boolean mDataValid;
-
     private int mRowIdColumn;
 
-    private final DataSetObserver mDataSetObserver;
-
-    public CursorRecyclerViewAdapter(Context context, Cursor cursor) {
-        mContext = context;
+    public CursorRecyclerViewAdapter(Cursor cursor) {
         mCursor = cursor;
         mDataValid = cursor != null;
-        mRowIdColumn = mDataValid ? mCursor.getColumnIndex("_id") : -1;
-        mDataSetObserver = new NotifyingDataSetObserver();
-        if (mCursor != null) {
-            mCursor.registerDataSetObserver(mDataSetObserver);
-        }
+        mRowIdColumn = mDataValid ? mCursor.getColumnIndexOrThrow("_id") : -1;
+        setHasStableIds(true);
     }
 
     public Cursor getCursor() {
@@ -54,16 +43,22 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
     public int getItemCount() {
         if (mDataValid && mCursor != null) {
             return mCursor.getCount();
+        } else {
+            return 0;
         }
-        return 0;
     }
 
     @Override
     public long getItemId(int position) {
-        if (mDataValid && mCursor != null && mCursor.moveToPosition(position)) {
-            return mCursor.getLong(mRowIdColumn);
+        if (hasStableIds() && mDataValid && mCursor != null) {
+            if (mCursor.moveToPosition(position)) {
+                return mCursor.getLong(mRowIdColumn);
+            } else {
+                return RecyclerView.NO_ID;
+            }
+        } else {
+            return RecyclerView.NO_ID;
         }
-        return 0;
     }
 
     public Object getItem(int position) {
@@ -73,11 +68,6 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
         } else {
             return null;
         }
-    }
-
-    @Override
-    public void setHasStableIds(boolean hasStableIds) {
-        super.setHasStableIds(true);
     }
 
     public abstract void onBindViewHolder(VH viewHolder, Cursor cursor);
@@ -114,40 +104,17 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
             return null;
         }
         final Cursor oldCursor = mCursor;
-        if (oldCursor != null && mDataSetObserver != null) {
-            oldCursor.unregisterDataSetObserver(mDataSetObserver);
-        }
         mCursor = newCursor;
         if (mCursor != null) {
-            if (mDataSetObserver != null) {
-                mCursor.registerDataSetObserver(mDataSetObserver);
-            }
             mRowIdColumn = newCursor.getColumnIndexOrThrow("_id");
             mDataValid = true;
             notifyDataSetChanged();
         } else {
             mRowIdColumn = -1;
             mDataValid = false;
-            notifyDataSetChanged();
-            //There is no notifyDataSetInvalidated() method in RecyclerView.Adapter
+            // notify the observers about the lack of a data set
+            notifyItemRangeRemoved(0, getItemCount());
         }
         return oldCursor;
-    }
-
-    private class NotifyingDataSetObserver extends DataSetObserver {
-        @Override
-        public void onChanged() {
-            super.onChanged();
-            mDataValid = true;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public void onInvalidated() {
-            super.onInvalidated();
-            mDataValid = false;
-            notifyDataSetChanged();
-            //There is no notifyDataSetInvalidated() method in RecyclerView.Adapter
-        }
     }
 }
