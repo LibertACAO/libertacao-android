@@ -156,6 +156,14 @@
     <string name="eventSuggestedError">Não foi possível sugerir o evento :(. Por favor, tente novamente mais tarde.</string>
     <string name="eventSavedSuccessfully">Evento salvo com sucesso!</string>
     <string name="eventSuggestedSuccessfully">Evento sugerido com sucesso!</string>
+    <string name="explanationDate">Seu evento será mostrado para os outros usuários do momento em que ele for aprovado até a sua data final. Caso não seja
+        definida uma data final, ele será mostrado até a sua data inicial.</string>
+    <string name="explanationLink">O campo \"Link URL\" deverá apontar para o site do evento (ou para o link do evento no Facebook). O campo \"Link texto\"
+    é a mensagem a ser mostrada aos usuários para clicarem no link.</string>
+    <string name="explanationLocation">Os campos Localização e Localização completa descrevem a localização do evento. Caso ele seja específico para
+        pessoas de determinada localidade, selecione ela no mapa (caso não haja uma localização exata, escolha uma aproximada) - assim o evento só será
+    mostrado para as pessoas daquele lugar. Caso ele não seja específico de nenhum lugar, NÃO selecione a localização no mapa - só forneça a
+        localização nos campos de texto.</string>
 
     <!-- Event details - Admin -->
     <string name="activate">Ativar</string>
