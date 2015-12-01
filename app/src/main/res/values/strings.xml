@@ -54,6 +54,7 @@
 
     <!-- Notifications -->
     <string name="empty_event_list">Sem nenhum evento nesta categoria :(…</string>
+    <string name="empty_news_list">Sem nenhuma notícia :(…</string>
     <string name="share">Compartilhar</string>
 
     <!-- Profile -->

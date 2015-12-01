@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/empty_event_list"
+        android:text="@string/empty_news_list"
         android:visibility="gone"
         tools:visibility="visible"/>
 
