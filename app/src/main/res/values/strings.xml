@@ -47,8 +47,10 @@
     <string name="drawer_notificacoes">Notificações</string>
     <string name="drawer_cadastro">Cadastre-se</string>
     <string name="drawer_perfil">Perfil</string>
-    <string name="drawer_contato">Contato</string>
     <string name="drawer_admin">Administrar</string>
+    <string name="drawer_contato">Contato</string>
+    <string name="drawer_other_apps">Apps veganos</string>
+    <string name="drawer_about">Sobre</string>
 
     <!-- Notifications -->
     <string name="empty_event_list">Sem nenhum evento nesta categoria :(…</string>
@@ -185,6 +187,15 @@
     <string name="sendContact">Enviar mensagem</string>
     <string name="messageSavedError">Error! Não foi possível enviar sua mensagem. Tente novamente mais tarde.</string>
     <string name="messageSavedSuccessfully">Mensagem enviada com sucesso!</string>
+
+    <!-- Other apps fragment -->
+    <string name="beVeg">BeVeg</string>
+    <string name="beVegDescription">Encontre estabelecimentos com opções veganas perto de você</string>
+
+    <!-- About fragment -->
+    <string name="likeOurPage">Curta nossa página no Facebook</string>
+    <string name="error_start_activity">Não foi possível encontrar alguma aplicação neste dispositivo para concluir esta ação</string>
+    <string name="goVeganForAnimalRights">Go vegan for the animal rights.</string>
 
 
 </resources>

@@ -30,6 +30,8 @@ import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.admin.AdminFragment;
 import com.libertacao.libertacao.view.contact.ContactFragment;
 import com.libertacao.libertacao.view.event.EventFragment;
+import com.libertacao.libertacao.view.info.AboutFragment;
+import com.libertacao.libertacao.view.info.OtherAppsFragment;
 import com.libertacao.libertacao.view.login.ParseLoginActivity;
 import com.libertacao.libertacao.view.perfil.PerfilFragment;
 
@@ -92,17 +94,21 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     @Override
     public void onNavigationDrawerItemSelected(@NavigationDrawerFragment.DrawerPosition int position) {
-        if(position == NavigationDrawerFragment.NOTIFICACAO) {
+        if(position == NavigationDrawerFragment.NOTIFICATION) {
             openFragment(EventFragment.newInstance());
-        } else if(position == NavigationDrawerFragment.CADASTRO_PERFIL){
+        } else if(position == NavigationDrawerFragment.PROFILE){
             if(LoginManager.getInstance().isLoggedIn()){
                 openFragment(PerfilFragment.newInstance());
             } else {
                 Intent intent = new Intent(this, ParseLoginActivity.class);
                 startActivityForResult(intent, LOGIN_RESULT_CODE);
             }
-        } else if(position == NavigationDrawerFragment.CONTATO){
+        } else if(position == NavigationDrawerFragment.OTHER_APPS){
+            openFragment(OtherAppsFragment.newInstance());
+        } else if(position == NavigationDrawerFragment.CONTACT){
             openFragment(ContactFragment.newInstance());
+        } else if(position == NavigationDrawerFragment.ABOUT){
+            openFragment(AboutFragment.newInstance());
         } else if(position == NavigationDrawerFragment.ADMIN){
             openFragment(AdminFragment.newInstance());
         }

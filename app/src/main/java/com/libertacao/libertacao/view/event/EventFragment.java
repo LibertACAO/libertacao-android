@@ -100,7 +100,7 @@ public class EventFragment extends Fragment {
                             .setNegativeButton(getString(R.string.login), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    ((MainActivity) getActivity()).onNavigationDrawerItemSelected(NavigationDrawerFragment.CADASTRO_PERFIL);
+                                    ((MainActivity) getActivity()).onNavigationDrawerItemSelected(NavigationDrawerFragment.PROFILE);
                                 }
                             })
                             .show();

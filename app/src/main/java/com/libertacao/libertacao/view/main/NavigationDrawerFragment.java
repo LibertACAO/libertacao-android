@@ -37,14 +37,16 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Track drawer position
      */
-    @IntDef({NOTIFICACAO, CADASTRO_PERFIL, CONTATO, ADMIN})
+    @IntDef({NOTIFICATION, PROFILE, OTHER_APPS, CONTACT, ABOUT, ADMIN})
     @Retention(RetentionPolicy.SOURCE)
     public @interface DrawerPosition {}
 
-    public static final int NOTIFICACAO = 0;
-    public static final int CADASTRO_PERFIL = 1;
-    public static final int CONTATO = 2;
-    public static final int ADMIN = 3;
+    public static final int NOTIFICATION = 0;
+    public static final int PROFILE = 1;
+    public static final int OTHER_APPS = 2;
+    public static final int CONTACT = 3;
+    public static final int ABOUT = 4;
+    public static final int ADMIN = 5;
 
     /**
      * Remember the position of the selected item.
@@ -113,10 +115,13 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerStrings = new ArrayList<>();
         mDrawerStrings.add(getString(R.string.drawer_notificacoes));
         mDrawerStrings.add(getString(R.string.drawer_cadastro));
+        mDrawerStrings.add(getString(R.string.drawer_other_apps));
         mDrawerStrings.add(getString(R.string.drawer_contato));
+        mDrawerStrings.add(getString(R.string.drawer_about));
         if(LoginManager.getInstance().isAdmin()) {
             mDrawerStrings.add(getString(R.string.drawer_admin));
         }
+
         mDrawerArrayAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
@@ -255,9 +260,9 @@ public class NavigationDrawerFragment extends Fragment {
 
     public void updateDrawerAdapter(){
         if(LoginManager.getInstance().isLoggedIn()){
-            mDrawerStrings.set(CADASTRO_PERFIL, getString(R.string.drawer_perfil));
+            mDrawerStrings.set(PROFILE, getString(R.string.drawer_perfil));
         } else {
-            mDrawerStrings.set(CADASTRO_PERFIL, getString(R.string.drawer_cadastro));
+            mDrawerStrings.set(PROFILE, getString(R.string.drawer_cadastro));
         }
         mDrawerArrayAdapter.notifyDataSetChanged();
     }
