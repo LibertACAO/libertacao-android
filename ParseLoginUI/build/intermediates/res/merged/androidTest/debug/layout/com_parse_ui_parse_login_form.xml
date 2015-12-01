@@ -51,4 +51,3 @@
         android:layout_marginBottom="@dimen/com_parse_ui_small_vertical_spacing"
         android:text="@string/com_parse_ui_forgot_password_button_label" />
 </LinearLayout>
-<!-- From: file:/home/guilherme/Documents/AllMyFiles/ProgrammingProjectsAndWebsites/Android/AndroidStudioProjects/NewLibertacao/libertacao-android/ParseLoginUI/src/main/res/layout/com_parse_ui_parse_login_form.xml --><!-- From: file:/home/guilherme/Documents/AllMyFiles/ProgrammingProjectsAndWebsites/Android/AndroidStudioProjects/NewLibertacao/libertacao-android/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_form.xml -->

@@ -8,7 +8,6 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'com.android.databinding'
 apply plugin: 'io.fabric'
 
 repositories {
@@ -38,6 +37,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dataBinding {
+        enabled = true
     }
 }
 

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/guilherme/Documents/AllMyFiles/ProgrammingProjectsAndWebsites/Android/AndroidStudioProjects/NewLibertacao/libertacao-android/ParseLoginUI/src/main/res/values/colors.xml -->
-    <eat-comment/>
     <color name="com_parse_ui_facebook_login_button">#3B5998</color>
     <color name="com_parse_ui_facebook_login_button_focus">#304F8B</color>
     <color name="com_parse_ui_facebook_login_button_push">#2E4677</color>
@@ -16,8 +14,6 @@
     <color name="com_parse_ui_twitter_login_button">#2DAAE2</color>
     <color name="com_parse_ui_twitter_login_button_focus">#2788BE</color>
     <color name="com_parse_ui_twitter_login_button_push">#2588B5</color>
-    <!-- From: file:/home/guilherme/Documents/AllMyFiles/ProgrammingProjectsAndWebsites/Android/AndroidStudioProjects/NewLibertacao/libertacao-android/ParseLoginUI/src/main/res/values/dimens.xml -->
-    <eat-comment/>
     <dimen name="com_parse_ui_horizontal_margin">16dp</dimen>
     <dimen name="com_parse_ui_large_vertical_spacing">24dp</dimen>
     <dimen name="com_parse_ui_small_horizontal_spacing">8dp</dimen>
@@ -25,8 +21,6 @@
     <dimen name="com_parse_ui_vertical_margin">16dp</dimen>
     <dimen name="com_parse_ui_vertical_spacing">16dp</dimen>
     <dimen name="com_parse_ui_xlarge_vertical_spacing">36dp</dimen>
-    <!-- From: file:/home/guilherme/Documents/AllMyFiles/ProgrammingProjectsAndWebsites/Android/AndroidStudioProjects/NewLibertacao/libertacao-android/ParseLoginUI/src/main/res/values/strings.xml -->
-    <eat-comment/>
     <plurals name="com_parse_ui_password_too_short_toast">
         <item quantity="one">Password must be at least %d character long</item>
         <item quantity="other">Password must be at least %d characters long</item>
@@ -81,8 +75,6 @@
     <string name="com_parse_ui_twitter_login_failed_toast">Twitter login failed</string>
     <string name="com_parse_ui_username_input_hint">Username</string>
     <string name="com_parse_ui_username_taken_toast">Username is already taken, please choose a different one</string>
-    <!-- From: file:/home/guilherme/Documents/AllMyFiles/ProgrammingProjectsAndWebsites/Android/AndroidStudioProjects/NewLibertacao/libertacao-android/ParseLoginUI/src/main/res/values/styles.xml -->
-    <eat-comment/>
     <style name="ParseLoginUI"/>
     <style name="ParseLoginUI.Button" parent="@android:style/Widget.Button">
         <item name="android:layout_width">match_parent</item>
