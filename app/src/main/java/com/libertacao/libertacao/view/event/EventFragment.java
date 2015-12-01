@@ -2,9 +2,11 @@ package com.libertacao.libertacao.view.event;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,16 +15,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.event.ChangedOrderByEvent;
 import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.persistence.UserPreferences;
 import com.libertacao.libertacao.view.main.MainActivity;
 import com.libertacao.libertacao.view.main.NavigationDrawerFragment;
 import com.libertacao.libertacao.view.rssitem.ThirdPartyNewsFragment;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 
 public class EventFragment extends Fragment {
+
+    // Order by
+    public static final int END_DATE = 0;
+    public static final int LAST_UPDATED = 1;
+    public static final int MOST_POPULAR = 2;
+    @OrderBy private int selectedOrderBy = UserPreferences.getSelectedOrderBy();
+
+    @IntDef({END_DATE, LAST_UPDATED, MOST_POPULAR})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface OrderBy {}
 
     /**
      * Interface elements
@@ -58,6 +75,7 @@ public class EventFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.event_fragment_menu, menu);
         inflater.inflate(R.menu.add_event_menu, menu);
         MenuItem menuAddEvent = menu.findItem(R.id.menu_add_event);
         if(LoginManager.getInstance().isAdmin()) {
@@ -87,6 +105,25 @@ public class EventFragment extends Fragment {
                             })
                             .show();
                 }
+                return true;
+            case R.id.menu_order_by_event:
+                CharSequence[] orderByItems = new CharSequence[3];
+                orderByItems[0] = getString(R.string.orderByDate);
+                orderByItems[1] = getString(R.string.orderByLastUpdated);
+                orderByItems[2] = getString(R.string.orderByMostPopular);
+                AlertDialog.Builder orderByBuilder = new AlertDialog.Builder(getContext());
+                orderByBuilder.setTitle(getString(R.string.orderBy));
+                orderByBuilder.setSingleChoiceItems(orderByItems, selectedOrderBy, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectedOrderBy = which;
+                        UserPreferences.setSelectedOrderBy(selectedOrderBy);
+                        EventBus.getDefault().post(new ChangedOrderByEvent(selectedOrderBy));
+                        dialog.dismiss();
+                    }
+                });
+                orderByBuilder.setNegativeButton(getString(android.R.string.cancel), null);
+                orderByBuilder.show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -18,10 +18,12 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.event.ChangedOrderByEvent;
 import com.libertacao.libertacao.event.SyncedEvent;
 import com.libertacao.libertacao.manager.ConnectionManager;
 import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
+import com.libertacao.libertacao.persistence.UserPreferences;
 import com.libertacao.libertacao.util.SnackbarUtils;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.customviews.EmptyRecyclerView;
@@ -55,12 +57,7 @@ public class EventFragmentBase extends Fragment implements SwipeRefreshLayout.On
     /*@Category*/ private int selectedCategory = NEAR_ME;
 
     // Order by
-    // TODO: this should be in EventFragment to be shared between fragments
-    public static final int ORDER_BY_INITIAL_DATE = 0;
-    public static final int ORDER_BY_LAST_UPDATED = 1;
-    public static final int ORDER_BY_MOST_POPULAR = 2;
-    public static final int DEFAULT_ORDER_BY_FILTER = ORDER_BY_INITIAL_DATE;
-    private int selectedOrderBy = DEFAULT_ORDER_BY_FILTER;
+    private int selectedOrderBy = UserPreferences.getSelectedOrderBy();
 
     private boolean loaderInitied = false;
 
@@ -106,37 +103,6 @@ public class EventFragmentBase extends Fragment implements SwipeRefreshLayout.On
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
     }
-
-    /*TODO: @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.event_fragment_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_order_by_event:
-                CharSequence[] orderByItems = new CharSequence[3];
-                orderByItems[0] = getString(R.string.orderByInitialDate);
-                orderByItems[1] = getString(R.string.orderByLastUpdated);
-                orderByItems[2] = getString(R.string.orderByMostPopular);
-                AlertDialog.Builder orderByBuilder = new AlertDialog.Builder(getContext());
-                orderByBuilder.setTitle(getString(R.string.orderBy));
-                orderByBuilder.setSingleChoiceItems(orderByItems, selectedOrderBy, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selectedOrderBy = which;
-                        setupAdapterAndLoader();
-                        dialog.dismiss();
-                    }
-                });
-                orderByBuilder.setNegativeButton(getString(android.R.string.cancel), null);
-                orderByBuilder.show();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
     /**
      * Helper UI methods
@@ -219,5 +185,11 @@ public class EventFragmentBase extends Fragment implements SwipeRefreshLayout.On
     @SuppressWarnings("unused")
     public void onEventMainThread(SyncedEvent event) {
         mSwipeLayout.setRefreshing(false);
+    }
+
+    @SuppressWarnings("unused")
+    public void onEventMainThread(ChangedOrderByEvent event) {
+        selectedOrderBy = event.selectedOrderBy;
+        setupAdapterAndLoader();
     }
 }

@@ -86,4 +86,16 @@ public class UserPreferences {
         editor.putInt("SELECTED_TAB", newValue);
         editor.apply();
     }
+
+    // Selected order by
+    public static int getSelectedOrderBy() {
+        return getSharedPreferences().getInt("SELECTED_ORDER_BY", 0);
+    }
+
+    public static void setSelectedOrderBy(int newValue) {
+        SharedPreferences sharedPref = UserPreferences.getSharedPreferences();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("SELECTED_ORDER_BY", newValue);
+        editor.apply();
+    }
 }

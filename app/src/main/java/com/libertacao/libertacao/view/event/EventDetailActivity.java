@@ -116,8 +116,11 @@ public class EventDetailActivity extends AppCompatActivity {
                 return true;
             case android.R.id.home:
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    finishAfterTransition();
-                    return true;
+                    boolean fullyExpanded = (appbarLayout.getHeight() - appbarLayout.getBottom()) == 0;
+                    if(fullyExpanded) {
+                        finishAfterTransition();
+                        return true;
+                    }
                 }
                 break;
         }

@@ -131,7 +131,8 @@ public class Event {
                 object.getString(LOCATION_DESCRIPTION),
                 parseFile != null? parseFile.getUrl() : null,
                 object.getDate(INITIAL_DATE),
-                object.getDate(END_DATE),
+                // If end date is null, set it as initial date, so we can use it in our order by
+                object.getDate(END_DATE) != null? object.getDate(END_DATE) : object.getDate(INITIAL_DATE),
                 object.getInt(TYPE),
                 object.getBoolean(ENABLED),
                 (object.getNumber(GOING) != null)? object.getNumber(GOING).longValue() : 0,
@@ -209,8 +210,9 @@ public class Event {
         return endDate;
     }
 
+    // It only has an end date if it is different from initial date (because if end date is null, we set it equals to initial date)
     public boolean hasEndDate() {
-        return endDate != null;
+        return endDate != null && !endDate.equals(initialDate);
     }
 
     public void setEndDate(Date endDate) {

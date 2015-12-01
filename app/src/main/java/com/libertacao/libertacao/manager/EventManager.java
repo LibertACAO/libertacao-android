@@ -18,9 +18,9 @@ import de.greenrobot.event.EventBus;
 import rx.Observable;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class EventManager {
-    private final static String TAG = "EventManager";
 
     private static final EventManager ourInstance = new EventManager();
 
@@ -44,12 +44,12 @@ public class EventManager {
                                 @Override
                                 public void onCompleted() {
                                     DatabaseHelper.getHelper(context).deleteEventsNotRecentlySynced();
-                                    Log.d(TAG, "Finished processing events");
+                                    Timber.d("Finished processing events");
                                 }
 
                                 @Override
                                 public void onError(Throwable e) {
-                                    Log.d(TAG, "Error while processing events: " + e.getLocalizedMessage());
+                                    Timber.d("Error while processing events: " + e.getLocalizedMessage());
                                 }
 
                                 @Override
@@ -58,7 +58,7 @@ public class EventManager {
                                 }
                             });
                 } else {
-                    Log.d("score", "Error: " + e.getMessage());
+                    Timber.e("Error: " + e.getMessage());
                 }
 
                 EventBus.getDefault().post(new SyncedEvent());

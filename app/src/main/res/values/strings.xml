@@ -98,7 +98,7 @@
 
     <!-- Event Fragment -->
     <string name="orderBy">Ordenar por…</string>
-    <string name="orderByInitialDate">Data inicial</string>
+    <string name="orderByDate">Data</string>
     <string name="orderByLastUpdated">Mais atualizados</string>
     <string name="orderByMostPopular">Mais populares</string>
     <string name="mustBeLoggedIn">Você precisa estar logado para acessar essa página</string>

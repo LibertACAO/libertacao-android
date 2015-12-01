@@ -20,6 +20,7 @@ import com.libertacao.libertacao.data.DataConfig;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.manager.UserManager;
 import com.libertacao.libertacao.util.MyDateUtils;
+import com.libertacao.libertacao.view.event.EventFragment;
 import com.libertacao.libertacao.view.event.EventFragmentBase;
 
 import java.sql.SQLException;
@@ -205,11 +206,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         queryBuilder.setWhere(where);
 
         // Order by
-        if(selectedOrderBy == 0) {
-            queryBuilder.orderBy(Event.INITIAL_DATE, true);
-        } else if(selectedOrderBy == 1) {
+        if(selectedOrderBy == EventFragment.END_DATE) {
+            queryBuilder.orderBy(Event.END_DATE, true);
+        } else if(selectedOrderBy == EventFragment.LAST_UPDATED) {
             queryBuilder.orderBy(Event.UPDATED_AT, false);
-        } else if(selectedOrderBy == 3) {
+        } else if(selectedOrderBy == EventFragment.MOST_POPULAR) {
             queryBuilder.orderBy(Event.GOING, false);
         }
 
