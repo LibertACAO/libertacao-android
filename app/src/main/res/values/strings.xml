@@ -9,6 +9,7 @@
     <string name="all">Todos</string>
     <string name="nearMe">Perto de mim</string>
     <string name="admin">Admin</string>
+    <string name="adminOldEvents">Antigos</string>
     <string name="thirdPartyNew">Notícias externas</string>
     <plurals name="event">
         <item quantity="one">Evento</item>
@@ -120,7 +121,6 @@
     <!-- Admin fragment-->
     <string name="addEvent">Adicionar evento</string>
     <string name="sendPush">Enviar push</string>
-    <string name="removeOldEvents">Remover eventos antigos</string>
     <string name="sendingPush">Enviando push</string>
     <string name="editEvent">Editar evento</string>
     <string name="activateEvent">Ativar evento</string>

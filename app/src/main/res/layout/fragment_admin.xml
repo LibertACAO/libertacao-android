@@ -18,12 +18,4 @@
         android:layout_height="wrap_content"
         android:text="@string/sendPush"/>
 
-    <Button
-        android:id="@+id/remove_old_events_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:text="@string/removeOldEvents"/>
-
 </LinearLayout>

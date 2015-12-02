@@ -155,6 +155,7 @@ public class EventFragment extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
         if(LoginManager.getInstance().isAdmin()) {
             adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.ADMIN), getString(R.string.admin));
+            adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.ADMIN_OLD_EVENTS), getString(R.string.adminOldEvents));
         }
         adapter.addFrag(EventFragmentBase.newInstance(EventFragmentBase.NEAR_ME), getString(R.string.nearMe));
         adapter.addFrag(ThirdPartyNewsFragment.newInstance(), getString(R.string.thirdPartyNew));

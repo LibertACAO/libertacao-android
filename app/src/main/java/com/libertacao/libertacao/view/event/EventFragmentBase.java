@@ -49,8 +49,9 @@ public class EventFragmentBase extends Fragment implements SwipeRefreshLayout.On
     public static final int NEAR_ME = 7;
     public static final int THIRD_PARTY_NEWS = 8;
     public static final int ADMIN = 9;
+    public static final int ADMIN_OLD_EVENTS = 10;
 
-    @IntDef({ALL, EVENT, VAKINHAS, PETITIONS, PROTEST, COMMUNITY_NEWS, OTHERS, NEAR_ME, THIRD_PARTY_NEWS, ADMIN})
+    @IntDef({ALL, EVENT, VAKINHAS, PETITIONS, PROTEST, COMMUNITY_NEWS, OTHERS, NEAR_ME, THIRD_PARTY_NEWS, ADMIN, ADMIN_OLD_EVENTS})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Category {}
 

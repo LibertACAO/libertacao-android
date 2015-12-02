@@ -145,6 +145,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         if(selectedCategory == EventFragmentBase.ADMIN) {
             queryBuilder.where().eq(Event.ENABLED, false);
             return queryBuilder.prepare();
+        } else if(selectedCategory == EventFragmentBase.ADMIN_OLD_EVENTS) {
+            queryBuilder.where().le(Event.END_DATE, MyDateUtils.getYesterdayDate());
+            return queryBuilder.prepare();
         }
 
         // Where

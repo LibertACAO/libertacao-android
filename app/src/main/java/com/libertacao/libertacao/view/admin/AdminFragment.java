@@ -9,18 +9,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.libertacao.libertacao.R;
-import com.libertacao.libertacao.manager.LoginManager;
 import com.libertacao.libertacao.view.event.EditEventActivity;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class AdminFragment extends Fragment {
-    @InjectView(R.id.remove_old_events_button) Button removeOldEventsButton;
 
     public static AdminFragment newInstance() {
         return new AdminFragment();
@@ -60,9 +56,6 @@ public class AdminFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_admin, container, false);
         ButterKnife.inject(this, layout);
-        if(LoginManager.getInstance().isSuperAdmin()) {
-            removeOldEventsButton.setVisibility(View.VISIBLE);
-        }
         return layout;
     }
 
@@ -74,10 +67,5 @@ public class AdminFragment extends Fragment {
     @OnClick(R.id.send_push_button)
     public void sendNewPush() {
         startActivity(SendPushActivity.newIntent(getContext()));
-    }
-
-    @OnClick(R.id.remove_old_events_button)
-    public void removeOldEvents() {
-        // TODO: Implement remove old events
     }
 }
