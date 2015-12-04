@@ -15,6 +15,7 @@ import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.util.MyDateUtils;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -223,7 +224,7 @@ public class EditEventDataModel extends EventDataModel {
         DatePickerDialog datePickerDialog = new DatePickerDialog(activity, onInitialDateSetListener,
                 initialDateCalendar.get(Calendar.YEAR), initialDateCalendar.get(Calendar.MONTH),
                 initialDateCalendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.getDatePicker().setMinDate(MyDateUtils.getYesterdayDate().getTime());
+        datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
         if (event.hasEndDate() && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             datePickerDialog.getDatePicker().setMaxDate(endDateCalendar.getTimeInMillis());
         }
