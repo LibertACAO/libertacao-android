@@ -22,9 +22,12 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.data.DataConfig;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.databinding.ActivityEventDetailBinding;
+import com.libertacao.libertacao.event.SyncedEvent;
 import com.libertacao.libertacao.manager.LoginManager;
+import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.MyImageLoader;
 import com.libertacao.libertacao.util.ViewUtils;
@@ -37,12 +40,17 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.greenrobot.event.EventBus;
 
 public class EventDetailActivity extends AppCompatActivity {
     private static final String EVENT_ID = "EVENT_ID";
+    private static final String EVENT_OBJECT_ID = "EVENT_OBJECT_ID";
     private Event event;
+    private ProgressDialog fetchingEventProgressDialog;
 
     @InjectView(R.id.event_detail_scroll_view) NestedScrollView scrollView;
     @InjectView(R.id.appbar) AppBarLayout appbarLayout;
@@ -54,6 +62,12 @@ public class EventDetailActivity extends AppCompatActivity {
         return intent;
     }
 
+    public static Intent newIntent(Context context, String eventObjectId){
+        Intent intent = new Intent(context, EventDetailActivity.class);
+        intent.putExtra(EVENT_OBJECT_ID, eventObjectId);
+        return intent;
+    }
+
     public EventDetailActivity(){
         // Required empty public constructor
     }
@@ -61,31 +75,32 @@ public class EventDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         int eventId = getIntent().getIntExtra(EVENT_ID, -1);
         if (eventId == -1){
-            notFoundEvent();
+            String eventObjectId = getIntent().getStringExtra(EVENT_OBJECT_ID);
+            List<Event> events = DatabaseHelper.getHelper(this).getEventIntegerRuntimeExceptionDao().queryForEq(DataConfig.OBJECT_ID, eventObjectId);
+            if(events.isEmpty()) {
+                fetchingEventProgressDialog = ViewUtils.showProgressDialog(this, getString(R.string.fetchingEvent), true);
+                SyncManager.getInstance().sync(this);
+            } else {
+                event = events.get(0);
+                setupViewWithEvent();
+            }
         } else {
             event = DatabaseHelper.getHelper(this).getEventIntegerRuntimeExceptionDao().queryForId(eventId);
             if(event != null){
-                ActivityEventDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_event_detail);
-                binding.setEventDataModel(new EventDataModel(this, event));
-                ViewUtils.setHomeAsUpEnabled(this);
-                if(getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle("");
-                }
-                ButterKnife.inject(this);
-
-                if(!event.hasImage()) {
-                    appbarLayout.setExpanded(false);
-                }
-
-                setupMapFragment();
-                setToolbarAndStatusColorAccordingToEventImage();
-
+                setupViewWithEvent();
             } else {
                 notFoundEvent();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -133,6 +148,23 @@ public class EventDetailActivity extends AppCompatActivity {
     private void notFoundEvent() {
         Toast.makeText(getBaseContext(), getString(R.string.eventNotFound), Toast.LENGTH_LONG).show();
         finish();
+    }
+
+    private void setupViewWithEvent() {
+        ActivityEventDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_event_detail);
+        binding.setEventDataModel(new EventDataModel(this, event));
+        ViewUtils.setHomeAsUpEnabled(this);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("");
+        }
+        ButterKnife.inject(this);
+
+        if(!event.hasImage()) {
+            appbarLayout.setExpanded(false);
+        }
+
+        setupMapFragment();
+        setToolbarAndStatusColorAccordingToEventImage();
     }
 
     private void activateEvent() {
@@ -247,6 +279,25 @@ public class EventDetailActivity extends AppCompatActivity {
                     });
                 }
             });
+        }
+    }
+
+    /**
+     * Events
+     */
+
+    @SuppressWarnings("unused")
+    public void onEventMainThread(SyncedEvent syncedEvent) {
+        if(fetchingEventProgressDialog != null) {
+            String eventObjectId = getIntent().getStringExtra(EVENT_OBJECT_ID);
+            List<Event> events = DatabaseHelper.getHelper(this).getEventIntegerRuntimeExceptionDao().queryForEq(DataConfig.OBJECT_ID, eventObjectId);
+            if(events.isEmpty()) {
+                notFoundEvent();
+            } else {
+                event = events.get(0);
+                setupViewWithEvent();
+            }
+            ViewUtils.hideProgressDialog(fetchingEventProgressDialog);
         }
     }
 }

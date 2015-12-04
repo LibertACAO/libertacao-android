@@ -6,16 +6,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.libertacao.libertacao.R;
+import com.libertacao.libertacao.data.Event;
+import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.Validator;
 import com.libertacao.libertacao.util.ViewUtils;
 import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
@@ -25,7 +30,9 @@ import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,7 +46,9 @@ public class SendPushActivity extends AppCompatActivity {
     @InjectView(R.id.send_push_title_edit_text) EditText titleEditText;
     @InjectView(R.id.send_push_message_edit_text) EditText messageEditText;
     @InjectView(R.id.send_push_uri_edit_text) EditText uriEditText;
+    @InjectView(R.id.send_push_event_spinner) Spinner eventSpinner;
 
+    @Nullable  private List<Event> events;
     private MapFragment mapFragment;
 
     public static Intent newIntent(@NonNull Context context) {
@@ -56,7 +65,18 @@ public class SendPushActivity extends AppCompatActivity {
         setContentView(R.layout.activity_send_push);
         ViewUtils.setHomeAsUpEnabled(this);
         ButterKnife.inject(this);
+        setupSpinner();
         setupMap();
+    }
+
+    private void setupSpinner() {
+        events = DatabaseHelper.getHelper(this).getEventIntegerRuntimeExceptionDao().queryForEq(Event.ENABLED, true);
+        if (events != null) {
+            events.add(0, new Event("", getString(R.string.selectAnEventForThisPushOptional), null, Event.INVALID_LOCATION, Event.INVALID_LOCATION, null,
+                    null, null, new Date(), null, -1, false, -1, null, null, null));
+            ArrayAdapter<Event> adapter =  new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, events);
+            eventSpinner.setAdapter(adapter);
+        }
     }
 
     private void setupMap() {
@@ -90,7 +110,7 @@ public class SendPushActivity extends AppCompatActivity {
         }
 
         LatLng selectedLatLng = mapFragment.getSelectedLatLng();
-        if(selectedLatLng != null) {
+        if(onlyLocalCheckbox.isChecked() || selectedLatLng != null) {
             actuallySendPush();
         } else {
             new android.app.AlertDialog.Builder(this)
@@ -123,8 +143,15 @@ public class SendPushActivity extends AppCompatActivity {
         }
         params.put("userObjectId", ParseUser.getCurrentUser().getObjectId());
 
-        if(onlyLocalCheckbox.isChecked()) {
+        final boolean onlyToMe = onlyLocalCheckbox.isChecked();
+        if(onlyToMe) {
             params.put("recipientId", ParseUser.getCurrentUser().getObjectId());
+        }
+
+        int selectedItemPosition = eventSpinner.getSelectedItemPosition();
+        if(events != null && selectedItemPosition > 0 && selectedItemPosition <= events.size()){
+            String eventObjectId = events.get(selectedItemPosition).getObjectId();
+            params.put("eventObjectId", eventObjectId);
         }
 
         LatLng selectedLatLng = mapFragment.getSelectedLatLng();
@@ -144,10 +171,12 @@ public class SendPushActivity extends AppCompatActivity {
                 } else {
                     String toastText = TextUtils.isEmpty(success) ? SendPushActivity.this.getString(R.string.pushSendSuccess) : success;
                     Toast.makeText(SendPushActivity.this, toastText, Toast.LENGTH_SHORT).show();
-                    onlyLocalCheckbox.setChecked(true);
-                    titleEditText.setText("");
-                    messageEditText.setText("");
-                    uriEditText.setText("");
+                    if(!onlyToMe) {
+                        onlyLocalCheckbox.setChecked(true);
+                        titleEditText.setText("");
+                        messageEditText.setText("");
+                        uriEditText.setText("");
+                    }
                 }
             }
         });

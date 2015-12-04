@@ -52,6 +52,11 @@
                 android:hint="@string/uriTextHint"
                 android:inputType="textUri"/>
 
+            <Spinner
+                android:id="@+id/send_push_event_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <FrameLayout
                 android:id="@+id/event_map"
                 android:layout_width="match_parent"

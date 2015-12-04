@@ -122,7 +122,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public void deleteEventsNotRecentlySynced() {
+    public synchronized void deleteEventsNotRecentlySynced() {
         Calendar sometimeInThePast = Calendar.getInstance();
         sometimeInThePast.add(Calendar.MINUTE, LAST_SYNCED_THRESHOLD_IN_MINUTES);
         try {

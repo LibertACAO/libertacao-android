@@ -45,6 +45,7 @@ public class EventManager {
                                 public void onCompleted() {
                                     DatabaseHelper.getHelper(context).deleteEventsNotRecentlySynced();
                                     Timber.d("Finished processing events");
+                                    EventBus.getDefault().post(new SyncedEvent());
                                 }
 
                                 @Override
@@ -59,9 +60,8 @@ public class EventManager {
                             });
                 } else {
                     Timber.e("Error: " + e.getMessage());
+                    EventBus.getDefault().post(new SyncedEvent());
                 }
-
-                EventBus.getDefault().post(new SyncedEvent());
             }
         });
     }

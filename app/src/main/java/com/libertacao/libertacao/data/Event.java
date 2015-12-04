@@ -269,4 +269,9 @@ public class Event {
     public String getLinkText() {
         return linkText;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

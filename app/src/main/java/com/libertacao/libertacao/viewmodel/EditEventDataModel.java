@@ -223,6 +223,7 @@ public class EditEventDataModel extends EventDataModel {
         DatePickerDialog datePickerDialog = new DatePickerDialog(activity, onInitialDateSetListener,
                 initialDateCalendar.get(Calendar.YEAR), initialDateCalendar.get(Calendar.MONTH),
                 initialDateCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(MyDateUtils.getYesterdayDate().getTime());
         if (event.hasEndDate() && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             datePickerDialog.getDatePicker().setMaxDate(endDateCalendar.getTimeInMillis());
         }
@@ -276,7 +277,7 @@ public class EditEventDataModel extends EventDataModel {
         DatePickerDialog datePickerDialog = new DatePickerDialog(activity, onEndDateSetListener,
                 endDateCalendar.get(Calendar.YEAR), endDateCalendar.get(Calendar.MONTH),
                 endDateCalendar.get(Calendar.DAY_OF_MONTH));
-        if (event.hasEndDate() && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             datePickerDialog.getDatePicker().setMinDate(initialDateCalendar.getTimeInMillis());
         }
         datePickerDialog.show();
