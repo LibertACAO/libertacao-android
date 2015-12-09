@@ -28,6 +28,8 @@ import com.libertacao.libertacao.util.ShareUtils;
 import com.libertacao.libertacao.view.event.EventDetailActivity;
 import com.parse.ParseObject;
 
+import java.util.Locale;
+
 /**
  * This class is the ViewModel of the MVVM architecture pattern, representing an Event
  */
@@ -323,6 +325,20 @@ public class EventDataModel extends BaseObservable {
     public void onUrlClick(View view){
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ConnectionManager.getUrlWithHttp(event.getLinkUrl())));
+            activity.startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            Toast.makeText(activity, activity.getString(R.string.notFoundActivity), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Called when user clicked to open map externally
+     * @param view target
+     */
+    public void onOpenMapClick(View view){
+        try {
+            String uri = String.format(Locale.ENGLISH, "geo:%f,%f", event.getLatitude(), event.getLongitude());
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             activity.startActivity(intent);
         } catch (ActivityNotFoundException ex) {
             Toast.makeText(activity, activity.getString(R.string.notFoundActivity), Toast.LENGTH_LONG).show();
