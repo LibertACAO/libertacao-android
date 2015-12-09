@@ -55,7 +55,7 @@ public class EventManager {
 
                                 @Override
                                 public void onNext(ParseObject parseObject) {
-                                    DatabaseHelper.getHelper(context).createIfNotExists(Event.getEvent(parseObject));
+                                    DatabaseHelper.getHelper(context).createIfNotExists(ParserDtoManager.getEventFromParseObject(parseObject));
                                 }
                             });
                 } else {

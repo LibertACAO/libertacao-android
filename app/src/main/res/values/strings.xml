@@ -130,17 +130,19 @@
     <string name="createNewEvent">Criar novo evento</string>
 
     <!-- Edit event -->
-    <string name="selectPhotoToEventInfo">Clique abaixo para selecionar uma foto para o evento:</string>
-    <string name="title">Título (Feira Vegana)</string>
-    <string name="description">Descrição (Venha participar da Feira Vegana…)</string>
-    <string name="initialDate">Data (inicial): 22/10</string>
-    <string name="initialHour">20h</string>
-    <string name="endDate">Data final (opcional): 22/10</string>
-    <string name="endHour">21h</string>
-    <string name="linkUrl">Link URL (opcional)</string>
-    <string name="linkText">Link texto (opcional)</string>
-    <string name="locationSummary">Localização (Porto Alegre, RS)</string>
-    <string name="locationDescription">Localização completa (Avenida Lajeado, 6520)</string>
+    <string name="selectPhotoToEventInfo">Selecione uma foto para o evento</string>
+    <string name="selectEventType">Selecione o tipo de evento</string>
+    <string name="title">Título</string>
+    <string name="description">Descrição</string>
+    <string name="initialDate">Data (inicial)</string>
+    <string name="initialHour">Hora</string>
+    <string name="endDate">Data final (opcional)</string>
+    <string name="endHour">Hora</string>
+    <string name="linkUrl">Link URL</string>
+    <string name="linkText">Link texto</string>
+    <string name="linkTextDefaultPlaceURL">Acesse o site do local do evento</string>
+    <string name="locationSummary">Localização</string>
+    <string name="locationDescription">Localização completa)</string>
     <string name="createEdit">Criar/editar</string>
     <string name="suggestEvent">Sugerir evento</string>
     <string name="saveEvent">Salvar</string>
@@ -149,8 +151,6 @@
     <string name="selectAnEventType">Por favor, selecione um tipo para o seu evento</string>
     <string name="selectADate">Por favor, selecione uma data para o seu evento</string>
     <string name="typeALink">Você forneceu um texto para aparecer junto com o link, mas não o link URL</string>
-    <string name="latLngNotSet">Você forneceu uma localização textual, mas não selecionou a latitude/longitude por meio do mapa. Isso se
-        tornará um evento global. Deseja continuar mesmo assim?</string>
     <string name="savingEvent">Salvando evento…</string>
     <string name="suggestingEvent">Sugerindo evento…</string>
     <string name="eventSavedError">Não foi possível salvar o evento. Tente novamente mais tarde.</string>
@@ -161,10 +161,8 @@
         definida uma data final, ele será mostrado até a sua data inicial.</string>
     <string name="explanationLink">O campo \"Link URL\" deverá apontar para o site do evento (ou para o link do evento no Facebook). O campo \"Link texto\"
     é a mensagem a ser mostrada aos usuários para clicarem no link.</string>
-    <string name="explanationLocation">Os campos Localização e Localização completa descrevem a localização do evento. Caso ele seja específico para
-        pessoas de determinada localidade, selecione ela no mapa (caso não haja uma localização exata, escolha uma aproximada) - assim o evento só será
-    mostrado para as pessoas daquele lugar. Caso ele não seja específico de nenhum lugar, NÃO selecione a localização no mapa - só forneça a
-        localização nos campos de texto.</string>
+    <string name="specificLocationCheckbox">Mostrar esse evento somente para pessoas perto do local definido. Escolha essa opção caso este evento seja
+        específico de uma determinada região. Caso contrário, deixe ele deselecionado, assim todos os usuários do app poderão visualizá-lo.</string>
 
     <!-- Event details - Admin -->
     <string name="activate">Ativar</string>

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -31,7 +30,6 @@ import com.libertacao.libertacao.manager.SyncManager;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.MyImageLoader;
 import com.libertacao.libertacao.util.ViewUtils;
-import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.libertacao.libertacao.viewmodel.EventDataModel;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -52,7 +50,6 @@ public class EventDetailActivity extends AppCompatActivity {
     private Event event;
     private ProgressDialog fetchingEventProgressDialog;
 
-    @InjectView(R.id.event_detail_scroll_view) NestedScrollView scrollView;
     @InjectView(R.id.appbar) AppBarLayout appbarLayout;
     @InjectView(R.id.collapsing_toolbar_layout) CollapsingToolbarLayout collapsingToolbarLayout;
 
@@ -250,12 +247,6 @@ public class EventDetailActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         MapFragment mapFragment = MapFragment.newInstance(event);
         fragmentManager.beginTransaction().replace(R.id.event_map, mapFragment).commit();
-        mapFragment.setListener(new WorkaroundMapFragment.OnTouchListener() {
-            @Override
-            public void onTouch() {
-                scrollView.requestDisallowInterceptTouchEvent(true);
-            }
-        });
     }
 
     private void setToolbarAndStatusColorAccordingToEventImage() {

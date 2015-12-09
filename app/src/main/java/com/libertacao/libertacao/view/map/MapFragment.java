@@ -10,6 +10,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -18,7 +19,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
-import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 
 /**
  * This class is responsible to control a fragment that only contains a map. It can work in normal mode or in edit mode.
@@ -26,7 +26,7 @@ import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
  *
  * This is leaking because there is a known bug in Google Play Services: https://github.com/googlesamples/android-play-location/issues/26
  */
-public class MapFragment extends WorkaroundMapFragment implements GoogleApiClient.ConnectionCallbacks,
+public class MapFragment extends SupportMapFragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnMapClickListener,

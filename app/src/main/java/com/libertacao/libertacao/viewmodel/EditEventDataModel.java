@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.databinding.Bindable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -28,6 +29,11 @@ public class EditEventDataModel extends EventDataModel {
      * Hold on OnSelectImageClick to delegate when user has clicked on Select image
      */
     private OnSelectImageClick onSelectImageClickListener;
+
+    /**
+     * Hold on OnPickEventPlaceClick to delegate when user has clicked on Pick event place
+     */
+    private OnPickEventPlaceClick onPickEventPlaceClickListener;
 
     /**
      * This contains the path to the event local image, in case it was selected a new one (e.g. in the edit event activity)
@@ -60,9 +66,11 @@ public class EditEventDataModel extends EventDataModel {
      * @param onSelectImageClickListener listener to be called when user has clicked on Select image
      * @param event related event
      */
-    public EditEventDataModel(@NonNull Activity activity, @NonNull OnSelectImageClick onSelectImageClickListener, @NonNull Event event) {
+    public EditEventDataModel(@NonNull Activity activity, @NonNull OnSelectImageClick onSelectImageClickListener,
+                              @NonNull OnPickEventPlaceClick onPickEventPlaceClickListener, @NonNull Event event) {
         super(activity, event);
         this.onSelectImageClickListener = onSelectImageClickListener;
+        this.onPickEventPlaceClickListener = onPickEventPlaceClickListener;
         initialDateCalendar = Calendar.getInstance(new Locale("pt", "BR"));
         if(event.hasInitialDate()) {
             initialDateCalendar.setTime(event.getInitialDate());
@@ -138,6 +146,24 @@ public class EditEventDataModel extends EventDataModel {
 
     public interface OnSelectImageClick {
         void onSelectImageClick();
+    }
+
+    /**
+     * Called when user clicked to pick event place
+     * @param view target
+     */
+    public void pickEventPlace(View view){
+        if(onPickEventPlaceClickListener != null) {
+            onPickEventPlaceClickListener.onPickEventPlaceClick();
+        }
+    }
+
+    /**
+     * Interface to communicate when user has clicked to pick event place
+     */
+
+    public interface OnPickEventPlaceClick {
+        void onPickEventPlaceClick();
     }
 
     /**
@@ -224,8 +250,10 @@ public class EditEventDataModel extends EventDataModel {
         DatePickerDialog datePickerDialog = new DatePickerDialog(activity, onInitialDateSetListener,
                 initialDateCalendar.get(Calendar.YEAR), initialDateCalendar.get(Calendar.MONTH),
                 initialDateCalendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
-        if (event.hasEndDate() && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+        }
+        if (event.hasEndDate() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             datePickerDialog.getDatePicker().setMaxDate(endDateCalendar.getTimeInMillis());
         }
         datePickerDialog.show();
@@ -322,5 +350,31 @@ public class EditEventDataModel extends EventDataModel {
      */
     @Nullable public Calendar getEndDateCalendar() {
         return endDateSet? endDateCalendar : null;
+    }
+
+    // Changes in EditTexts
+
+    public void onTitleChanged(CharSequence s, int start, int before, int count) {
+        event.setTitle(s.toString());
+    }
+
+    public void onDescriptionChanged(CharSequence s, int start, int before, int count) {
+        event.setDescription(s.toString());
+    }
+
+    public void onLocationSummaryChanged(CharSequence s, int start, int before, int count) {
+        event.setLocationSummary(s.toString());
+    }
+
+    public void onLocationDescriptionChanged(CharSequence s, int start, int before, int count) {
+        event.setLocationDescription(s.toString());
+    }
+
+    public void onLinkUrlChanged(CharSequence s, int start, int before, int count) {
+        event.setLinkUrl(s.toString());
+    }
+
+    public void onLinkTextChanged(CharSequence s, int start, int before, int count) {
+        event.setLinkText(s.toString());
     }
 }

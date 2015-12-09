@@ -6,9 +6,6 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.libertacao.libertacao.MyApp;
 import com.libertacao.libertacao.R;
-import com.parse.ParseFile;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 
 import java.util.Date;
 
@@ -117,29 +114,6 @@ public class Event {
         this.linkUrl = linkUrl;
         this.linkText = linkText;
         this.updatedAt = updatedAt;
-    }
-
-    public static Event getEvent(@NonNull ParseObject object){
-        ParseGeoPoint location = object.getParseGeoPoint(LOCATION);
-        ParseFile parseFile = object.getParseFile(IMAGE);
-        return new Event(object.getObjectId(),
-                object.getString(TITLE),
-                object.getString(DESCRIPTION),
-                location != null? location.getLatitude() : INVALID_LOCATION,
-                location != null? location.getLongitude() : INVALID_LOCATION,
-                object.getString(LOCATION_SUMMARY),
-                object.getString(LOCATION_DESCRIPTION),
-                parseFile != null? parseFile.getUrl() : null,
-                object.getDate(INITIAL_DATE),
-                // If end date is null, set it as initial date, so we can use it in our order by
-                object.getDate(END_DATE) != null? object.getDate(END_DATE) : object.getDate(INITIAL_DATE),
-                object.getInt(TYPE),
-                object.getBoolean(ENABLED),
-                (object.getNumber(GOING) != null)? object.getNumber(GOING).longValue() : 0,
-                object.getString(LINK_URL),
-                object.getString(LINK_TEXT),
-                object.getUpdatedAt()
-        );
     }
 
     public boolean isSynced() {
@@ -268,6 +242,38 @@ public class Event {
 
     public String getLinkText() {
         return linkText;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLocationSummary(String locationSummary) {
+        this.locationSummary = locationSummary;
+    }
+
+    public void setLocationDescription(String locationDescription) {
+        this.locationDescription = locationDescription;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
+    }
+
+    public void setLinkText(String linkText) {
+        this.linkText = linkText;
     }
 
     @Override

@@ -23,7 +23,6 @@ import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.Validator;
 import com.libertacao.libertacao.util.ViewUtils;
-import com.libertacao.libertacao.view.customviews.WorkaroundMapFragment;
 import com.libertacao.libertacao.view.map.MapFragment;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
@@ -83,12 +82,6 @@ public class SendPushActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         mapFragment = MapFragment.newInstance(true);
         fragmentManager.beginTransaction().replace(R.id.event_map, mapFragment).commit();
-        mapFragment.setListener(new WorkaroundMapFragment.OnTouchListener() {
-            @Override
-            public void onTouch() {
-                scrollView.requestDisallowInterceptTouchEvent(true);
-            }
-        });
     }
 
     /**
