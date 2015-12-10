@@ -7,23 +7,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.libertacao.libertacao.R;
 import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.persistence.DatabaseHelper;
 import com.libertacao.libertacao.util.Validator;
 import com.libertacao.libertacao.util.ViewUtils;
-import com.libertacao.libertacao.view.map.MapFragment;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
@@ -39,16 +41,18 @@ import butterknife.OnClick;
 import timber.log.Timber;
 
 public class SendPushActivity extends AppCompatActivity {
+    public static final int PLACE_PICKER_REQUEST_CODE = 1;
 
-    @InjectView(R.id.send_push_scroll_view) ScrollView scrollView;
     @InjectView(R.id.send_push_only_local_checkbox) CheckBox onlyLocalCheckbox;
     @InjectView(R.id.send_push_title_edit_text) EditText titleEditText;
     @InjectView(R.id.send_push_message_edit_text) EditText messageEditText;
     @InjectView(R.id.send_push_uri_edit_text) EditText uriEditText;
     @InjectView(R.id.send_push_event_spinner) Spinner eventSpinner;
+    @InjectView(R.id.toWhoThisPushWillBeSent) TextView toWhoThisPushWillBeSent;
+
+    @Nullable private LatLng latLng;
 
     @Nullable  private List<Event> events;
-    private MapFragment mapFragment;
 
     public static Intent newIntent(@NonNull Context context) {
         return new Intent(context, SendPushActivity.class);
@@ -65,7 +69,6 @@ public class SendPushActivity extends AppCompatActivity {
         ViewUtils.setHomeAsUpEnabled(this);
         ButterKnife.inject(this);
         setupSpinner();
-        setupMap();
     }
 
     private void setupSpinner() {
@@ -78,10 +81,29 @@ public class SendPushActivity extends AppCompatActivity {
         }
     }
 
-    private void setupMap() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        mapFragment = MapFragment.newInstance(true);
-        fragmentManager.beginTransaction().replace(R.id.event_map, mapFragment).commit();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_PICKER_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+
+                latLng = place.getLatLng();
+                if(latLng != null) {
+                    toWhoThisPushWillBeSent.setText(String.format(getString(R.string.latitudeLongitudePlaceholder), latLng.latitude, latLng.longitude));
+                }
+            }
+        }
+    }
+
+    @OnClick(R.id.pickPushLocationButton)
+    public void pickPushLocationButtonClicked() {
+        PlacePicker.IntentBuilder intentBuilder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(intentBuilder.build(this), PLACE_PICKER_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.unknown_error), Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -102,8 +124,7 @@ public class SendPushActivity extends AppCompatActivity {
             return;
         }
 
-        LatLng selectedLatLng = mapFragment.getSelectedLatLng();
-        if(onlyLocalCheckbox.isChecked() || selectedLatLng != null) {
+        if(onlyLocalCheckbox.isChecked() || latLng != null) {
             actuallySendPush();
         } else {
             new android.app.AlertDialog.Builder(this)
@@ -147,10 +168,9 @@ public class SendPushActivity extends AppCompatActivity {
             params.put("eventObjectId", eventObjectId);
         }
 
-        LatLng selectedLatLng = mapFragment.getSelectedLatLng();
-        if(selectedLatLng != null) {
-            params.put("latitude", selectedLatLng.latitude);
-            params.put("longitude", selectedLatLng.longitude);
+        if(latLng != null) {
+            params.put("latitude", latLng.latitude);
+            params.put("longitude", latLng.longitude);
         }
 
         ParseCloud.callFunctionInBackground("sendPushToLocation", params, new FunctionCallback<String>() {

@@ -61,8 +61,6 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
     @InjectView(R.id.notificacao_detail_title) EditText titleEditText;
     @InjectView(R.id.notificacao_detail_description) EditText descriptionEditText;
     @InjectView(R.id.edit_event_checkbox_specific_location) CheckBox specificLocationCheckbox;
-    @InjectView(R.id.notification_location_summary) EditText locationSummaryEditText;
-    @InjectView(R.id.notification_location_description) EditText locationDescriptionEditText;
     @InjectView(R.id.event_link_url) EditText linkUrlEditText;
     @InjectView(R.id.event_link_text) EditText linkTextEditText;
 

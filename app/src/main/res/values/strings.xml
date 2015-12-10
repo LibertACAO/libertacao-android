@@ -143,7 +143,7 @@
     <string name="linkText">Link texto</string>
     <string name="linkTextDefaultPlaceURL">Acesse o site do local do evento</string>
     <string name="locationSummary">Localização</string>
-    <string name="locationDescription">Localização completa)</string>
+    <string name="locationDescription">Localização completa</string>
     <string name="createEdit">Criar/editar</string>
     <string name="suggestEvent">Sugerir evento</string>
     <string name="saveEvent">Salvar</string>
@@ -189,6 +189,9 @@
     <string name="send_push_only_local_info">Testar push localmente (só você receberá esse push. É útil para ter certeza que ele irá no formato que você definiu.)</string>
     <string name="areYouSureYouWantToSendPush">Você tem certeza que deseja enviar o push? Ele será enviado para TODOS os usuários do app.</string>
     <string name="selectAnEventForThisPushOptional">(Opcional) Selecione um evento</string>
+    <string name="pickPushLocation">Escolher o local destino do push</string>
+    <string name="pushWillBeSentTo">Esse push será enviado para: </string>
+    <string name="latitudeLongitudePlaceholder">(%1$s, %2$s)</string>
 
     <!-- Contact fragment -->
     <string name="emailOptional">E-mail (opcional)</string>

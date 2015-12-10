@@ -85,6 +85,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:onClick="@{editEventDataModel.onImageClick}"
+                            android:layout_margin="@dimen/default_margin"
                             android:text="@string/selectPhotoToEventInfo"/>
 
                         <Spinner
@@ -214,6 +215,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:onClick="@{editEventDataModel.pickEventPlace}"
+                            android:layout_margin="@dimen/default_margin"
                             android:text="@string/pickEventPlace"/>
 
                         <CheckBox
