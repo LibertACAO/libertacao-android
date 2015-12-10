@@ -17,14 +17,14 @@ repositories {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.libertacao.libertacao"
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 14
-        versionName "1.6"
+        versionCode 15
+        versionName "1.7"
         manifestPlaceholders = [ parse_permission:"com.libertacao.libertacao.permission.C2D_MESSAGE"]
     }
     buildTypes {

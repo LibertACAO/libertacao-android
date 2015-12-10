@@ -89,7 +89,6 @@ public class EditEventActivity extends AppCompatActivity implements EditEventDat
             event = new Event();
         }
 
-        // TODO: Titulo e descricao sao apagados depois de escolher o local do evento!
         ActivityEditEventBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_event);
         editEventDataModel = new EditEventDataModel(this, this, this, event);
         binding.setEditEventDataModel(editEventDataModel);
