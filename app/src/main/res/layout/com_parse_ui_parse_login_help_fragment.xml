@@ -23,12 +23,18 @@
         android:layout_gravity="center"
         android:text="@string/forgotPasswordInstructions"/>
 
-    <EditText
-        android:id="@+id/login_help_email_input"
-        style="@style/LoginEditText"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:hint="@string/emailHint"
-        android:inputType="textEmailAddress"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin">
+
+        <EditText
+            android:id="@+id/login_help_email_input"
+            style="@style/LoginEditText"
+            android:hint="@string/emailHint"
+            android:inputType="textEmailAddress"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/login_help_submit"

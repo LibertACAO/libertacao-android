@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/parse_login"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/com_parse_ui_vertical_margin"
-              android:paddingLeft="@dimen/com_parse_ui_horizontal_margin"
-              android:paddingRight="@dimen/com_parse_ui_horizontal_margin"
-              android:paddingTop="@dimen/com_parse_ui_vertical_margin"
-              tools:background="@drawable/background">
+<LinearLayout
+    android:id="@+id/parse_login"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/com_parse_ui_vertical_margin"
+    android:paddingLeft="@dimen/com_parse_ui_horizontal_margin"
+    android:paddingRight="@dimen/com_parse_ui_horizontal_margin"
+    android:paddingTop="@dimen/com_parse_ui_vertical_margin"
+    tools:background="@drawable/background">
 
     <ImageView
         style="@style/LogoImageView"
         android:layout_gravity="center"
         tools:ignore="ContentDescription"/>
 
-    <EditText
-        android:id="@+id/login_username_input"
-        style="@style/LoginEditText"
-        android:layout_marginTop="@dimen/large_margin"
-        android:hint="@string/usernameHint"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_margin">
 
-    <EditText
-        android:id="@+id/login_password_input"
-        style="@style/LoginEditText"
-        android:layout_marginTop="@dimen/space_between_edit_texts"
-        android:fontFamily="sans-serif"
-        android:hint="@string/passwordHint"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"/>
+        <EditText
+            android:id="@+id/login_username_input"
+            style="@style/LoginEditText"
+            android:hint="@string/usernameHint"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/login_password_input"
+            style="@style/LoginEditText"
+            android:fontFamily="sans-serif"
+            android:hint="@string/passwordHint"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            tools:ignore="UnusedAttribute"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/parse_login_button"
