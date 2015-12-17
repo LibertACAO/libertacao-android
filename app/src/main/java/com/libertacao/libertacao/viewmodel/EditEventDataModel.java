@@ -16,7 +16,6 @@ import com.libertacao.libertacao.data.Event;
 import com.libertacao.libertacao.util.MyDateUtils;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -251,7 +250,7 @@ public class EditEventDataModel extends EventDataModel {
                 initialDateCalendar.get(Calendar.YEAR), initialDateCalendar.get(Calendar.MONTH),
                 initialDateCalendar.get(Calendar.DAY_OF_MONTH));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         }
         if (event.hasEndDate() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             datePickerDialog.getDatePicker().setMaxDate(endDateCalendar.getTimeInMillis());
