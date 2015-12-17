@@ -29,31 +29,18 @@ import com.libertacao.libertacao.persistence.DatabaseHelper;
 public class MapFragment extends SupportMapFragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         GoogleMap.OnInfoWindowClickListener,
-        GoogleMap.OnMapClickListener,
         GoogleMap.OnMarkerClickListener {
 
     private static final String EVENT_ID = "EVENT_ID";
-    private static final String EDIT_MODE = "EDIT_MODE";
     private GoogleApiClient mGoogleApiClient;
     @Nullable private Event event;
-    private boolean editMode;
-    @Nullable private Marker eventLocationMarker;
-
-    public static MapFragment newInstance(boolean editMode) {
-        return newInstance(null, editMode);
-    }
 
     public static MapFragment newInstance(Event event) {
-        return newInstance(event, false);
-    }
-
-    public static MapFragment newInstance(@Nullable Event event, boolean editMode) {
         MapFragment mapFragment = new MapFragment();
         Bundle bundle = new Bundle();
         if(event != null) {
             bundle.putInt(EVENT_ID, event.getId());
         }
-        bundle.putBoolean(EDIT_MODE, editMode);
         mapFragment.setArguments(bundle);
         return mapFragment;
     }
@@ -62,13 +49,12 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        editMode = getArguments().getBoolean(EDIT_MODE, false);
         int eventId = getArguments().getInt(EVENT_ID, -1);
         if(eventId != -1) {
             event = DatabaseHelper.getHelper(getContext()).getEventIntegerRuntimeExceptionDao().queryForId(eventId);
         }
 
-        if(event == null && !editMode) {
+        if(event == null) {
             Toast.makeText(getContext(), getString(R.string.eventNotFound), Toast.LENGTH_LONG).show();
         } else {
             mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -85,9 +71,6 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
         if(getMap() != null) {
             getMap().setOnMarkerClickListener(this);
             getMap().setOnInfoWindowClickListener(this);
-            if(editMode) {
-                getMap().setOnMapClickListener(this);
-            }
         }
     }
 
@@ -107,7 +90,9 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
 
     @Override
     public void onConnected(Bundle bundle) {
-        initCamera();
+        if(getMap() != null) {
+            initCamera();
+        }
     }
 
     private void initCamera() {
@@ -130,11 +115,8 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
             // Create marker at event location
             MarkerOptions options = new MarkerOptions().position(eventLocation);
             options.title(event.getTitle());
-            if (editMode) {
-                options.draggable(true);
-            }
             options.icon(BitmapDescriptorFactory.defaultMarker());
-            eventLocationMarker = getMap().addMarker(options);
+            getMap().addMarker(options);
         }
     }
 
@@ -157,24 +139,5 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
     public boolean onMarkerClick(Marker marker) {
         marker.showInfoWindow();
         return true;
-    }
-
-    @Override
-    public void onMapClick(LatLng latLng) {
-        if(eventLocationMarker != null) {
-            eventLocationMarker.remove();
-        }
-
-        MarkerOptions options = new MarkerOptions().position(latLng);
-        if(event != null) {
-            options.title(event.getTitle());
-        }
-        options.draggable(true);
-        options.icon( BitmapDescriptorFactory.defaultMarker() );
-        eventLocationMarker = getMap().addMarker(options);
-    }
-
-    @Nullable public LatLng getSelectedLatLng() {
-        return eventLocationMarker != null? eventLocationMarker.getPosition() : null;
     }
 }
