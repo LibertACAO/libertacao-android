@@ -22,8 +22,12 @@ public class ParserDtoManager {
         }
         parseObject.put(Event.TITLE, event.getTitle());
         parseObject.put(Event.DESCRIPTION, event.getDescription());
-        parseObject.put(Event.LOCATION_SUMMARY, event.getLocationSummary());
-        parseObject.put(Event.LOCATION_DESCRIPTION, event.getLocationDescription());
+        if(event.getLocationSummary() != null) {
+            parseObject.put(Event.LOCATION_SUMMARY, event.getLocationSummary());
+        }
+        if(event.getLocationDescription() != null) {
+            parseObject.put(Event.LOCATION_DESCRIPTION, event.getLocationDescription());
+        }
         return parseObject;
     }
 
