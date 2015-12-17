@@ -78,8 +78,8 @@ public class LibertacaoPushBroadcastReceiver extends BroadcastReceiver {
         JSONObject pushData = null;
         try {
             pushData = new JSONObject(intent.getStringExtra(KEY_PUSH_DATA));
-        } catch (JSONException e) {
-            Timber.e("Unexpected JSONException when receiving push data: " + e);
+        } catch (JSONException | NullPointerException e) {
+            Timber.e("Unexpected exception when receiving push data: " + e);
         }
 
         // If the push data includes an action string, that broadcast intent is fired.
